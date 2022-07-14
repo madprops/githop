@@ -1,0 +1,44 @@
+body, html {
+  font-family: sans-serif;
+  font-size: 18px;
+  background-color: #252933;
+  color: white;
+  overflow: hidden;
+}
+
+#filter {
+  position: relative;
+  background-color: #99A7D6;
+  border-width: 0;
+  margin-bottom: 1rem;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.25rem;
+  color: black;
+}
+
+#list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 500px;
+  height: 500px;
+  overflow: auto;
+}
+
+.item {
+  transition: text-shadow 250ms, box-shadow 250ms;
+  cursor: pointer;
+  border: 1px solid grey;
+  border-spacing: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 25px;
+}
+
+.selected {
+  border-color: white;
+}
+
+.item:hover {
+  text-shadow: 0 0 1rem currentColor;
+}
