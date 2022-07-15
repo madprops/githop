@@ -27,7 +27,6 @@ body, html {
 }
 
 .item {
-  transition: text-shadow 250ms, box-shadow 250ms;
   cursor: pointer;
   border: 1px solid grey;
   border-spacing: 0.5rem;
@@ -38,8 +37,4 @@ body, html {
 .selected {
   border-color: white;
   background-color: #2B303B;
-}
-
-.item:hover {
-  text-shadow: 0 0 1rem currentColor;
 }

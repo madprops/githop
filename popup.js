@@ -44,14 +44,14 @@ function get_items () {
 
 // Make an item selected
 // Unselect all the others
-function select_item (el) {
+function select_item (s_item) {
   for (let item of get_items()) {
     item.classList.remove("selected")
   }
 
-  el.classList.add("selected")
-  el.scrollIntoView({block: "nearest"})
-  selected_item = el
+  s_item.classList.add("selected")
+  s_item.scrollIntoView({block: "nearest"})
+  selected_item = s_item
 }
 // Open a new tab with a url
 function open_tab (url) {
@@ -59,7 +59,7 @@ function open_tab (url) {
 }
 
 // Get next item that is visible
-function get_next_visible_item (el) {
+function get_next_visible_item (o_item) {
   let waypoint = false
   let items = get_items()
 
@@ -70,14 +70,14 @@ function get_next_visible_item (el) {
       }
     }
 
-    if (item === el) {
+    if (item === o_item) {
       waypoint = true
     }
   }
 }
 
 // Get prev item that is visible
-function get_prev_visible_item (el) {
+function get_prev_visible_item (o_item) {
   let waypoint = false
   let items = get_items()
   items.reverse()
@@ -89,7 +89,7 @@ function get_prev_visible_item (el) {
       }
     }
 
-    if (item === el) {
+    if (item === o_item) {
       waypoint = true
     }
   }
@@ -132,16 +132,16 @@ document.addEventListener("keydown", function (e) {
       window.close()
     }
   } else if (e.key === "ArrowUp") {
-    let el = get_prev_visible_item(selected_item)
+    let item = get_prev_visible_item(selected_item)
 
-    if (el) {
-      select_item(el)
+    if (item) {
+      select_item(item)
     }
   } else if (e.key === "ArrowDown") {
-    let el = get_next_visible_item(selected_item)
+    let item = get_next_visible_item(selected_item)
 
-    if (el) {
-      select_item(el)
+    if (item) {
+      select_item(item)
     }
   }
 })
@@ -149,10 +149,17 @@ document.addEventListener("keydown", function (e) {
 // When list items are clicked
 list.addEventListener("click", function (e) {
   if (e.target.closest(".item")) {
-    let el = e.target.closest(".item")
-    open_tab(el.dataset.url)
+    let item = e.target.closest(".item")
+    open_tab(item.dataset.url)
     window.close()
-    return
+  }
+})
+
+// When list items get hovered
+list.addEventListener("mouseover", function (e) {
+  if (e.target.closest(".item")) {
+    let item = e.target.closest(".item")
+    select_item(item)
   }
 })
 
