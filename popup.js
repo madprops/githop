@@ -1,6 +1,7 @@
 // Settings
 const root_url = "https://github.com/"
 const max_results = 100
+const history_months = 3
 
 // DOM elements
 const filter = document.querySelector("#filter")
@@ -168,7 +169,8 @@ list.addEventListener("mouseover", function (e) {
 // Do the history search
 browser.history.search({
   text: root_url,
-  maxResults: max_results
+  maxResults: max_results,
+  startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * history_months)
 }).then(on_results)
 
 // Focus the filter

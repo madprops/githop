@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "GitHop",
-    "version": "1.7",
+    "version": "1.9",
     "description": "Go to the GitHub URL you are thinking of",
     "permissions": [
         "history"
@@ -15,5 +15,10 @@
         },
         "default_title": "GitHop",
         "default_popup": "popup.html"
+    },
+    "commands": {
+        "_execute_browser_action": {
+
+        }
     }
 }
