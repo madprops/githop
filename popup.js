@@ -4,16 +4,29 @@ const max_results = 1000
 const history_months = 12
 const remove_get_parameters = true
 const remove_hash_parameters = true
-const linkmap = [
+const links_map = [
   {name: "Homepage", url: "https://github.com"},
   {name: "Notifications", url: "https://github.com/notifications"},
   {name: "Issues", url: "https://github.com/issues"},
   {name: "Pulls", url: "https://github.com/pulls"},
 ]
+const filter_buttons_map = [
+  {name: "Clear", callback: function () {
+    filter.value = ""
+    do_filter()
+  }},
+  {name: "Unit", callback: function () {
+    do_filter(1)
+  }},
+  {name: "Repos", callback: function () {
+    do_filter(2)
+  }},
+]
 
 // DOM elements
 const links  = document.querySelector("#links")
 const filter = document.querySelector("#filter")
+const filter_buttons = document.querySelector("#filter_buttons")
 const list = document.querySelector("#list")
 
 // Used on Enter
@@ -25,7 +38,7 @@ function on_results (items) {
   let added = []
   let escaped = escape_special_chars(root_url)
   let regex = new RegExp(`^${escaped}`, "i")
-  let used_urls = linkmap.map(x => x.url)
+  let used_urls = links_map.map(x => x.url)
 
   for (let item of items) {    
     if (!item.url.startsWith(root_url)) {
@@ -145,7 +158,7 @@ function get_prev_visible_item (o_item) {
 }
 
 // Filter the list with the filter's value
-function do_filter () {
+function do_filter (level = 0) {
   selected_item = undefined
   let words = filter.value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
@@ -153,6 +166,12 @@ function do_filter () {
   for (let item of get_items()) {
     let item_text = item.textContent.toLowerCase()
     let includes = words.every(x => item_text.includes(x))
+
+    if (level > 0) {
+      if (item.textContent.split("/").length !== level) {
+        includes = false
+      }
+    }
 
     if (includes) {
       item.style.display = "initial"
@@ -167,11 +186,13 @@ function do_filter () {
   }
 }
 
+// Add links to the top
 function create_links () {
-  for (let link of linkmap) {
+  for (let link of links_map) {
     let el = document.createElement("div")
     el.textContent = link.name
     el.classList.add("link")
+    el.classList.add("action")
     
     // Avoid reference problems
     let url = link.url
@@ -181,6 +202,25 @@ function create_links () {
     })
 
     links.append(el)
+  }
+}
+
+// Add buttons next to the filter
+function create_filter_buttons () {
+  for (let button of filter_buttons_map) {
+    let el = document.createElement("button")
+    el.textContent = button.name
+    el.classList.add("filter_button")
+    el.classList.add("action")
+
+    // Avoid reference problems
+    let callback = button.callback
+    
+    el.addEventListener("click", function (e) {
+      callback()
+    })
+
+    filter_buttons.append(el)
   }
 }
 
@@ -236,6 +276,9 @@ list.addEventListener("mouseover", function (e) {
 
 // Place the links at the top
 create_links()
+
+// Place the filter buttons
+create_filter_buttons()
 
 // Do the history search
 browser.history.search({
