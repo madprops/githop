@@ -6,8 +6,9 @@ const remove_get_parameters = true
 const remove_hash_parameters = true
 const linkmap = [
   {name: "Homepage", url: "https://github.com"},
+  {name: "Notifications", url: "https://github.com/notifications"},
   {name: "Issues", url: "https://github.com/issues"},
-  {name: "Pulls", url: "https://github.com/pulls"}
+  {name: "Pulls", url: "https://github.com/pulls"},
 ]
 
 // DOM elements
@@ -24,9 +25,14 @@ function on_results (items) {
   let added = []
   let escaped = escape_special_chars(root_url)
   let regex = new RegExp(`^${escaped}`, "i")
+  let used_urls = linkmap.map(x => x.url)
 
   for (let item of items) {    
     if (!item.url.startsWith(root_url)) {
+      continue
+    }
+
+    if (used_urls.includes(item.url)) {
       continue
     }
 

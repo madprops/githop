@@ -10,13 +10,18 @@ body, html {
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  padding-bottom: 0.7rem;
+  padding-bottom: 0.77rem;
   color: white;
 }
 
 .link {
   cursor: pointer;
   text-decoration: underline;
+  transition: text-shadow 250ms, box-shadow 250ms;
+}
+
+.link:hover {
+  text-shadow: 0 0 1rem currentColor;
 }
 
 #filter {
