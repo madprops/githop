@@ -1,6 +1,6 @@
 // Settings
 const root_url = "https://github.com/"
-const max_results = 500
+const max_results = 1000
 const history_months = 12
 
 // DOM elements
