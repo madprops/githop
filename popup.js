@@ -17,11 +17,7 @@ function on_results (items) {
   let escaped = escape_special_chars(root_url)
   let regex = new RegExp(`^${escaped}`, "i")
 
-  for (let item of items) {
-    if (item.url.includes("?")) {
-      continue
-    }
-    
+  for (let item of items) {    
     let text = item.url.replace(regex, "").replace(/\/$/, "").trim()
     text = remove_params(text)
     
