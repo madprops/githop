@@ -6,6 +6,19 @@ body, html {
   overflow: hidden;
 }
 
+#links {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  color: white;
+}
+
+.link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 #filter {
   position: relative;
   background-color: #99A7D6;

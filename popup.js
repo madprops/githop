@@ -4,8 +4,14 @@ const max_results = 1000
 const history_months = 12
 const remove_get_parameters = true
 const remove_hash_parameters = true
+const linkmap = [
+  {name: "Homepage", url: "https://github.com"},
+  {name: "Issues", url: "https://github.com/issues"},
+  {name: "Pulls", url: "https://github.com/pulls"}
+]
 
 // DOM elements
+const links  = document.querySelector("#links")
 const filter = document.querySelector("#filter")
 const list = document.querySelector("#list")
 
@@ -20,15 +26,15 @@ function on_results (items) {
   let regex = new RegExp(`^${escaped}`, "i")
 
   for (let item of items) {    
+    if (!item.url.startsWith(root_url)) {
+      continue
+    }
+
     let text = item.url.replace(regex, "")
     text = remove_trailing_slash(text)
     text = decodeURI(remove_params(text))
 
-    if (!text) {
-      text = "* Homepage *"
-    }
-
-    if (added.includes(text)) {
+    if (!text || added.includes(text)) {
       continue
     }
     
@@ -91,7 +97,8 @@ function select_item (s_item, scroll = true) {
 }
 // Open a new tab with a url
 function open_tab (url) {
-  browser.tabs.create({url: url}) 
+  browser.tabs.create({url: url})
+  window.close()
 }
 
 // Get next item that is visible
@@ -154,6 +161,23 @@ function do_filter () {
   }
 }
 
+function create_links () {
+  for (let link of linkmap) {
+    let el = document.createElement("div")
+    el.textContent = link.name
+    el.classList.add("link")
+    
+    // Avoid reference problems
+    let url = link.url
+
+    el.addEventListener("click", function () {
+      open_tab(url)
+    })
+
+    links.append(el)
+  }
+}
+
 // When a user types something
 filter.addEventListener("input", function (e) {
   do_filter()
@@ -161,12 +185,9 @@ filter.addEventListener("input", function (e) {
 
 // When another key is pressed
 document.addEventListener("keydown", function (e) {
-  filter.focus()
-
   if (e.key === "Enter") {
     if (selected_item) {
       open_tab(selected_item.dataset.url)
-      window.close()
     }
   } else if (e.key === "ArrowUp") {
     let item = get_prev_visible_item(selected_item)
@@ -188,7 +209,6 @@ list.addEventListener("click", function (e) {
   if (e.target.closest(".item")) {
     let item = e.target.closest(".item")
     open_tab(item.dataset.url)
-    window.close()
   }
 })
 
@@ -201,6 +221,9 @@ list.addEventListener("mouseover", function (e) {
 })
 
 // START PROGRAM ----
+
+// Place the links at the top
+create_links()
 
 // Do the history search
 browser.history.search({
