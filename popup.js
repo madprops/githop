@@ -13,6 +13,7 @@ let selected_item
 
 // When results are found
 function on_results (items) {
+  let added = []
   let escaped = escape_special_chars(root_url)
   let regex = new RegExp(`^${escaped}`, "i")
 
@@ -22,17 +23,20 @@ function on_results (items) {
     }
     
     let text = item.url.replace(regex, "").replace(/\/$/, "").trim()
+    text = remove_params(text)
     
-    if (!text) {
+    if (!text || added.includes(text)) {
       continue
     }
     
+    let url = remove_params(item.url)
     let el = document.createElement("div")
-
+    
     el.textContent = text
     el.classList.add("item")
-    el.dataset.url = item.url
+    el.dataset.url = url
     list.append(el)
+    added.push(text)
   }
 
   do_filter()
@@ -41,6 +45,11 @@ function on_results (items) {
 // Escape non alphanumeric chars
 function escape_special_chars (s) {
   return s.replace(/[^A-Za-z0-9]/g, "\\$&")
+}
+
+// Remove parameters from a URL
+function remove_params (url) {
+  return url.split("?")[0]
 }
 
 // Get an array with all list items
