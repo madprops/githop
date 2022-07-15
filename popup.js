@@ -13,15 +13,12 @@ const links_map = [
 const filter_buttons_map = [
   {name: "Clear", callback: function () {
     clear_filter()
-    filter.focus()
   }},
   {name: "Unit", callback: function () {
     do_filter(1)
-    filter.focus()
   }},
   {name: "Repos", callback: function () {
     do_filter(2)
-    filter.focus()
   }},
 ]
 
@@ -226,6 +223,7 @@ function create_filter_buttons () {
     
     el.addEventListener("click", function (e) {
       callback()
+      filter.focus()
     })
 
     filter_buttons.append(el)
