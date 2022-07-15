@@ -1,7 +1,7 @@
 // Settings
 const root_url = "https://github.com/"
 const max_results = 100
-const history_months = 3
+const history_months = 12
 
 // DOM elements
 const filter = document.querySelector("#filter")
