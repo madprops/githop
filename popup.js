@@ -19,7 +19,7 @@ function on_results (items) {
 
   for (let item of items) {    
     let text = item.url.replace(regex, "").replace(/\/$/, "").trim()
-    text = remove_params(text)
+    text = decodeURI(remove_params(text))
     
     if (!text || added.includes(text)) {
       continue
@@ -45,7 +45,7 @@ function escape_special_chars (s) {
 
 // Remove parameters from a URL
 function remove_params (url) {
-  return url.split("?")[0]
+  return url.split("?")[0].split("#")[0]
 }
 
 // Get an array with all list items
