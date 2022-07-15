@@ -37,6 +37,7 @@ body, html {
 
 .selected {
   border-color: white;
+  background-color: #2B303B;
 }
 
 .item:hover {
