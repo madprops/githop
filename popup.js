@@ -2,6 +2,8 @@
 const root_url = "https://github.com/"
 const max_results = 1000
 const history_months = 12
+const remove_get_parameters = true
+const remove_hash_parameters = true
 
 // DOM elements
 const filter = document.querySelector("#filter")
@@ -18,10 +20,15 @@ function on_results (items) {
   let regex = new RegExp(`^${escaped}`, "i")
 
   for (let item of items) {    
-    let text = item.url.replace(regex, "").replace(/\/$/, "").trim()
+    let text = item.url.replace(regex, "")
+    text = remove_trailing_slash(text)
     text = decodeURI(remove_params(text))
-    
-    if (!text || added.includes(text)) {
+
+    if (!text) {
+      text = "* Homepage *"
+    }
+
+    if (added.includes(text)) {
       continue
     }
     
@@ -45,7 +52,22 @@ function escape_special_chars (s) {
 
 // Remove parameters from a URL
 function remove_params (url) {
-  return url.split("?")[0].split("#")[0]
+  let s = url
+  
+  if (remove_get_parameters) {
+    s = url.split("?")[0]
+  }
+
+  if (remove_hash_parameters) {
+    s = s.split("#")[0]
+  }
+
+  return s
+}
+
+// Remove slash at the end
+function remove_trailing_slash (url) {
+  return url.replace(/\/$/, "").trim()
 }
 
 // Get an array with all list items
