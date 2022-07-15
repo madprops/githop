@@ -23,7 +23,8 @@ body, html {
   gap: 0.5rem;
   width: 500px;
   height: 500px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .item {
