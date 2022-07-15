@@ -195,18 +195,24 @@ document.addEventListener("keydown", function (e) {
     if (selected_item) {
       open_tab(selected_item.dataset.url)
     }
+
+    e.preventDefault()
   } else if (e.key === "ArrowUp") {
     let item = get_prev_visible_item(selected_item)
 
     if (item) {
       select_item(item)
     }
+
+    e.preventDefault()
   } else if (e.key === "ArrowDown") {
     let item = get_next_visible_item(selected_item)
 
     if (item) {
       select_item(item)
     }
+
+    e.preventDefault()
   }
 })
 
