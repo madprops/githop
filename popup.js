@@ -13,14 +13,15 @@ let selected_item
 
 // When results are found
 function on_results (items) {
+  let added = []
   let escaped = escape_special_chars(root_url)
   let regex = new RegExp(`^${escaped}`, "i")
 
   for (let item of items) {
     let el = document.createElement("div")
-    let text = item.url.replace(regex, "").replace(/\/$/, "").trim()
+    let text = item.url.replace(regex, "").replace(/\/$/, "").trim().split("?")[0]
     
-    if (!text) {
+    if (!text || added.includes(text)) {
       continue
     }
     
@@ -28,6 +29,7 @@ function on_results (items) {
     el.classList.add("item")
     el.dataset.url = item.url
     list.append(el)
+    added.push(text)
   }
 
   do_filter()
@@ -45,14 +47,17 @@ function get_items () {
 
 // Make an item selected
 // Unselect all the others
-function select_item (s_item) {
+function select_item (s_item, scroll = true) {
   for (let item of get_items()) {
     item.classList.remove("selected")
   }
 
   s_item.classList.add("selected")
-  s_item.scrollIntoView({block: "nearest"})
   selected_item = s_item
+
+  if (scroll) {
+    s_item.scrollIntoView({block: "nearest"})
+  }
 }
 // Open a new tab with a url
 function open_tab (url) {
@@ -161,7 +166,7 @@ list.addEventListener("click", function (e) {
 list.addEventListener("mouseover", function (e) {
   if (e.target.closest(".item")) {
     let item = e.target.closest(".item")
-    select_item(item)
+    select_item(item, false)
   }
 })
 
