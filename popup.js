@@ -13,23 +13,26 @@ let selected_item
 
 // When results are found
 function on_results (items) {
-  let added = []
   let escaped = escape_special_chars(root_url)
   let regex = new RegExp(`^${escaped}`, "i")
 
   for (let item of items) {
-    let el = document.createElement("div")
-    let text = item.url.replace(regex, "").replace(/\/$/, "").trim().split("?")[0]
-    
-    if (!text || added.includes(text)) {
+    if (item.url.includes("?")) {
       continue
     }
     
+    let text = item.url.replace(regex, "").replace(/\/$/, "").trim()
+    
+    if (!text) {
+      continue
+    }
+    
+    let el = document.createElement("div")
+
     el.textContent = text
     el.classList.add("item")
     el.dataset.url = item.url
     list.append(el)
-    added.push(text)
   }
 
   do_filter()
