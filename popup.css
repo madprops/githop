@@ -33,6 +33,8 @@ body, html {
   border-spacing: 0.5rem;
   padding: 0.5rem;
   border-radius: 25px;
+  overflow-wrap: break-word;
+	word-break: break-word;
 }
 
 .selected {
