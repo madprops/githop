@@ -99,21 +99,22 @@ function get_prev_visible_item (o_item) {
 // Filter the list with the filter's value
 function do_filter () {
   selected_item = undefined
-  let filter_text = filter.value.toLowerCase()
+  let words = filter.value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
 
   for (let item of get_items()) {
     let item_text = item.textContent.toLowerCase()
+    let includes = words.every(x => item_text.includes(x))
 
-    if (!item_text.includes(filter_text)) {
-      item.style.display = "none"
-    } else {
+    if (includes) {
       item.style.display = "initial"
 
       if (!selected) {
         select_item(item)
         selected = true
       }
+    } else {
+      item.style.display = "none"
     }
   }
 }
