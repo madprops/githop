@@ -12,14 +12,16 @@ const links_map = [
 ]
 const filter_buttons_map = [
   {name: "Clear", callback: function () {
-    filter.value = ""
-    do_filter()
+    clear_filter()
+    filter.focus()
   }},
   {name: "Unit", callback: function () {
     do_filter(1)
+    filter.focus()
   }},
   {name: "Repos", callback: function () {
     do_filter(2)
+    filter.focus()
   }},
 ]
 
@@ -184,6 +186,12 @@ function do_filter (level = 0) {
       item.style.display = "none"
     }
   }
+}
+
+// Clear filter
+function clear_filter () {
+  filter.value = ""
+  do_filter()
 }
 
 // Add links to the top
