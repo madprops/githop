@@ -68,6 +68,11 @@ body, html {
 	word-break: break-word;
 }
 
+.item_title {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
 .selected {
   border-color: white;
   background-color: #2B303B;

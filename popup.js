@@ -49,22 +49,31 @@ function on_results (items) {
       continue
     }
 
-    let text = item.url.replace(regex, "")
-    text = remove_trailing_slash(text)
-    text = decodeURI(remove_params(text))
+    let url_text = item.url.replace(regex, "")
+    url_text = remove_trailing_slash(url_text)
+    url_text = decodeURI(remove_params(url_text))
 
-    if (!text || added.includes(text)) {
+    if (!url_text || added.includes(url_text)) {
       continue
     }
     
-    let url = remove_params(item.url)
-    let el = document.createElement("div")
+    let c = document.createElement("div")
+    c.classList.add("item")
     
-    el.textContent = text
-    el.classList.add("item")
-    el.dataset.url = url
-    list.append(el)
-    added.push(text)
+    let url_el = document.createElement("div")
+    url_el.classList.add("item_url")
+    url_el.textContent = url_text
+    
+    let title_el = document.createElement("div")
+    title_el.classList.add("item_title")
+    title_el.textContent = item.title
+
+    c.append(url_el)
+    c.append(title_el)
+    c.dataset.url = remove_params(item.url)
+
+    list.append(c)
+    added.push(url_text)
   }
 
   // Start with an n-level filter
