@@ -20,7 +20,7 @@ const links_map = [
 
 const buttons_map = [
   {name: "All", mode: "all"},
-  {name: "Visited", mode: "visited"},
+  {name: "Visited", mode: "visited", title: "Middle click to forget items"},
   {name: "Issues", mode: "issues", path: "/issues/"},
   {name: "Commits", mode: "commits", path: "/commit/"},
   {name: "Pulls", mode: "pulls", path: "/pull/"},
