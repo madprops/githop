@@ -3,6 +3,9 @@ const root_url = "https://github.com/"
 const max_results = 1000
 const history_months = 12
 const max_title_length = 250
+const max_visited = 250
+const ls_visited = "visited_v2"
+const symbol = "!"
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
   {name: "Notifications", url: "https://github.com/notifications"},
@@ -16,28 +19,37 @@ const buttons_map = [
   {name: "Clear", callback: function () {
     clear_filter()
   }},
-  {name: "1", callback: function () {
-    do_filter(slash_filter("1"))
-  }},
-  {name: "2", callback: function () {
-    do_filter(slash_filter("2"))
-  }},
-  {name: "3", callback: function () {
-    do_filter(slash_filter("3"))
+  {name: "Visited", callback: function () {
+    do_filter(bang_filter("visited"))
   }},
   {name: "Issues", callback: function () {
-    do_filter(slash_filter("issues"))
+    do_filter(bang_filter("issues"))
   }},
   {name: "Commits", callback: function () {
-    do_filter(slash_filter("commit"))
+    do_filter(bang_filter("commits"))
   }},
   {name: "Pulls", callback: function () {
-    do_filter(slash_filter("pull"))
+    do_filter(bang_filter("pulls"))
   }},
   {name: "Tags", callback: function () {
-    do_filter(slash_filter("tag"))
-  }},      
+    do_filter(bang_filter("tags"))
+  }}, 
+  {name: "1", callback: function () {
+    do_filter(bang_filter("1"))
+  }, title: "Path Level 1"},
+  {name: "2", callback: function () {
+    do_filter(bang_filter("2"))
+  }, title: "Path Level 2"},
+  {name: "3", callback: function () {
+    do_filter(bang_filter("3"))
+  }, title: "Path Level 3"},     
 ]
+const dollar_map = {
+  "issues": "/issues/",
+  "commits": "/commit/",
+  "pulls": "/pull/",
+  "tags": "/tag/",
+}
 
 // DOM elements
 const links  = document.querySelector("#links")
@@ -51,6 +63,9 @@ let selected_item
 
 // Used for performance measuring
 let date_start = Date.now()
+
+// Visited local storage
+let visited
 
 // When results are found
 function on_results (items) {
@@ -117,10 +132,10 @@ function clean_url (url) {
 }
 
 // Create a slashed filter search
-function slash_filter (s) {
-  let regex = new RegExp("^\\/\\w+\\/", "")
+function bang_filter (s) {
+  let regex = new RegExp(`^\\${symbol}\\w+`, "")
   let v = filter.value.replace(regex, "").trim()
-  return `/${s}/ ${v}`
+  return `${symbol}${s} ${v}`
 }
 
 // Check if string is a number
@@ -206,6 +221,12 @@ function do_filter (value = "") {
     filter.value = value
   }
 
+  let visited_urls
+
+  if (value.includes(`${symbol}visited`)) {
+    visited_urls = visited.map(x => x.url)
+  }
+
   let words = value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
   
@@ -213,11 +234,18 @@ function do_filter (value = "") {
     let url = item.dataset.clean_url
     let text = item.textContent.toLowerCase()
     
-    if (words[0] && words[0].startsWith("/") && words[0].endsWith("/")) {
+    if (words[0] && words[0].startsWith(symbol)) {
+      let u = words[0].replace(symbol, "")
       let tail = words.slice(1)
-      let u = words[0].split("/")[1]
 
-      if (is_number(u)) {
+      if (u === "visited") {
+        let includes = visited_urls.includes(item.dataset.url) && tail.every(x => text.includes(x))
+
+        if (!includes) {
+          hide_item(item)
+          continue
+        }
+      } else if (is_number(u)) {
         let num_slashes = url.split("/").length
 
         if (num_slashes !== parseInt(u)) {
@@ -232,7 +260,7 @@ function do_filter (value = "") {
           continue
         }
       } else {
-        let includes = url.includes(words[0]) && tail.every(x => text.includes(x))
+        let includes = url.includes(dollar_map[u]) && tail.every(x => text.includes(x))
 
         if (!includes) {
           hide_item(item)
@@ -274,7 +302,7 @@ function clear_filter () {
 }
 
 // Add links to the top
-function create_links () {
+function make_links () {
   for (let link of links_map) {
     let el = document.createElement("div")
     el.textContent = link.name
@@ -294,12 +322,16 @@ function create_links () {
 }
 
 // Add buttons next to the filter
-function create_buttons () {
+function make_buttons () {
   for (let button of buttons_map) {
     let el = document.createElement("button")
     el.textContent = button.name
     el.classList.add("button")
     el.classList.add("action")
+
+    if (button.title) {
+      el.title = button.title
+    }
 
     // Avoid reference problems
     let callback = button.callback
@@ -313,6 +345,53 @@ function create_buttons () {
   }
 }
 
+// Centralized function to get localStorage objects
+function get_local_storage (ls_name) {
+  let obj
+
+  if (localStorage[ls_name]) {
+    try {
+      obj = JSON.parse(localStorage.getItem(ls_name))
+    } catch (err) {
+      localStorage.removeItem(ls_name)
+      obj = null
+    }
+  } else {
+    obj = null
+  }
+
+  return obj
+}
+
+// Centralized function to save localStorage objects
+function save_local_storage (ls_name, obj) {
+  localStorage.setItem(ls_name, JSON.stringify(obj))
+}
+
+// Get visited local storage
+function get_visited () {
+  visited = get_local_storage(ls_visited)
+
+  if (visited === null) {
+    visited = []
+  }
+}
+
+// Saves the visited localStorage object
+function save_visited () {
+  save_local_storage(ls_visited, visited)
+}
+
+// Add a visited item
+function add_to_visited (item) {
+  let o = {}
+  o.title = item.textContent
+  o.url = item.dataset.url
+  visited.unshift(o)
+  visited = visited.slice(0, max_visited)
+  save_visited()
+}
+
 // When a user types something
 filter.addEventListener("input", function (e) {
   do_filter()
@@ -324,6 +403,7 @@ document.addEventListener("keydown", function (e) {
 
   if (e.key === "Enter") {
     if (selected_item) {
+      add_to_visited(selected_item)
       open_tab(selected_item.dataset.url)
     }
 
@@ -351,6 +431,7 @@ document.addEventListener("keydown", function (e) {
 list.addEventListener("click", function (e) {
   if (e.target.closest(".item")) {
     let item = e.target.closest(".item")
+    add_to_visited(item)
     open_tab(item.dataset.url)
   }
 })
@@ -366,10 +447,10 @@ list.addEventListener("mouseover", function (e) {
 // START PROGRAM ----
 
 // Place the links at the top
-create_links()
+make_links()
 
 // Place the buttons
-create_buttons()
+make_buttons()
 
 // Do the history search
 browser.history.search({
@@ -377,6 +458,9 @@ browser.history.search({
   maxResults: max_results,
   startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * history_months)
 }).then(on_results)
+
+// Get visited local storage object
+get_visited()
 
 // Focus the filter
 filter.focus()
