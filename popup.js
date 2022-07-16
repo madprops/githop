@@ -237,6 +237,8 @@ filter.addEventListener("input", function (e) {
 
 // When another key is pressed
 document.addEventListener("keydown", function (e) {
+  filter.focus()
+  
   if (e.key === "Enter") {
     if (selected_item) {
       open_tab(selected_item.dataset.url)
