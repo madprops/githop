@@ -2,9 +2,8 @@
 const root_url = "https://github.com/"
 const max_results = 1000
 const history_months = 12
-const remove_get_parameters = true
-const remove_hash_parameters = true
 const initial_filter_level = 2
+const max_title_length = 250
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
   {name: "Notifications", url: "https://github.com/notifications"},
@@ -36,9 +35,8 @@ let selected_item
 // When results are found
 function on_results (items) {
   let added = []
-  let escaped = escape_special_chars(root_url)
-  let regex = new RegExp(`^${escaped}`, "i")
   let used_urls = links_map.map(x => x.url)
+  let base_url = unslash(root_url)
 
   for (let item of items) {    
     if (!item.url.startsWith(root_url)) {
@@ -49,31 +47,25 @@ function on_results (items) {
       continue
     }
 
-    let url_text = item.url.replace(regex, "")
-    url_text = remove_trailing_slash(url_text)
-    url_text = decodeURI(remove_params(url_text))
+    let url = unslash(item.url)
 
-    if (!url_text || added.includes(url_text)) {
+    if (url === base_url) {
+      continue
+    }
+
+    let text = item.title.substring(0, max_title_length)
+
+    if (!text || added.includes(text)) {
       continue
     }
     
-    let c = document.createElement("div")
-    c.classList.add("item")
-    
-    let url_el = document.createElement("div")
-    url_el.classList.add("item_url")
-    url_el.textContent = url_text
-    
-    let title_el = document.createElement("div")
-    title_el.classList.add("item_title")
-    title_el.textContent = item.title
+    let el = document.createElement("div")
+    el.classList.add("item")
+    el.textContent = text
+    el.dataset.url = url
 
-    c.append(url_el)
-    c.append(title_el)
-    c.dataset.url = remove_params(item.url)
-
-    list.append(c)
-    added.push(url_text)
+    list.append(el)
+    added.push(text)
   }
 
   // Start with an n-level filter
@@ -85,23 +77,8 @@ function escape_special_chars (s) {
   return s.replace(/[^A-Za-z0-9]/g, "\\$&")
 }
 
-// Remove parameters from a URL
-function remove_params (url) {
-  let s = url
-  
-  if (remove_get_parameters) {
-    s = url.split("?")[0]
-  }
-
-  if (remove_hash_parameters) {
-    s = s.split("#")[0]
-  }
-
-  return s
-}
-
 // Remove slash at the end
-function remove_trailing_slash (url) {
+function unslash (url) {
   return url.replace(/\/$/, "").trim()
 }
 
