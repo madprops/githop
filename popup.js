@@ -23,30 +23,38 @@ const buttons_map = [
   {name: "All", callback: function () {
     clear_filter()
   }},
+
   {name: "Visited", callback: function () {
     do_filter(bang_filter("visited"))
-  }},
+  }, bang: "visited"},
+
   {name: "Issues", callback: function () {
     do_filter(bang_filter("issues"))
-  }},
+  }, bang: "issues"},
+  
   {name: "Commits", callback: function () {
     do_filter(bang_filter("commits"))
-  }},
+  }, bang: "commits"},
+
   {name: "Pulls", callback: function () {
     do_filter(bang_filter("pulls"))
-  }},
+  }, bang: "pulls"},
+
   {name: "Tags", callback: function () {
     do_filter(bang_filter("tags"))
-  }},
+  }, bang: "tags"},
+
   {name: "1", callback: function () {
     do_filter(bang_filter("1"))
-  }, title: "Path Level 1"},
+  }, title: "Path Level 1", bang: "1"},
+
   {name: "2", callback: function () {
     do_filter(bang_filter("2"))
-  }, title: "Path Level 2"},
+  }, title: "Path Level 2", bang: "2"},
+
   {name: "3", callback: function () {
     do_filter(bang_filter("3"))
-  }, title: "Path Level 3"},
+  }, title: "Path Level 3", bang: "3"},
 ]
 
 const symbol_map = {
@@ -54,13 +62,6 @@ const symbol_map = {
   "commits": "/commit/",
   "pulls": "/pull/",
   "tags": "/tag/",
-}
-
-const on_middle_click = function (item) {
-  if (filter.value.startsWith("!visited")) {
-    remove_visited(item)
-    item.remove()
-  }
 }
 
 // DOM elements
@@ -407,6 +408,41 @@ function make_buttons () {
   }
 }
 
+// Move to the next button
+function cycle_buttons (direction) {
+  let map = buttons_map.slice(0)
+
+  if (direction === "left") {
+    map.reverse()
+  }
+
+  let waypoint = false
+  let first
+  
+  for (let button of map) {
+    if (!button.bang) {
+      continue
+    }
+
+    if (!first) {
+      first = button
+    }
+
+    if (waypoint) {
+      do_filter(`${symbol}${button.bang}`)
+      return
+    }
+
+    if (filter.value.startsWith(`${symbol}${button.bang}`)) {
+      waypoint = true
+    }
+  }
+
+  if (first) {
+    do_filter(`${symbol}${first.bang}`)
+  }  
+}
+
 // Centralized function to get localStorage objects
 function get_local_storage (ls_name) {
   let obj
@@ -501,6 +537,14 @@ document.addEventListener("keydown", function (e) {
     }
 
     e.preventDefault()
+  } else if (e.key === "Tab") {
+    if (e.shiftKey) {
+      cycle_buttons("left")
+    } else {
+      cycle_buttons("right")
+    }
+
+    e.preventDefault()
   }
 })
 
@@ -519,7 +563,10 @@ list.addEventListener("auxclick", function (e) {
     let item = e.target.closest(".item")
     
     if (e.button === 1) {
-      on_middle_click(item)
+      if (filter.value.startsWith("!visited")) {
+        remove_visited(item)
+        item.remove()
+      }
     }
   }
 })
