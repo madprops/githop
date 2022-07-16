@@ -446,6 +446,8 @@ function save_visited () {
 
 // Add a visited item
 function add_visited (item) {
+  remove_visited(item)
+  
   let o = {}
   o.title = item.textContent
   o.url = item.dataset.url
