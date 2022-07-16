@@ -544,7 +544,7 @@ list.addEventListener("auxclick", function (e) {
     let item = e.target.closest(".item")
     
     if (e.button === 1) {
-      if (filter.value.startsWith("!visited")) {
+      if (active_button.mode === "visited") {
         remove_visited(item)
         item.remove()
       }
