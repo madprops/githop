@@ -2,7 +2,6 @@
 const root_url = "https://github.com/"
 const max_results = 1000
 const history_months = 12
-const initial_filter_level = 2
 const max_title_length = 250
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
@@ -13,12 +12,6 @@ const links_map = [
 const filter_buttons_map = [
   {name: "Clear", callback: function () {
     clear_filter()
-  }},
-  {name: "Unit", callback: function () {
-    do_filter(1)
-  }},
-  {name: "Repos", callback: function () {
-    do_filter(2)
   }},
 ]
 
@@ -63,13 +56,14 @@ function on_results (items) {
     el.classList.add("item")
     el.textContent = text
     el.dataset.url = url
+    el.title = url
 
     list.append(el)
     added.push(text)
   }
 
-  // Start with an n-level filter
-  do_filter(initial_filter_level)
+  // Initial filter
+  do_filter()
 }
 
 // Escape non alphanumeric chars
@@ -145,8 +139,7 @@ function get_prev_visible_item (o_item) {
 }
 
 // Filter the list with the filter's value
-// Use a level of 0 to ignore level check
-function do_filter (level = 0) {
+function do_filter () {
   selected_item = undefined
   let words = filter.value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
@@ -154,12 +147,6 @@ function do_filter (level = 0) {
   for (let item of get_items()) {
     let item_text = item.textContent.toLowerCase()
     let includes = words.every(x => item_text.includes(x))
-
-    if (level > 0) {
-      if (item.querySelector(".item_url").textContent.split("/").length !== level) {
-        includes = false
-      }
-    }
 
     if (includes) {
       item.style.display = "initial"
