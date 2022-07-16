@@ -1,7 +1,7 @@
 // Settings
 const root_url = "https://github.com/"
-const max_results = 500
-const history_months = 10
+const max_results = 1000
+const history_months = 12
 const max_title_length = 250
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
