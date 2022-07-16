@@ -12,7 +12,7 @@ const links_map = [
   {name: "Market", url: "https://github.com/marketplace"},
   {name: "Explore", url: "https://github.com/explore"},
 ]
-const filter_buttons_map = [
+const buttons_map = [
   {name: "Clear", callback: function () {
     clear_filter()
   }},
@@ -42,7 +42,7 @@ const filter_buttons_map = [
 // DOM elements
 const links  = document.querySelector("#links")
 const filter = document.querySelector("#filter")
-const filter_buttons = document.querySelector("#filter_buttons")
+const buttons = document.querySelector("#buttons")
 const list = document.querySelector("#list")
 
 // Used on Enter
@@ -293,11 +293,11 @@ function create_links () {
 }
 
 // Add buttons next to the filter
-function create_filter_buttons () {
-  for (let button of filter_buttons_map) {
+function create_buttons () {
+  for (let button of buttons_map) {
     let el = document.createElement("button")
     el.textContent = button.name
-    el.classList.add("filter_button")
+    el.classList.add("button")
     el.classList.add("action")
 
     // Avoid reference problems
@@ -308,7 +308,7 @@ function create_filter_buttons () {
       filter.focus()
     })
 
-    filter_buttons.append(el)
+    buttons.append(el)
   }
 }
 
@@ -367,8 +367,8 @@ list.addEventListener("mouseover", function (e) {
 // Place the links at the top
 create_links()
 
-// Place the filter buttons
-create_filter_buttons()
+// Place the buttons
+create_buttons()
 
 // Do the history search
 browser.history.search({
