@@ -69,6 +69,10 @@ body, html {
   background-color: #2B303B;
 }
 
+.hidden {
+  display: none;
+}
+
 .action {
   cursor: pointer;
   transition: text-shadow 250ms, box-shadow 250ms;

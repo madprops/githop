@@ -33,7 +33,7 @@ const buttons_map = [
   }},
   {name: "Tags", callback: function () {
     do_filter(bang_filter("tags"))
-  }}, 
+  }},
   {name: "1", callback: function () {
     do_filter(bang_filter("1"))
   }, title: "Path Level 1"},
@@ -42,7 +42,7 @@ const buttons_map = [
   }, title: "Path Level 2"},
   {name: "3", callback: function () {
     do_filter(bang_filter("3"))
-  }, title: "Path Level 3"},     
+  }, title: "Path Level 3"},
 ]
 const symbol_map = {
   "issues": "/issues/",
@@ -73,7 +73,7 @@ function on_results (items) {
   let used_urls = links_map.map(x => x.url)
   let base_url = unslash(root_url)
 
-  for (let item of items) {    
+  for (let item of items) {
     if (!item.url.startsWith(root_url)) {
       continue
     }
@@ -93,7 +93,7 @@ function on_results (items) {
     if (!text || added.includes(text)) {
       continue
     }
-    
+
     let el = document.createElement("div")
     el.classList.add("item")
     el.textContent = text
@@ -141,7 +141,7 @@ function bang_filter (s) {
 // Check if string is a number
 function is_number (s) {
   const regex = new RegExp("^[0-9]+$")
-  
+
   if (s.match(regex)) {
     return true
   } else {
@@ -181,7 +181,7 @@ function get_next_visible_item (o_item) {
 
   for (let item of items) {
     if (waypoint) {
-      if (item.style.display !== "none") {
+      if (!is_hidden(item)) {
         return item
       }
     }
@@ -200,7 +200,7 @@ function get_prev_visible_item (o_item) {
 
   for (let item of items) {
     if (waypoint) {
-      if (item.style.display !== "none") {
+      if (!is_hidden(item)) {
         return item
       }
     }
@@ -211,8 +211,16 @@ function get_prev_visible_item (o_item) {
   }
 }
 
+// Hide all items
+function hide_all_items () {
+  for (let item of get_items()) {
+    hide_item(item)
+  }
+}
+
 // Filter the list with the filter's value
 function do_filter (value = "") {
+  let filter_start = Date.now()
   selected_item = undefined
 
   if (!value) {
@@ -223,17 +231,22 @@ function do_filter (value = "") {
 
   let visited_urls
 
-  if (value.includes(`${symbol}visited`)) {
+  if (value.startsWith(`${symbol}visited`)) {
     visited_urls = visited.map(x => x.url)
+
+    if (visited_urls.length === 0) {
+      hide_all_items()
+      return
+    }
   }
 
   let words = value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
-  
+
   for (let item of get_items()) {
     let url = item.dataset.clean_url
     let text = item.textContent.toLowerCase()
-    
+
     if (words[0] && words[0].startsWith(symbol)) {
       let u = words[0].replace(symbol, "")
       let tail = words.slice(1)
@@ -252,7 +265,7 @@ function do_filter (value = "") {
           hide_item(item)
           continue
         }
-        
+
         let includes = tail.every(x => text.includes(x))
 
         if (!includes) {
@@ -283,16 +296,25 @@ function do_filter (value = "") {
       selected = true
     }
   }
+
+  // Check performance
+  let d = Date.now() - filter_start
+  console.log(`Filter Time: ${d}`)
 }
 
 // Make item visible
 function show_item (item) {
-  item.style.display = "initial"
+  item.classList.remove("hidden")
 }
 
 // Make an item not visible
 function hide_item (item) {
-  item.style.display = "none"
+  item.classList.add("hidden")
+}
+
+// Check if item is hidden
+function is_hidden (item) {
+  return item.classList.contains("hidden")
 }
 
 // Clear filter
@@ -309,7 +331,7 @@ function make_links () {
     el.classList.add("link")
     el.classList.add("action")
     el.title = link.url
-    
+
     // Avoid reference problems
     let url = link.url
 
@@ -335,7 +357,7 @@ function make_buttons () {
 
     // Avoid reference problems
     let callback = button.callback
-    
+
     el.addEventListener("click", function (e) {
       callback()
       filter.focus()
