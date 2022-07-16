@@ -1,14 +1,16 @@
-// Settings
-const app_name = "GitHop"
-const description = "Type to filter - Enter to select - Tab to cycle"
-const root_url = "https://github.com/"
-const max_results = 1000
-const history_months = 12
-const max_title_length = 250
-const max_visited = 250
-const ls_visited = "visited_v3"
+const App = {}
 
-const links_map = [
+// Settings
+App.name = "GitHop"
+App.description = "Type to filter - Enter to select - Tab to cycle"
+App.root_url = "https://github.com/"
+App.max_results = 1000
+App.history_months = 12
+App.max_title_length = 250
+App.max_visited = 250
+App.ls_visited = "visited_v3"
+
+App.link_map = [
   {name: "Homepage", url: "https://github.com"},
   {name: "Notifications", url: "https://github.com/notifications"},
   {name: "Issues", url: "https://github.com/issues"},
@@ -18,7 +20,7 @@ const links_map = [
   {name: "Explore", url: "https://github.com/explore"},
 ]
 
-const buttons_map = [
+App.button_map = [
   {name: "All", mode: "all"},
   {name: "Visited", mode: "visited", title: "Middle click to forget items"},
   {name: "Issues", mode: "issues", path: "/issues/"},
@@ -31,32 +33,22 @@ const buttons_map = [
 ]
 
 // DOM elements
-const links  = document.querySelector("#links")
-const filter = document.querySelector("#filter")
-const buttons = document.querySelector("#buttons")
-const list = document.querySelector("#list")
-
-// Used on Enter
-// Has a white border
-let selected_item
+App.links  = document.querySelector("#links")
+App.filter = document.querySelector("#filter")
+App.buttons = document.querySelector("#buttons")
+App.list = document.querySelector("#list")
 
 // Used for performance measuring
-let date_start = Date.now()
-
-// Visited local storage
-let visited
-
-// The current filter mode
-let active_button
+App.date_start = Date.now()
 
 // When results are found
-function on_results (items) {
+App.on_results = function (items) {
   let added = []
-  let used_urls = links_map.map(x => x.url)
-  let base_url = unslash(root_url)
+  let used_urls = App.link_map.map(x => x.url)
+  let base_url = App.unslash(App.root_url)
 
   for (let item of items) {
-    if (!item.url.startsWith(root_url)) {
+    if (!item.url.startsWith(App.root_url)) {
       continue
     }
 
@@ -64,14 +56,14 @@ function on_results (items) {
       continue
     }
 
-    let url = unslash(item.url)
+    let url = App.unslash(item.url)
 
     if (url === base_url) {
       continue
     }
 
-    let curl = clean_url(url)
-    let text = item.title.substring(0, max_title_length)
+    let curl = App.clean_url(url)
+    let text = item.title.substring(0, App.max_title_length)
 
     if (!text || added.includes(text)) {
       continue
@@ -87,7 +79,7 @@ function on_results (items) {
     i.classList.add("item_icon")
     i.width = 25
     i.height = 25
-    jdenticon.update(i, get_unit(curl))
+    jdenticon.update(i, App.get_unit(curl))
     c.append(i)
 
     let t = document.createElement("div")
@@ -100,39 +92,39 @@ function on_results (items) {
   }
 
   // Initial filter
-  do_filter()
+  App.do_filter()
 
   // Check performance
-  let d = Date.now() - date_start
+  let d = Date.now() - App.date_start
   console.log(`Time: ${d}`)
   console.log(`Results: ${items.length}`)
 }
 
 // Escape non alphanumeric chars
-function escape_special_chars (s) {
+App.escape_special_chars = function (s) {
   return s.replace(/[^A-Za-z0-9]/g, "\\$&")
 }
 
 // Remove slash at the end
-function unslash (url) {
+App.unslash = function (url) {
   return url.replace(/\/$/, "").trim()
 }
 
 // Remove root url from the start of a url
-function clean_url (url) {
-  let escaped = escape_special_chars(root_url)
+App.clean_url = function (url) {
+  let escaped = App.escape_special_chars(App.root_url)
   let regex = new RegExp(`^${escaped}`, "i")
   return url.replace(regex, "")
 }
 
 // Get first part of a url
-function get_unit (curl) {
+App.get_unit = function (curl) {
   return curl.split("/")[0].split("?")[0].split("#")[0]
 }
 
 // Check if string is a number
-function is_number (s) {
-  const regex = new RegExp("^[0-9]+$")
+App.is_number = function (s) {
+  let regex = new RegExp("^[0-9]+$")
 
   if (s.match(regex)) {
     return true
@@ -142,25 +134,25 @@ function is_number (s) {
 }
 
 // Set the filter placeholder
-function set_placeholder () {
-  let s = app_name
+App.set_placeholder = function () {
+  let s = App.name
 
-  if (description) {
-    s += ` - ${description}`
+  if (App.description) {
+    s += ` - ${App.description}`
   }
 
-  filter.placeholder = s
+  App.filter.placeholder = s
 }
 
 // Get an array with all list items
-function get_items () {
+App.get_items = function () {
   return Array.from(list.querySelectorAll(".item"))
 }
 
 // Make an item selected
 // Unselect all the others
-function select_item (s_item, scroll = true) {
-  for (let item of get_items()) {
+App.select_item = function (s_item, scroll = true) {
+  for (let item of App.get_items()) {
     item.classList.remove("selected")
   }
 
@@ -172,19 +164,19 @@ function select_item (s_item, scroll = true) {
   }
 }
 // Open a new tab with a url
-function open_tab (url) {
+App.open_tab = function (url) {
   browser.tabs.create({url: url})
   window.close()
 }
 
 // Get next item that is visible
-function get_next_visible_item (o_item) {
+App.get_next_visible_item = function (o_item) {
   let waypoint = false
-  let items = get_items()
+  let items = App.get_items()
 
   for (let item of items) {
     if (waypoint) {
-      if (!is_hidden(item)) {
+      if (!App.is_hidden(item)) {
         return item
       }
     }
@@ -196,14 +188,14 @@ function get_next_visible_item (o_item) {
 }
 
 // Get prev item that is visible
-function get_prev_visible_item (o_item) {
+App.get_prev_visible_item = function (o_item) {
   let waypoint = false
-  let items = get_items()
+  let items = App.get_items()
   items.reverse()
 
   for (let item of items) {
     if (waypoint) {
-      if (!is_hidden(item)) {
+      if (!App.is_hidden(item)) {
         return item
       }
     }
@@ -215,37 +207,37 @@ function get_prev_visible_item (o_item) {
 }
 
 // Hide all items
-function hide_all_items () {
-  for (let item of get_items()) {
-    hide_item(item)
+App.hide_all_items = function () {
+  for (let item of App.get_items()) {
+    App.hide_item(item)
   }
 }
 
 // Filter the list with the filter's value
-function do_filter (value = "") {
+App.do_filter = function (value = "") {
   let filter_start = Date.now()
   selected_item = undefined
 
   if (value) {
-    filter.value = value
+    App.filter.value = value
   } else {
-    value = filter.value
+    value = App.filter.value
   }
 
-  for (let button of buttons_map) {
-    if (active_button.mode === button.mode) {
-      highlight_button(button)
+  for (let button of App.button_map) {
+    if (App.active_button.mode === button.mode) {
+      App.highlight_button(button)
       break
     }
   }
 
   let visited_urls
 
-  if (active_button.mode === "visited") {
-    visited_urls = visited.map(x => x.url)
+  if (App.active_button.mode === "visited") {
+    visited_urls = App.visited.map(x => x.url)
 
     if (visited_urls.length === 0) {
-      hide_all_items()
+      App.hide_all_items()
       return
     }
   }
@@ -253,51 +245,51 @@ function do_filter (value = "") {
   let words = value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
 
-  for (let item of get_items()) {
+  for (let item of App.get_items()) {
     let url = item.dataset.clean_url
     let text = item.textContent.toLowerCase()
 
-    if (active_button.mode === "all") {
+    if (App.active_button.mode === "all") {
       let includes = words.every(x => text.includes(x)) || words.every(x => url.includes(x))
 
       if (!includes) {
-        hide_item(item)
+        App.hide_item(item)
         continue
       }
-    } else if (active_button.mode === "visited") {
+    } else if (App.active_button.mode === "visited") {
       let includes = visited_urls.includes(item.dataset.url) && words.every(x => text.includes(x))
 
       if (!includes) {
-        hide_item(item)
+        App.hide_item(item)
         continue
       }
-    } else if (is_number(active_button.mode)) {
+    } else if (App.is_number(App.active_button.mode)) {
       let num_slashes = url.split("/").length
 
-      if (num_slashes !== parseInt(active_button.mode)) {
-        hide_item(item)
+      if (num_slashes !== parseInt(App.active_button.mode)) {
+        App.hide_item(item)
         continue
       }
 
       let includes = words.every(x => text.includes(x))
 
       if (!includes) {
-        hide_item(item)
+        App.hide_item(item)
         continue
       }
     } else {
-      let includes = url.includes(active_button.path) && words.every(x => text.includes(x))
+      let includes = url.includes(App.active_button.path) && words.every(x => text.includes(x))
 
       if (!includes) {
-        hide_item(item)
+        App.hide_item(item)
         continue
       }
     }
 
-    show_item(item)
+    App.show_item(item)
 
     if (!selected) {
-      select_item(item)
+      App.select_item(item)
       selected = true
     }
   }
@@ -308,29 +300,29 @@ function do_filter (value = "") {
 }
 
 // Make item visible
-function show_item (item) {
+App.show_item = function (item) {
   item.classList.remove("hidden")
 }
 
 // Make an item not visible
-function hide_item (item) {
+App.hide_item = function (item) {
   item.classList.add("hidden")
 }
 
 // Check if item is hidden
-function is_hidden (item) {
+App.is_hidden = function (item) {
   return item.classList.contains("hidden")
 }
 
 // Clear filter
-function clear_filter () {
-  filter.value = ""
-  do_filter()
+App.clear_filter = function () {
+  App.filter.value = ""
+  App.do_filter()
 }
 
 // Add links to the top
-function make_links () {
-  for (let link of links_map) {
+App.make_links = function () {
+  for (let link of App.link_map) {
     let el = document.createElement("div")
     el.textContent = link.name
     el.classList.add("link")
@@ -341,7 +333,7 @@ function make_links () {
     let url = link.url
 
     el.addEventListener("click", function () {
-      open_tab(url)
+      App.open_tab(url)
     })
 
     links.append(el)
@@ -349,8 +341,8 @@ function make_links () {
 }
 
 // Add buttons next to the filter
-function make_buttons () {
-  for (let button of buttons_map) {
+App.make_buttons = function () {
+  for (let button of App.button_map) {
     let el = document.createElement("button")
     el.textContent = button.name
     el.classList.add("button")
@@ -364,20 +356,20 @@ function make_buttons () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      active_button = btn
-      do_filter()
-      filter.focus()
+      App.active_button = btn
+      App.do_filter()
+      App.filter.focus()
     })
 
     buttons.append(el)
   }
 
-  active_button = buttons_map[0]
+  App.active_button = App.button_map[0]
 }
 
 // Move to the next button
-function cycle_buttons (direction) {
-  let map = buttons_map.slice(0)
+App.cycle_buttons = function (direction) {
+  let map = App.button_map.slice(0)
 
   if (direction === "left") {
     map.reverse()
@@ -392,30 +384,30 @@ function cycle_buttons (direction) {
     }
 
     if (waypoint) {
-      active_button = button
-      do_filter()
+      App.active_button = button
+      App.do_filter()
       return
     }
 
-    if (active_button.mode === button.mode) {
+    if (App.active_button.mode === button.mode) {
       waypoint = true
     }
   }
 
   if (first) {
-    active_button = first
-    do_filter()
+    App.active_button = first
+    App.do_filter()
   }  
 }
 
 // Get button elements
-function get_buttons () {
+App.get_buttons = function () {
   return Array.from(buttons.querySelectorAll(".button"))
 }
 
 // Highlight the active button
-function highlight_button (btn) {
-  for (let button of get_buttons()) {
+App.highlight_button = function (btn) {
+  for (let button of App.get_buttons()) {
     if (button.textContent === btn.name) {
       button.classList.add("highlighted")
     } else {
@@ -425,7 +417,7 @@ function highlight_button (btn) {
 }
 
 // Centralized function to get localStorage objects
-function get_local_storage (ls_name) {
+App.get_local_storage = function (ls_name) {
   let obj
 
   if (localStorage[ls_name]) {
@@ -443,109 +435,109 @@ function get_local_storage (ls_name) {
 }
 
 // Centralized function to save localStorage objects
-function save_local_storage (ls_name, obj) {
+App.save_local_storage = function (ls_name, obj) {
   localStorage.setItem(ls_name, JSON.stringify(obj))
 }
 
 // Get visited local storage
-function get_visited () {
-  visited = get_local_storage(ls_visited)
+App.get_visited = function () {
+  App.visited = App.get_local_storage(App.ls_visited)
 
-  if (visited === null) {
-    visited = []
+  if (App.visited === null) {
+    App.visited = []
   }
 }
 
 // Saves the visited localStorage object
-function save_visited () {
-  save_local_storage(ls_visited, visited)
+App.save_visited = function () {
+  App.save_local_storage(App.ls_visited, App.visited)
 }
 
 // Add a visited item
-function add_visited (item) {
-  remove_visited(item)
+App.add_visited = function (item) {
+  App.remove_visited(item)
   
   let o = {}
   o.title = item.textContent
   o.url = item.dataset.url
-  visited.unshift(o)
-  visited = visited.slice(0, max_visited)
-  save_visited()
+  App.visited.unshift(o)
+  App.visited = App.visited.slice(0, App.max_visited)
+  App.save_visited()
 }
 
 // Remove a visited item
-function remove_visited (item) {
-  for (let i=0; i<visited.length; i++) {
-    let it = visited[i]
+App.remove_visited = function (item) {
+  for (let i=0; i<App.visited.length; i++) {
+    let it = App.visited[i]
 
     if (it.url === item.dataset.url) {
-      visited.splice(i, 1)
-      save_visited()
+      App.visited.splice(i, 1)
+      App.save_visited()
       return
     }
   }
 }
 
-// When a user types something
-filter.addEventListener("input", function (e) {
-  do_filter()
-})
-
 // When another key is pressed
 document.addEventListener("keydown", function (e) {
-  filter.focus()
+  App.filter.focus()
 
   if (e.key === "Enter") {
     if (selected_item) {
-      add_visited(selected_item)
-      open_tab(selected_item.dataset.url)
+      App.add_visited(selected_item)
+      App.open_tab(selected_item.dataset.url)
     }
 
     e.preventDefault()
   } else if (e.key === "ArrowUp") {
-    let item = get_prev_visible_item(selected_item)
+    let item = App.get_prev_visible_item(selected_item)
 
     if (item) {
-      select_item(item)
+      App.select_item(item)
     }
 
     e.preventDefault()
   } else if (e.key === "ArrowDown") {
-    let item = get_next_visible_item(selected_item)
+    let item = App.get_next_visible_item(selected_item)
 
     if (item) {
-      select_item(item)
+      App.select_item(item)
     }
 
     e.preventDefault()
   } else if (e.key === "Tab") {
     if (e.shiftKey) {
-      cycle_buttons("left")
+      App.cycle_buttons("left")
     } else {
-      cycle_buttons("right")
+      App.cycle_buttons("right")
     }
 
     e.preventDefault()
   }
 })
 
+// When a user types something
+App.filter.addEventListener("input", function (e) {
+  App.do_filter()
+})
+
 // When list items are clicked
-list.addEventListener("click", function (e) {
+App.list.addEventListener("click", function (e) {
   if (e.target.closest(".item")) {
     let item = e.target.closest(".item")
-    add_visited(item)
-    open_tab(item.dataset.url)
+    App.add_visited(item)
+    App.open_tab(item.dataset.url)
   }
 })
 
 // When list items are clicked
-list.addEventListener("auxclick", function (e) {
+App.list.addEventListener("auxclick", function (e) {
   if (e.target.closest(".item")) {
     let item = e.target.closest(".item")
     
     if (e.button === 1) {
-      if (active_button.mode === "visited") {
-        remove_visited(item)
+      if (App.active_button.mode === "visited") {
+        App.remove_visited(item)
         item.remove()
       }
     }
@@ -553,33 +545,33 @@ list.addEventListener("auxclick", function (e) {
 })
 
 // When list items get hovered
-list.addEventListener("mouseover", function (e) {
+App.list.addEventListener("mouseover", function (e) {
   if (e.target.closest(".item")) {
     let item = e.target.closest(".item")
-    select_item(item, false)
+    App.select_item(item, false)
   }
 })
 
 // START PROGRAM ----
 
 // Place the links at the top
-make_links()
+App.make_links()
 
 // Place the buttons
-make_buttons()
+App.make_buttons()
 
 // Do the history search
 browser.history.search({
-  text: root_url,
-  maxResults: max_results,
-  startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * history_months)
-}).then(on_results)
+  text: App.root_url,
+  maxResults: App.max_results,
+  startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.history_months)
+}).then(App.on_results)
 
 // Get visited local storage object
-get_visited()
+App.get_visited()
 
 // Set filter placeholder
-set_placeholder()
+App.set_placeholder()
 
 // Focus the filter
-filter.focus()
+App.filter.focus()
