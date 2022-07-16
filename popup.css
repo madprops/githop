@@ -84,6 +84,10 @@ body, html {
   display: none;
 }
 
+.highlighted {
+  background-color: #99EDC3;
+}
+
 .action {
   cursor: pointer;
   transition: text-shadow 250ms, box-shadow 250ms;

@@ -1,6 +1,6 @@
 // Settings
 const app_name = "GitHop"
-const description = "Type to filter - Enter to select"
+const description = "Type to filter - Enter to select - Tab to cycle"
 const root_url = "https://github.com/"
 const max_results = 1000
 const history_months = 12
@@ -20,41 +20,41 @@ const links_map = [
 ]
 
 const buttons_map = [
-  {name: "All", callback: function () {
+  {name: "All", callback: function (o) {
     clear_filter()
-  }},
+  }, bang: ""},
 
-  {name: "Visited", callback: function () {
-    do_filter(bang_filter("visited"))
+  {name: "Visited", callback: function (o) {
+    do_filter(bang_filter(o.bang))
   }, bang: "visited"},
 
-  {name: "Issues", callback: function () {
-    do_filter(bang_filter("issues"))
+  {name: "Issues", callback: function (o) {
+    do_filter(bang_filter(o.bang))
   }, bang: "issues"},
   
-  {name: "Commits", callback: function () {
-    do_filter(bang_filter("commits"))
+  {name: "Commits", callback: function (o) {
+    do_filter(bang_filter(o.bang))
   }, bang: "commits"},
 
-  {name: "Pulls", callback: function () {
-    do_filter(bang_filter("pulls"))
+  {name: "Pulls", callback: function (o) {
+    do_filter(bang_filter(o.bang))
   }, bang: "pulls"},
 
-  {name: "Tags", callback: function () {
-    do_filter(bang_filter("tags"))
+  {name: "Tags", callback: function (o) {
+    do_filter(bang_filter(o.bang))
   }, bang: "tags"},
 
-  {name: "1", callback: function () {
-    do_filter(bang_filter("1"))
-  }, title: "Path Level 1", bang: "1"},
+  {name: "1", callback: function (o) {
+    do_filter(bang_filter(o.bang))
+  }, bang: "1", title: "Path Level 1"},
 
-  {name: "2", callback: function () {
-    do_filter(bang_filter("2"))
-  }, title: "Path Level 2", bang: "2"},
+  {name: "2", callback: function (o) {
+    do_filter(bang_filter(o.bang))
+  }, bang: "2", title: "Path Level 2"},
 
-  {name: "3", callback: function () {
-    do_filter(bang_filter("3"))
-  }, title: "Path Level 3", bang: "3"},
+  {name: "3", callback: function (o) {
+    do_filter(bang_filter(o.bang))
+  }, bang: "3", title: "Path Level 3"},
 ]
 
 const symbol_map = {
@@ -264,10 +264,26 @@ function do_filter (value = "") {
   let filter_start = Date.now()
   selected_item = undefined
 
-  if (!value) {
-    value = filter.value
-  } else {
+  if (value) {
     filter.value = value
+  } else {
+    value = filter.value
+  }
+
+  remove_button_highlights()
+
+  for (let button of buttons_map) {
+    if (value.startsWith(symbol)) {
+      if (button.bang && value.startsWith(`${symbol}${button.bang}`)) {
+        highlight_button(button)
+        break
+      }
+    } else {
+      if (value.startsWith(button.bang)) {
+        highlight_button(button)
+        break
+      }
+    }
   }
 
   let visited_urls
@@ -400,7 +416,7 @@ function make_buttons () {
     let callback = button.callback
 
     el.addEventListener("click", function (e) {
-      callback()
+      callback(button)
       filter.focus()
     })
 
@@ -420,27 +436,52 @@ function cycle_buttons (direction) {
   let first
   
   for (let button of map) {
-    if (!button.bang) {
-      continue
-    }
-
     if (!first) {
       first = button
     }
 
     if (waypoint) {
-      do_filter(`${symbol}${button.bang}`)
+      button.callback(button)
       return
     }
 
-    if (filter.value.startsWith(`${symbol}${button.bang}`)) {
-      waypoint = true
+    if (filter.value.startsWith(symbol)) {
+      if (button.bang && filter.value.startsWith(`${symbol}${button.bang}`)) {
+        waypoint = true
+      }
+    } else {
+      if (!button.bang) {
+        waypoint = true
+      }
     }
   }
 
   if (first) {
-    do_filter(`${symbol}${first.bang}`)
+    first.callback(first)
   }  
+}
+
+// Get button elements
+function get_buttons () {
+  return Array.from(buttons.querySelectorAll(".button"))
+}
+
+// Remove button higlights
+function remove_button_highlights () {
+  for (let button of get_buttons()) {
+    button.classList.remove("highlighted")
+  }
+}
+
+// Highlight the active button
+function highlight_button (btn) {
+  for (let button of get_buttons()) {
+    if (button.textContent === btn.name) {
+      button.classList.add("highlighted")
+    } else {
+      button.classList.remove("highlighted")
+    }
+  }
 }
 
 // Centralized function to get localStorage objects
