@@ -17,16 +17,16 @@ const filter_buttons_map = [
     clear_filter()
   }},
   {name: "Issues", callback: function () {
-    do_filter("/issues/")
+    do_filter(slash_filter("issues"))
   }},
   {name: "Commits", callback: function () {
-    do_filter("/commit/")
+    do_filter(slash_filter("commit"))
   }},
   {name: "Pulls", callback: function () {
-    do_filter("/pull/")
+    do_filter(slash_filter("pull"))
   }},
   {name: "Releases", callback: function () {
-    do_filter("/releases/")
+    do_filter(slash_filter("releases"))
   }},      
 ]
 
@@ -107,6 +107,13 @@ function clean_url (url) {
   return url.replace(regex, "")
 }
 
+// Create a slashed filter search
+function slash_filter (s) {
+  let regex = new RegExp("^\\/\\w+\\/", "")
+  let v = filter.value.replace(regex, "").trim()
+  return `/${s}/ ${v}`
+}
+
 // Get an array with all list items
 function get_items () {
   return Array.from(list.querySelectorAll(".item"))
@@ -180,13 +187,20 @@ function do_filter (value = "") {
   }
 
   let words = value.toLowerCase().split(" ").filter(x => x !== "")
+  let tail = words.slice(1)
   let selected = false
 
   for (let item of get_items()) {
     let url = item.dataset.clean_url
     let item_text = item.textContent.toLowerCase()
-    let includes = words.every(x => item_text.includes(x)) || 
-                   words.every(x => url.includes(x))
+    let includes = false
+
+    if (words.length > 1 && words[0].startsWith("/") && words[0].endsWith("/")) {
+      includes = url.includes(words[0]) && tail.every(x => item_text.includes(x))
+    } else {
+      includes = words.every(x => item_text.includes(x)) || 
+                 words.every(x => url.includes(x))
+    }
 
     if (includes) {
       item.style.display = "initial"
