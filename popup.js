@@ -8,6 +8,7 @@ const max_title_length = 250
 const max_visited = 250
 const ls_visited = "visited_v2"
 const symbol = "!"
+
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
   {name: "Notifications", url: "https://github.com/notifications"},
@@ -17,8 +18,9 @@ const links_map = [
   {name: "Market", url: "https://github.com/marketplace"},
   {name: "Explore", url: "https://github.com/explore"},
 ]
+
 const buttons_map = [
-  {name: "Clear", callback: function () {
+  {name: "All", callback: function () {
     clear_filter()
   }},
   {name: "Visited", callback: function () {
@@ -46,11 +48,19 @@ const buttons_map = [
     do_filter(bang_filter("3"))
   }, title: "Path Level 3"},
 ]
+
 const symbol_map = {
   "issues": "/issues/",
   "commits": "/commit/",
   "pulls": "/pull/",
   "tags": "/tag/",
+}
+
+const on_middle_click = function (item) {
+  if (filter.value.startsWith("!visited")) {
+    remove_visited(item)
+    item.remove()
+  }
 }
 
 // DOM elements
@@ -507,8 +517,7 @@ list.addEventListener("auxclick", function (e) {
     let item = e.target.closest(".item")
     
     if (e.button === 1) {
-      remove_visited(item)
-      item.remove()
+      on_middle_click(item)
     }
   }
 })
