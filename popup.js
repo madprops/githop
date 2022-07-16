@@ -1,7 +1,7 @@
 // Settings
 const root_url = "https://github.com/"
-const max_results = 1000
-const history_months = 12
+const max_results = 500
+const history_months = 10
 const max_title_length = 250
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
@@ -21,9 +21,13 @@ const filter = document.querySelector("#filter")
 const filter_buttons = document.querySelector("#filter_buttons")
 const list = document.querySelector("#list")
 
+
 // Used on Enter
 // Has a white border
 let selected_item
+
+// Used for performance measuring
+let date_start = Date.now()
 
 // When results are found
 function on_results (items) {
@@ -65,6 +69,11 @@ function on_results (items) {
 
   // Initial filter
   do_filter()
+
+  // Check performance
+  let d = Date.now() - date_start
+  console.log(`Time: ${d}`)
+  console.log(`Results: ${items.length}`)
 }
 
 // Escape non alphanumeric chars
