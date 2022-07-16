@@ -16,6 +16,15 @@ const filter_buttons_map = [
   {name: "Clear", callback: function () {
     clear_filter()
   }},
+  {name: "1", callback: function () {
+    do_filter(slash_filter("1"))
+  }},
+  {name: "2", callback: function () {
+    do_filter(slash_filter("2"))
+  }},
+  {name: "3", callback: function () {
+    do_filter(slash_filter("3"))
+  }},
   {name: "Issues", callback: function () {
     do_filter(slash_filter("issues"))
   }},
@@ -114,6 +123,17 @@ function slash_filter (s) {
   return `/${s}/ ${v}`
 }
 
+// Check if string is a number
+function is_number (s) {
+  const regex = new RegExp("^[0-9]+$")
+  
+  if (s.match(regex)) {
+    return true
+  } else {
+    return false
+  }
+}
+
 // Get an array with all list items
 function get_items () {
   return Array.from(list.querySelectorAll(".item"))
@@ -187,32 +207,63 @@ function do_filter (value = "") {
   }
 
   let words = value.toLowerCase().split(" ").filter(x => x !== "")
-  let tail = words.slice(1)
   let selected = false
-
+  
   for (let item of get_items()) {
     let url = item.dataset.clean_url
-    let item_text = item.textContent.toLowerCase()
-    let includes = false
+    let text = item.textContent.toLowerCase()
+    
+    if (words[0] && words[0].startsWith("/") && words[0].endsWith("/")) {
+      let tail = words.slice(1)
+      let u = words[0].split("/")[1]
 
-    if (words.length > 1 && words[0].startsWith("/") && words[0].endsWith("/")) {
-      includes = url.includes(words[0]) && tail.every(x => item_text.includes(x))
-    } else {
-      includes = words.every(x => item_text.includes(x)) || 
-                 words.every(x => url.includes(x))
-    }
+      if (is_number(u)) {
+        let num_slashes = url.split("/").length
 
-    if (includes) {
-      item.style.display = "initial"
+        if (num_slashes !== parseInt(u)) {
+          hide_item(item)
+          continue
+        }
+        let includes = tail.every(x => text.includes(x))
 
-      if (!selected) {
-        select_item(item)
-        selected = true
+        if (!includes) {
+          hide_item(item)
+          continue
+        }
+      } else {
+        let includes = url.includes(words[0]) && tail.every(x => text.includes(x))
+
+        if (!includes) {
+          hide_item(item)
+          continue
+        }
       }
     } else {
-      item.style.display = "none"
+      let includes = words.every(x => text.includes(x)) || words.every(x => url.includes(x))
+
+      if (!includes) {
+        hide_item(item)
+        continue
+      }
+    }
+
+    show_item(item)
+
+    if (!selected) {
+      select_item(item)
+      selected = true
     }
   }
+}
+
+// Make item visible
+function show_item (item) {
+  item.style.display = "initial"
+}
+
+// Make an item not visible
+function hide_item (item) {
+  item.style.display = "none"
 }
 
 // Clear filter
