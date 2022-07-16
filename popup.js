@@ -2,24 +2,32 @@
 const root_url = "https://github.com/"
 const max_results = 500
 const history_months = 10
-const initial_level = 2
 const max_title_length = 250
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
   {name: "Notifications", url: "https://github.com/notifications"},
   {name: "Issues", url: "https://github.com/issues"},
   {name: "Pulls", url: "https://github.com/pulls"},
+  {name: "Gists", url: "https://gist.github.com/mine"},
+  {name: "Market", url: "https://github.com/marketplace"},
+  {name: "Explore", url: "https://github.com/explore"},
 ]
 const filter_buttons_map = [
   {name: "Clear", callback: function () {
     clear_filter()
   }},
-  {name: "Units", callback: function () {
-    do_filter(1)
+  {name: "Issues", callback: function () {
+    do_filter("/issues/")
   }},
-  {name: "Repos", callback: function () {
-    do_filter(2)
+  {name: "Commits", callback: function () {
+    do_filter("/commit/")
   }},
+  {name: "Pulls", callback: function () {
+    do_filter("/pull/")
+  }},
+  {name: "Releases", callback: function () {
+    do_filter("/releases/")
+  }},      
 ]
 
 // DOM elements
@@ -74,7 +82,7 @@ function on_results (items) {
   }
 
   // Initial filter
-  do_filter(initial_level)
+  do_filter()
 
   // Check performance
   let d = Date.now() - date_start
@@ -162,9 +170,16 @@ function get_prev_visible_item (o_item) {
 }
 
 // Filter the list with the filter's value
-function do_filter (level = 0) {
+function do_filter (value = "") {
   selected_item = undefined
-  let words = filter.value.toLowerCase().split(" ").filter(x => x !== "")
+
+  if (!value) {
+    value = filter.value
+  } else {
+    filter.value = value
+  }
+
+  let words = value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
 
   for (let item of get_items()) {
@@ -172,13 +187,6 @@ function do_filter (level = 0) {
     let item_text = item.textContent.toLowerCase()
     let includes = words.every(x => item_text.includes(x)) || 
                    words.every(x => url.includes(x))
-
-    if (level > 0 && includes) {
-      let num_slashes = url.split("/").length
-      if (num_slashes !== level) {
-        includes = false
-      }
-    }                
 
     if (includes) {
       item.style.display = "initial"
