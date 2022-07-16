@@ -224,6 +224,7 @@ function do_filter (value = "") {
           hide_item(item)
           continue
         }
+        
         let includes = tail.every(x => text.includes(x))
 
         if (!includes) {
