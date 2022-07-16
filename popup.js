@@ -361,10 +361,10 @@ function make_buttons () {
     }
 
     // Avoid reference problems
-    let mode = button.mode
+    let btn = button
 
     el.addEventListener("click", function (e) {
-      filter_mode = mode
+      active_button = btn
       do_filter()
       filter.focus()
     })
