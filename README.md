@@ -7,4 +7,4 @@ Use your mouse or keyboard. Use the filter to search for a specific item.
 Buttons 1, 2, and 3, refer to path levels. 
 For instance aa/bb is a 2-level path.
 
-![](https://i.imgur.com/LBLlEPN.jpg)
+![](https://i.imgur.com/XHck9kq.jpg)
