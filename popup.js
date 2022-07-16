@@ -6,7 +6,7 @@ const max_results = 1000
 const history_months = 12
 const max_title_length = 250
 const max_visited = 250
-const ls_visited = "visited_v2"
+const ls_visited = "visited_v3"
 const symbol = "!"
 
 const links_map = [
