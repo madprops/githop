@@ -162,10 +162,10 @@ function do_filter () {
   let selected = false
 
   for (let item of get_items()) {
-    let clean_url = item.dataset.clean_url
+    let url = item.dataset.clean_url
     let item_text = item.textContent.toLowerCase()
     let includes = words.every(x => item_text.includes(x)) || 
-                   words.every(x => clean_url.includes(x))
+                   words.every(x => url.includes(x))
 
     if (includes) {
       item.style.display = "initial"
