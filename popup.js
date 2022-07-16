@@ -56,6 +56,7 @@ function on_results (items) {
     el.classList.add("item")
     el.textContent = text
     el.dataset.url = url
+    el.dataset.clean_url = clean_url(url)
     el.title = url
 
     list.append(el)
@@ -74,6 +75,13 @@ function escape_special_chars (s) {
 // Remove slash at the end
 function unslash (url) {
   return url.replace(/\/$/, "").trim()
+}
+
+// Remove root url from the start of a url
+function clean_url (url) {
+  let escaped = escape_special_chars(root_url)
+  let regex = new RegExp(`^${escaped}`, "i")
+  return url.replace(regex, "")
 }
 
 // Get an array with all list items
@@ -145,8 +153,10 @@ function do_filter () {
   let selected = false
 
   for (let item of get_items()) {
+    let clean_url = item.dataset.clean_url
     let item_text = item.textContent.toLowerCase()
-    let includes = words.every(x => item_text.includes(x))
+    let includes = words.every(x => item_text.includes(x)) || 
+                   words.every(x => clean_url.includes(x))
 
     if (includes) {
       item.style.display = "initial"
