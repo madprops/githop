@@ -214,6 +214,7 @@ function create_links () {
     el.textContent = link.name
     el.classList.add("link")
     el.classList.add("action")
+    el.title = link.url
     
     // Avoid reference problems
     let url = link.url
