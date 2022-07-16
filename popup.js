@@ -94,14 +94,25 @@ function on_results (items) {
       continue
     }
 
-    let el = document.createElement("div")
-    el.classList.add("item")
-    el.textContent = text
-    el.dataset.url = url
-    el.dataset.clean_url = clean_url(url)
-    el.title = url
+    let c = document.createElement("div")
+    c.classList.add("item")
+    c.dataset.url = url
+    c.dataset.clean_url = clean_url(url)
+    c.title = url
 
-    list.append(el)
+    let i = document.createElement("canvas")
+    i.classList.add("item_icon")
+    i.width = 25
+    i.height = 25
+    jdenticon.update(i, text)
+    c.append(i)
+
+    let t = document.createElement("div")
+    t.classList.add("item_text")
+    t.textContent = text
+    c.append(t)
+
+    list.append(c)
     added.push(text)
   }
 

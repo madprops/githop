@@ -48,13 +48,16 @@ body, html {
   flex-direction: column;
   gap: 0.5rem;
   width: 700px;
-  height: 500px;
+  height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 1rem;
 }
 
 .item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
   cursor: pointer;
   border: 1px solid grey;
   border-spacing: 0.5rem;
@@ -62,6 +65,14 @@ body, html {
   border-radius: 25px;
   overflow-wrap: break-word;
 	word-break: break-word;
+  align-items: center;
+}
+
+.item_icon {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
 }
 
 .selected {
