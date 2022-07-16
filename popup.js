@@ -34,8 +34,8 @@ const buttons_map = [
   {name: "Pulls", callback: function () {
     do_filter(slash_filter("pull"))
   }},
-  {name: "Releases", callback: function () {
-    do_filter(slash_filter("releases"))
+  {name: "Tags", callback: function () {
+    do_filter(slash_filter("tag"))
   }},      
 ]
 
