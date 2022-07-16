@@ -44,7 +44,7 @@ const buttons_map = [
     do_filter(bang_filter("3"))
   }, title: "Path Level 3"},     
 ]
-const dollar_map = {
+const symbol_map = {
   "issues": "/issues/",
   "commits": "/commit/",
   "pulls": "/pull/",
@@ -260,7 +260,7 @@ function do_filter (value = "") {
           continue
         }
       } else {
-        let includes = url.includes(dollar_map[u]) && tail.every(x => text.includes(x))
+        let includes = url.includes(symbol_map[u]) && tail.every(x => text.includes(x))
 
         if (!includes) {
           hide_item(item)
