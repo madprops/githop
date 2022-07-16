@@ -4,6 +4,7 @@ const max_results = 1000
 const history_months = 12
 const remove_get_parameters = true
 const remove_hash_parameters = true
+const initial_filter_level = 2
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
   {name: "Notifications", url: "https://github.com/notifications"},
@@ -66,7 +67,8 @@ function on_results (items) {
     added.push(text)
   }
 
-  do_filter()
+  // Start with an n-level filter
+  do_filter(initial_filter_level)
 }
 
 // Escape non alphanumeric chars
@@ -157,6 +159,7 @@ function get_prev_visible_item (o_item) {
 }
 
 // Filter the list with the filter's value
+// Use a level of 0 to ignore level check
 function do_filter (level = 0) {
   selected_item = undefined
   let words = filter.value.toLowerCase().split(" ").filter(x => x !== "")
@@ -238,7 +241,7 @@ filter.addEventListener("input", function (e) {
 // When another key is pressed
 document.addEventListener("keydown", function (e) {
   filter.focus()
-  
+
   if (e.key === "Enter") {
     if (selected_item) {
       open_tab(selected_item.dataset.url)
