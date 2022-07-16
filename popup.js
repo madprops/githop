@@ -1,4 +1,6 @@
 // Settings
+const app_name = "GitHop"
+const description = "Type to filter - Enter to select"
 const root_url = "https://github.com/"
 const max_results = 1000
 const history_months = 12
@@ -164,6 +166,17 @@ function is_number (s) {
   } else {
     return false
   }
+}
+
+// Set the filter placeholder
+function set_placeholder () {
+  let s = app_name
+
+  if (description) {
+    s += ` - ${description}`
+  }
+
+  filter.placeholder = s
 }
 
 // Get an array with all list items
@@ -422,13 +435,26 @@ function save_visited () {
 }
 
 // Add a visited item
-function add_to_visited (item) {
+function add_visited (item) {
   let o = {}
   o.title = item.textContent
   o.url = item.dataset.url
   visited.unshift(o)
   visited = visited.slice(0, max_visited)
   save_visited()
+}
+
+// Remove a visited item
+function remove_visited (item) {
+  for (let i=0; i<visited.length; i++) {
+    let it = visited[i]
+
+    if (it.url === item.dataset.url) {
+      visited.splice(i, 1)
+      save_visited()
+      return
+    }
+  }
 }
 
 // When a user types something
@@ -442,7 +468,7 @@ document.addEventListener("keydown", function (e) {
 
   if (e.key === "Enter") {
     if (selected_item) {
-      add_to_visited(selected_item)
+      add_visited(selected_item)
       open_tab(selected_item.dataset.url)
     }
 
@@ -470,8 +496,20 @@ document.addEventListener("keydown", function (e) {
 list.addEventListener("click", function (e) {
   if (e.target.closest(".item")) {
     let item = e.target.closest(".item")
-    add_to_visited(item)
+    add_visited(item)
     open_tab(item.dataset.url)
+  }
+})
+
+// When list items are clicked
+list.addEventListener("auxclick", function (e) {
+  if (e.target.closest(".item")) {
+    let item = e.target.closest(".item")
+    
+    if (e.button === 1) {
+      remove_visited(item)
+      item.remove()
+    }
   }
 })
 
@@ -500,6 +538,9 @@ browser.history.search({
 
 // Get visited local storage object
 get_visited()
+
+// Set filter placeholder
+set_placeholder()
 
 // Focus the filter
 filter.focus()
