@@ -2,6 +2,7 @@
 const root_url = "https://github.com/"
 const max_results = 500
 const history_months = 10
+const initial_level = 2
 const max_title_length = 250
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
@@ -13,6 +14,12 @@ const filter_buttons_map = [
   {name: "Clear", callback: function () {
     clear_filter()
   }},
+  {name: "Units", callback: function () {
+    do_filter(1)
+  }},
+  {name: "Repos", callback: function () {
+    do_filter(2)
+  }},
 ]
 
 // DOM elements
@@ -20,7 +27,6 @@ const links  = document.querySelector("#links")
 const filter = document.querySelector("#filter")
 const filter_buttons = document.querySelector("#filter_buttons")
 const list = document.querySelector("#list")
-
 
 // Used on Enter
 // Has a white border
@@ -68,7 +74,7 @@ function on_results (items) {
   }
 
   // Initial filter
-  do_filter()
+  do_filter(initial_level)
 
   // Check performance
   let d = Date.now() - date_start
@@ -156,7 +162,7 @@ function get_prev_visible_item (o_item) {
 }
 
 // Filter the list with the filter's value
-function do_filter () {
+function do_filter (level = 0) {
   selected_item = undefined
   let words = filter.value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
@@ -166,6 +172,13 @@ function do_filter () {
     let item_text = item.textContent.toLowerCase()
     let includes = words.every(x => item_text.includes(x)) || 
                    words.every(x => url.includes(x))
+
+    if (level > 0 && includes) {
+      let num_slashes = url.split("/").length
+      if (num_slashes !== level) {
+        includes = false
+      }
+    }                
 
     if (includes) {
       item.style.display = "initial"
