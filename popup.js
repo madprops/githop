@@ -88,6 +88,7 @@ function on_results (items) {
       continue
     }
 
+    let curl = clean_url(url)
     let text = item.title.substring(0, max_title_length)
 
     if (!text || added.includes(text)) {
@@ -97,14 +98,14 @@ function on_results (items) {
     let c = document.createElement("div")
     c.classList.add("item")
     c.dataset.url = url
-    c.dataset.clean_url = clean_url(url)
+    c.dataset.clean_url = curl
     c.title = url
 
     let i = document.createElement("canvas")
     i.classList.add("item_icon")
     i.width = 25
     i.height = 25
-    jdenticon.update(i, text)
+    jdenticon.update(i, get_unit(curl))
     c.append(i)
 
     let t = document.createElement("div")
@@ -140,6 +141,11 @@ function clean_url (url) {
   let escaped = escape_special_chars(root_url)
   let regex = new RegExp(`^${escaped}`, "i")
   return url.replace(regex, "")
+}
+
+// Get first part of a url
+function get_unit (curl) {
+  return curl.split("/")[0].split("?")[0].split("#")[0]
 }
 
 // Create a slashed filter search
