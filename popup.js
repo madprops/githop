@@ -7,7 +7,6 @@ const history_months = 12
 const max_title_length = 250
 const max_visited = 250
 const ls_visited = "visited_v3"
-const symbol = "!"
 
 const links_map = [
   {name: "Homepage", url: "https://github.com"},
@@ -20,49 +19,16 @@ const links_map = [
 ]
 
 const buttons_map = [
-  {name: "All", callback: function (o) {
-    clear_filter()
-  }, bang: ""},
-
-  {name: "Visited", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "visited"},
-
-  {name: "Issues", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "issues"},
-  
-  {name: "Commits", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "commits"},
-
-  {name: "Pulls", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "pulls"},
-
-  {name: "Tags", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "tags"},
-
-  {name: "1", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "1", title: "Path Level 1"},
-
-  {name: "2", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "2", title: "Path Level 2"},
-
-  {name: "3", callback: function (o) {
-    do_filter(bang_filter(o.bang))
-  }, bang: "3", title: "Path Level 3"},
+  {name: "All", mode: "all"},
+  {name: "Visited", mode: "visited"},
+  {name: "Issues", mode: "issues", path: "/issues/"},
+  {name: "Commits", mode: "commits", path: "/commit/"},
+  {name: "Pulls", mode: "pulls", path: "/pull/"},
+  {name: "Tags", mode: "tags", path: "/tag/"},
+  {name: "1", mode: "1", title: "Path Level 1"},
+  {name: "2", mode: "2", title: "Path Level 2"},
+  {name: "3", mode: "3", title: "Path Level 3"},
 ]
-
-const symbol_map = {
-  "issues": "/issues/",
-  "commits": "/commit/",
-  "pulls": "/pull/",
-  "tags": "/tag/",
-}
 
 // DOM elements
 const links  = document.querySelector("#links")
@@ -79,6 +45,9 @@ let date_start = Date.now()
 
 // Visited local storage
 let visited
+
+// The current filter mode
+let active_button
 
 // When results are found
 function on_results (items) {
@@ -159,13 +128,6 @@ function clean_url (url) {
 // Get first part of a url
 function get_unit (curl) {
   return curl.split("/")[0].split("?")[0].split("#")[0]
-}
-
-// Create a slashed filter search
-function bang_filter (s) {
-  let regex = new RegExp(`^\\${symbol}\\w+`, "")
-  let v = filter.value.replace(regex, "").trim()
-  return `${symbol}${s} ${v}`
 }
 
 // Check if string is a number
@@ -270,25 +232,16 @@ function do_filter (value = "") {
     value = filter.value
   }
 
-  remove_button_highlights()
-
   for (let button of buttons_map) {
-    if (value.startsWith(symbol)) {
-      if (button.bang && value.startsWith(`${symbol}${button.bang}`)) {
-        highlight_button(button)
-        break
-      }
-    } else {
-      if (value.startsWith(button.bang)) {
-        highlight_button(button)
-        break
-      }
+    if (active_button.mode === button.mode) {
+      highlight_button(button)
+      break
     }
   }
 
   let visited_urls
 
-  if (value.startsWith(`${symbol}visited`)) {
+  if (active_button.mode === "visited") {
     visited_urls = visited.map(x => x.url)
 
     if (visited_urls.length === 0) {
@@ -304,41 +257,36 @@ function do_filter (value = "") {
     let url = item.dataset.clean_url
     let text = item.textContent.toLowerCase()
 
-    if (words[0] && words[0].startsWith(symbol)) {
-      let u = words[0].replace(symbol, "")
-      let tail = words.slice(1)
+    if (active_button.mode === "all") {
+      let includes = words.every(x => text.includes(x)) || words.every(x => url.includes(x))
 
-      if (u === "visited") {
-        let includes = visited_urls.includes(item.dataset.url) && tail.every(x => text.includes(x))
+      if (!includes) {
+        hide_item(item)
+        continue
+      }
+    } else if (active_button.mode === "visited") {
+      let includes = visited_urls.includes(item.dataset.url) && words.every(x => text.includes(x))
 
-        if (!includes) {
-          hide_item(item)
-          continue
-        }
-      } else if (is_number(u)) {
-        let num_slashes = url.split("/").length
+      if (!includes) {
+        hide_item(item)
+        continue
+      }
+    } else if (is_number(active_button.mode)) {
+      let num_slashes = url.split("/").length
 
-        if (num_slashes !== parseInt(u)) {
-          hide_item(item)
-          continue
-        }
+      if (num_slashes !== parseInt(active_button.mode)) {
+        hide_item(item)
+        continue
+      }
 
-        let includes = tail.every(x => text.includes(x))
+      let includes = words.every(x => text.includes(x))
 
-        if (!includes) {
-          hide_item(item)
-          continue
-        }
-      } else {
-        let includes = url.includes(symbol_map[u]) && tail.every(x => text.includes(x))
-
-        if (!includes) {
-          hide_item(item)
-          continue
-        }
+      if (!includes) {
+        hide_item(item)
+        continue
       }
     } else {
-      let includes = words.every(x => text.includes(x)) || words.every(x => url.includes(x))
+      let includes = url.includes(active_button.path) && words.every(x => text.includes(x))
 
       if (!includes) {
         hide_item(item)
@@ -413,15 +361,18 @@ function make_buttons () {
     }
 
     // Avoid reference problems
-    let callback = button.callback
+    let mode = button.mode
 
     el.addEventListener("click", function (e) {
-      callback(button)
+      filter_mode = mode
+      do_filter()
       filter.focus()
     })
 
     buttons.append(el)
   }
+
+  active_button = buttons_map[0]
 }
 
 // Move to the next button
@@ -441,36 +392,25 @@ function cycle_buttons (direction) {
     }
 
     if (waypoint) {
-      button.callback(button)
+      active_button = button
+      do_filter()
       return
     }
 
-    if (filter.value.startsWith(symbol)) {
-      if (button.bang && filter.value.startsWith(`${symbol}${button.bang}`)) {
-        waypoint = true
-      }
-    } else {
-      if (!button.bang) {
-        waypoint = true
-      }
+    if (active_button.mode === button.mode) {
+      waypoint = true
     }
   }
 
   if (first) {
-    first.callback(first)
+    active_button = first
+    do_filter()
   }  
 }
 
 // Get button elements
 function get_buttons () {
   return Array.from(buttons.querySelectorAll(".button"))
-}
-
-// Remove button higlights
-function remove_button_highlights () {
-  for (let button of get_buttons()) {
-    button.classList.remove("highlighted")
-  }
 }
 
 // Highlight the active button
