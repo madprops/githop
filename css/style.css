@@ -3,7 +3,20 @@ body, html {
   font-size: 18px;
   background-color: #252933;
   color: white;
+  width: 700px;
+  height: 600px;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  max-width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
 }
 
 #links {
@@ -12,6 +25,8 @@ body, html {
   gap: 1rem;
   padding-bottom: 0.77rem;
   color: white;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .link {
@@ -19,13 +34,12 @@ body, html {
 }
 
 #filter {
-  position: relative;
   background-color: #99A7D6;
   border-width: 0;
   font-size: 1rem;
   padding: 0.25rem;
   color: black;
-  width: 100%;
+  flex-grow: 0;
 }
 
 #buttons {
@@ -47,11 +61,10 @@ body, html {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 700px;
-  height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 1rem;
+  flex-grow: 1;
 }
 
 .item {
@@ -63,9 +76,12 @@ body, html {
   border-spacing: 0.5rem;
   padding: 0.5rem;
   border-radius: 25px;
+  align-items: center;
+}
+
+.item_text {
   overflow-wrap: break-word;
 	word-break: break-word;
-  align-items: center;
 }
 
 .item_icon {
