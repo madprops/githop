@@ -179,7 +179,7 @@ function do_filter (level = 0) {
     let includes = words.every(x => item_text.includes(x))
 
     if (level > 0) {
-      if (item.textContent.split("/").length !== level) {
+      if (item.querySelector(".item_url").textContent.split("/").length !== level) {
         includes = false
       }
     }
