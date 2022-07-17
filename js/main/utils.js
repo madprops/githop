@@ -39,7 +39,7 @@ App.set_placeholder = function () {
     s += ` - ${App.description}`
   }
 
-  App.filter.placeholder = s
+  App.el("#filter").placeholder = s
 }
 
 // Open a new tab with a url
@@ -69,4 +69,14 @@ App.get_local_storage = function (ls_name) {
 // Centralized function to save localStorage objects
 App.save_local_storage = function (ls_name, obj) {
   localStorage.setItem(ls_name, JSON.stringify(obj))
+}
+
+// Select a single element
+App.el = function (query, root = document) {
+  return root.querySelector(query)
+}
+
+// Select an array of elements
+App.els = function (query, root = document) {
+  return Array.from(root.querySelectorAll(query))
 }

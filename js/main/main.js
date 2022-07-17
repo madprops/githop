@@ -1,10 +1,3 @@
-// DOM elements
-App.links  = document.querySelector("#links")
-App.filter = document.querySelector("#filter")
-App.filter_clear = document.querySelector("#filter_clear")
-App.buttons = document.querySelector("#buttons")
-App.list = document.querySelector("#list")
-
 // Used for performance measuring
 App.date_start = Date.now()
 
@@ -34,4 +27,4 @@ App.set_placeholder()
 App.start_events()
 
 // Focus the filter
-App.filter.focus()
+App.focus_filter()

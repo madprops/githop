@@ -1,7 +1,11 @@
 App.start_events = function () {
+  let filter = App.el("#filter")
+  let list = App.el("#list")
+  let filter_clear = App.el("#filter_clear")
+
   // When another key is pressed
   document.addEventListener("keydown", function (e) {
-    App.filter.focus()
+    App.focus_filter()
 
     if (e.key === "Enter") {
       if (selected_item) {
@@ -38,12 +42,12 @@ App.start_events = function () {
   })
 
   // When a user types something
-  App.filter.addEventListener("input", function (e) {
+  filter.addEventListener("input", function (e) {
     App.do_filter()
   })
 
   // When list items are clicked
-  App.list.addEventListener("click", function (e) {
+  list.addEventListener("click", function (e) {
     if (e.target.closest(".item")) {
       let item = e.target.closest(".item")
       App.add_visited(item)
@@ -52,7 +56,7 @@ App.start_events = function () {
   })
 
   // When list items are clicked
-  App.list.addEventListener("auxclick", function (e) {
+  list.addEventListener("auxclick", function (e) {
     if (e.target.closest(".item")) {
       let item = e.target.closest(".item")
       
@@ -66,7 +70,7 @@ App.start_events = function () {
   })
 
   // When list items get hovered
-  App.list.addEventListener("mouseover", function (e) {
+  list.addEventListener("mouseover", function (e) {
     if (e.target.closest(".item")) {
       let item = e.target.closest(".item")
       App.select_item(item, false)
@@ -74,8 +78,8 @@ App.start_events = function () {
   })
 
   // When the filter clear button is pressed
-  App.filter_clear.addEventListener("click", function () {
+  filter_clear.addEventListener("click", function () {
     App.clear_filter()
-    App.filter.focus()
+    App.focus_filter()
   })
 }

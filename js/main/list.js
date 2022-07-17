@@ -3,6 +3,7 @@ App.on_results = function (items) {
   let added = []
   let used_urls = App.link_map.map(x => x.url)
   let base_url = App.unslash(App.root_url)
+  let list = App.el("#list")
 
   for (let item of items) {
     if (!item.url.startsWith(App.root_url)) {
@@ -107,9 +108,9 @@ App.do_filter = function (value = "") {
   selected_item = undefined
 
   if (value) {
-    App.filter.value = value
+    App.el("#filter").value = value
   } else {
-    value = App.filter.value
+    value = App.el("#filter").value
   }
 
   for (let button of App.button_map) {
@@ -204,13 +205,13 @@ App.is_hidden = function (item) {
 
 // Clear filter
 App.clear_filter = function () {
-  App.filter.value = ""
+  App.el("#filter").value = ""
   App.do_filter()
 }
 
 // Get an array with all list items
 App.get_items = function () {
-  return Array.from(list.querySelectorAll(".item"))
+  return App.els(".item", App.el("#list"))
 }
 
 // Make an item selected
@@ -226,4 +227,9 @@ App.select_item = function (s_item, scroll = true) {
   if (scroll) {
     s_item.scrollIntoView({block: "nearest"})
   }
+}
+
+// Focus the filter
+App.focus_filter = function () {
+  App.el("#filter").focus()
 }

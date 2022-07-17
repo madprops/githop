@@ -1,5 +1,7 @@
 // Add buttons next to the filter
 App.make_buttons = function () {
+  let buttons = App.el("#buttons")
+
   for (let button of App.button_map) {
     let el = document.createElement("button")
     el.textContent = button.name
@@ -16,7 +18,7 @@ App.make_buttons = function () {
     el.addEventListener("click", function (e) {
       App.activate_button(btn)
       App.do_filter()
-      App.filter.focus()
+      App.el("#filter").focus()
     })
 
     buttons.append(el)
@@ -58,7 +60,7 @@ App.cycle_buttons = function (direction) {
 
 // Get button elements
 App.get_buttons = function () {
-  return Array.from(buttons.querySelectorAll(".button"))
+  return App.els(".button", App.el("#buttons"))
 }
 
 // Highlight the active button
