@@ -146,7 +146,8 @@ App.do_filter = function (value = "") {
         continue
       }
     } else if (App.active_button.mode === "visited") {
-      let includes = visited_urls.includes(item.dataset.url) && words.every(x => text.includes(x))
+      let includes = visited_urls.includes(item.dataset.url) &&
+        ( words.every(x => text.includes(x)) || words.every(x => url.includes(x)) )
 
       if (!includes) {
         App.hide_item(item)
@@ -160,14 +161,15 @@ App.do_filter = function (value = "") {
         continue
       }
 
-      let includes = words.every(x => text.includes(x))
+      let includes = words.every(x => text.includes(x)) || words.every(x => url.includes(x))
 
       if (!includes) {
         App.hide_item(item)
         continue
       }
     } else if (App.active_button.path) {
-      let includes = url.includes(App.active_button.path) && words.every(x => text.includes(x))
+      let includes = url.includes(App.active_button.path) &&
+        ( words.every(x => text.includes(x)) || words.every(x => url.includes(x)) )
 
       if (!includes) {
         App.hide_item(item)
