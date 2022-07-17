@@ -14,8 +14,8 @@ browser.history.search({
   startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.history_months)
 }).then(App.on_results)
 
-// Get favorite local storage object
-App.get_favorite()
+// Get favorites local storage object
+App.get_favorites()
 
 // Get last mode local storage object
 App.get_last_mode()

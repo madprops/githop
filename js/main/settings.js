@@ -4,8 +4,8 @@ App.root_url = "https://github.com/"
 App.max_results = 1000
 App.history_months = 12
 App.max_title_length = 250
-App.max_favorite = 250
-App.ls_favorite = "favorite_v1"
+App.max_favorites = 250
+App.ls_favorites = "favorites_v1"
 App.ls_last_mode = "last_mode_v1"
 
 App.link_map = [

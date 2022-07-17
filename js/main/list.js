@@ -4,7 +4,7 @@ App.on_results = function (items) {
   let used_urls = App.link_map.map(x => x.url)
   let base_url = App.unslash(App.root_url)
   let list = App.el("#list")
-  let favorite_urls = App.favorite.map(x => x.url)
+  let favorite_urls = App.favorites.map(x => x.url)
 
   for (let item of items) {
     if (!item.url.startsWith(App.root_url)) {
@@ -137,7 +137,7 @@ App.do_filter = function (value = "") {
   let favorite_urls
 
   if (App.active_button.mode === "favorites") {
-    favorite_urls = App.favorite.map(x => x.url)
+    favorite_urls = App.favorites.map(x => x.url)
 
     if (favorite_urls.length === 0) {
       App.hide_all_items()
