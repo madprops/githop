@@ -4,8 +4,9 @@ App.on_results = function (items) {
   let used_urls = App.link_map.map(x => x.url)
   let base_url = App.unslash(App.root_url)
   let favorite_urls = App.favorites.map(x => x.url)
+  let list = App.el("#list")
   let i = 0
-  
+
   App.items = []
 
   for (let item of items) {
@@ -32,18 +33,22 @@ App.on_results = function (items) {
     }
 
     added.push(text)
-    
+
+    let el = App.div("item hidden")
+
     let obj = {
+      index: i,
       text: text,
       url: url,
       clean_url: clean_url,
       favorite: favorite_urls.includes(url),
       created: false,
       hidden: true,
-      index: i,
+      element: el
     }
     
     App.items.push(obj)
+    list.append(el)
 
     i += 1
   }
@@ -59,12 +64,10 @@ App.on_results = function (items) {
 
 // Create an item element
 App.create_item_element = function (item) {
-  let container = document.createElement("div")
-  container.classList.add("item")
-  container.title = item.url
+  item.element.title = item.url
 
   if (item.favorite) {
-    container.classList.add("favorite")
+    item.element.classList.add("favorite")
   }
 
   let icon = document.createElement("canvas")
@@ -72,17 +75,15 @@ App.create_item_element = function (item) {
   icon.width = 25
   icon.height = 25
   jdenticon.update(icon, App.get_unit(item.clean_url))
-  container.append(icon)
+  item.element.append(icon)
 
   let text = document.createElement("div")
   text.classList.add("item_text")
   text.textContent = item.text
-  container.append(text)
+  item.element.append(text)
 
-  item.element = container
   item.created = true
-  container.dataset.index = item.index
-  App.el("#list").append(container)
+  item.element.dataset.index = item.index
 }
 
 // Get next item that is visible
@@ -230,26 +231,24 @@ App.do_filter = function (value = "") {
 
 // Make item visible
 App.show_item = function (item) {
+  item.hidden = false
+
   if (!item.created) {
     App.create_item_element(item)
   }
 
-  if (!item.hidden) {
-    return
-  }
-
   item.element.classList.remove("hidden")
-  item.hidden = false
 }
 
 // Make an item not visible
 App.hide_item = function (item) {
-  if (!item.created || item.hidden) {
+  item.hidden = true
+
+  if (!item.created) {
     return
   }
 
   item.element.classList.add("hidden")
-  item.hidden = true
 }
 
 // Check if item is hidden

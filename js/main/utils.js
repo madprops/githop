@@ -84,6 +84,25 @@ App.els = function (query, root = document) {
   return Array.from(root.querySelectorAll(query))
 }
 
+// Create an empty div
+App.div = function (classes = "", id = "") {
+  let new_div = document.createElement("div")
+
+  if (classes) {
+    let classlist = classes.split(" ").filter(x => x != "")
+  
+    for (let cls of classlist) {
+      new_div.classList.add(cls)
+    }
+  }
+
+  if (id) {
+    new_div.id = id
+  }
+
+  return new_div
+}
+
 // Count occurences of a character
 App.count = function (s, b) {
   return s.split(b).length
