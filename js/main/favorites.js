@@ -46,7 +46,7 @@ App.remove_favorite = function (item) {
     let it = App.favorites[i]
 
     if (it.url === item.dataset.url) {
-      App.favorite.splice(i, 1)
+      App.favorites.splice(i, 1)
       App.save_favorites()
       break
     }
