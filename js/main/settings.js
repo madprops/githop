@@ -21,8 +21,8 @@ App.link_map = [
 App.button_map = [
   {name: "All", mode: "all", title: "Show all items"},
   {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle."},
-  {name: "Issues", mode: "issues", path: "/issues/", title: "Matches /issues/"},
   {name: "Commits", mode: "commits", path: "/commit/", title: "Matches /commit/"},
+  {name: "Issues", mode: "issues", path: "/issues/", title: "Matches /issues/"},
   {name: "Pulls", mode: "pulls", path: "/pull/", title: "Matches /pull/"},
   {name: "Tags", mode: "tags", path: "/tag/", title: "Matches /tag/"},
   {name: "1", mode: "1", title: "Path Level 1"},
