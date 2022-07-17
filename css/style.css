@@ -115,7 +115,7 @@ body, html {
   flex-shrink: 0;
   width: 25px;
   height: 25px;
-  padding: 0.5rem;
+  margin: 0.5rem;
   min-height: 100%;
 }
 
@@ -132,12 +132,9 @@ body, html {
   background-color: #99EDC3;
 }
 
-.favorite {
-  border-color: yellow;
-}
-
-.favorite:hover {
-  border-color: gold;
+.favorite .item_icon {
+  outline: 1px solid yellow;
+  border-radius: 50%;
 }
 
 .action, .actionbox {
