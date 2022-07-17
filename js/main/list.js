@@ -235,6 +235,7 @@ App.is_hidden = function (item) {
 App.clear_filter = function () {
   App.el("#filter").value = ""
   App.do_filter()
+  App.focus_filter()
 }
 
 // Get an array with all list items

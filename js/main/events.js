@@ -91,6 +91,5 @@ App.start_events = function () {
   // When the filter clear button is pressed
   filter_clear.addEventListener("click", function () {
     App.clear_filter()
-    App.focus_filter()
   })
 }
