@@ -94,11 +94,9 @@ body, html {
 .item {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
   cursor: pointer;
   border: 1px solid grey;
   border-spacing: 0.5rem;
-  padding: 0.5rem;
   border-radius: 25px;
   align-items: center;
 }
@@ -106,6 +104,10 @@ body, html {
 .item_text {
   overflow-wrap: break-word;
 	word-break: break-word;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-right: 0.5rem;
+  width: 100%;
 }
 
 .item_icon {
@@ -113,6 +115,8 @@ body, html {
   flex-shrink: 0;
   width: 25px;
   height: 25px;
+  padding: 0.5rem;
+  min-height: 100%;
 }
 
 .selected {
@@ -126,6 +130,14 @@ body, html {
 
 .highlighted {
   background-color: #99EDC3;
+}
+
+.favorite {
+  border-color: yellow;
+}
+
+.favorite:hover {
+  border-color: gold;
 }
 
 .action, .actionbox {

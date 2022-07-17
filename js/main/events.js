@@ -9,7 +9,6 @@ App.start_events = function () {
 
     if (e.key === "Enter") {
       if (selected_item) {
-        App.add_visited(selected_item)
         App.open_tab(selected_item.dataset.url)
       }
 
@@ -50,8 +49,16 @@ App.start_events = function () {
   list.addEventListener("click", function (e) {
     if (e.target.closest(".item")) {
       let item = e.target.closest(".item")
-      App.add_visited(item)
-      App.open_tab(item.dataset.url)
+
+      if (e.target.closest(".item_icon")) {
+        if (item.dataset.favorite === "yes") {
+          App.remove_favorite(item)
+        } else {
+          App.add_favorite(item)
+        }
+      } else if (e.target.closest(".item_text")) {
+        App.open_tab(item.dataset.url)
+      }
     }
   })
 
@@ -62,8 +69,8 @@ App.start_events = function () {
       
       if (e.button === 1) {
         if (e.shiftKey) {
-          if (App.active_button.mode === "visited") {
-            App.remove_visited(item)
+          if (App.active_button.mode === "favorite") {
+            App.remove_favorite(item)
             item.remove()
           }
         } else {

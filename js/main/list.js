@@ -4,6 +4,7 @@ App.on_results = function (items) {
   let used_urls = App.link_map.map(x => x.url)
   let base_url = App.unslash(App.root_url)
   let list = App.el("#list")
+  let favorite_urls = App.favorite.map(x => x.url)
 
   for (let item of items) {
     if (!item.url.startsWith(App.root_url)) {
@@ -27,11 +28,24 @@ App.on_results = function (items) {
       continue
     }
 
+    let fav
+
+    if (favorite_urls.includes(url)) {
+      fav = "yes"
+    } else {
+      fav = "no"
+    }
+
     let c = document.createElement("div")
     c.classList.add("item")
     c.dataset.url = url
     c.dataset.clean_url = curl
+    c.dataset.favorite = fav
     c.title = url
+
+    if (fav === "yes") {
+      c.classList.add("favorite")
+    }
 
     let i = document.createElement("canvas")
     i.classList.add("item_icon")
@@ -120,12 +134,12 @@ App.do_filter = function (value = "") {
     }
   }
 
-  let visited_urls
+  let favorite_urls
 
-  if (App.active_button.mode === "visited") {
-    visited_urls = App.visited.map(x => x.url)
+  if (App.active_button.mode === "favorites") {
+    favorite_urls = App.favorite.map(x => x.url)
 
-    if (visited_urls.length === 0) {
+    if (favorite_urls.length === 0) {
       App.hide_all_items()
       return
     }
@@ -143,8 +157,8 @@ App.do_filter = function (value = "") {
 
   if (App.active_button.mode === "all") {
     mode = "all"
-  } else if (App.active_button.mode === "visited") {
-    mode = "visited"
+  } else if (App.active_button.mode === "favorites") {
+    mode = "favorites"
   } else if (App.is_number(App.active_button.mode)) {
     mode_number = parseInt(App.active_button.mode)
     mode = "level"
@@ -163,8 +177,8 @@ App.do_filter = function (value = "") {
         App.hide_item(item)
         continue
       }
-    } else if (mode === "visited") {
-      let includes = visited_urls.includes(item.dataset.url) && matches(text, url)
+    } else if (mode === "favorites") {
+      let includes = favorite_urls.includes(item.dataset.url) && matches(text, url)
 
       if (!includes) {
         App.hide_item(item)
