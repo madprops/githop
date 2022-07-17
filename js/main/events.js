@@ -61,9 +61,13 @@ App.start_events = function () {
       let item = e.target.closest(".item")
       
       if (e.button === 1) {
-        if (App.active_button.mode === "visited") {
-          App.remove_visited(item)
-          item.remove()
+        if (e.shiftKey) {
+          if (App.active_button.mode === "visited") {
+            App.remove_visited(item)
+            item.remove()
+          }
+        } else {
+          App.open_tab(item.dataset.url, false)
         }
       }
     }

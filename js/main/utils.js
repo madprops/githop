@@ -43,9 +43,12 @@ App.set_placeholder = function () {
 }
 
 // Open a new tab with a url
-App.open_tab = function (url) {
+App.open_tab = function (url, close = true) {
   browser.tabs.create({url: url})
-  window.close()
+
+  if (close) {
+    window.close()
+  }
 }
 
 // Centralized function to get localStorage objects
