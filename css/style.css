@@ -48,6 +48,7 @@ body, html {
   padding: 0.25rem;
   color: black;
   flex-grow: 1;
+  outline: 1px solid blue;
 }
 
 #filter_clear {
