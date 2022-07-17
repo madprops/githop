@@ -5,6 +5,7 @@ App.on_results = function (items) {
   let base_url = App.unslash(App.root_url)
   let favorite_urls = App.favorites.map(x => x.url)
   let i = 0
+  
   App.items = []
 
   for (let item of items) {
@@ -43,7 +44,7 @@ App.on_results = function (items) {
     }
     
     App.items.push(obj)
-    
+
     i += 1
   }
 
