@@ -20,7 +20,7 @@ App.link_map = [
 
 App.button_map = [
   {name: "All", mode: "all"},
-  {name: "Visited", mode: "visited", title: "Middle click to forget items"},
+  {name: "Visited", mode: "visited", title: "Middle click items to forget them"},
   {name: "Issues", mode: "issues", path: "/issues/"},
   {name: "Commits", mode: "commits", path: "/commit/"},
   {name: "Pulls", mode: "pulls", path: "/pull/"},
