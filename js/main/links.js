@@ -1,5 +1,7 @@
 // Add links to the top
 App.make_links = function () {
+  let links = App.el("#links")
+  
   for (let link of App.link_map) {
     let el = document.createElement("div")
     el.textContent = link.name
