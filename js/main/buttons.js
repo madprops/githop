@@ -17,8 +17,7 @@ App.make_buttons = function () {
 
     el.addEventListener("click", function (e) {
       App.activate_button(btn)
-      App.do_filter()
-      App.el("#filter").focus()
+      App.clear_filter()
     })
 
     buttons.append(el)
