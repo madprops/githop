@@ -27,6 +27,7 @@ body, html {
   color: white;
   flex-shrink: 0;
   flex-grow: 0;
+  user-select: none;
 }
 
 .link {
@@ -74,6 +75,7 @@ body, html {
   gap: 0.5rem;
   height: 100%;
   margin-top: 0.77rem;
+  user-select: none;
 }
 
 .button {
@@ -89,6 +91,7 @@ body, html {
   overflow-x: hidden;
   margin-top: 1rem;
   flex-grow: 1;
+  user-select: none;
 }
 
 .item {
@@ -120,7 +123,7 @@ body, html {
 }
 
 .favorite .item_icon {
-  outline: 2px solid yellow;
+  outline: 2px solid gold;
   border-radius: 50%;
 }
 
