@@ -41,6 +41,7 @@ App.on_results = function (items) {
     c.dataset.url = url
     c.dataset.clean_url = curl
     c.dataset.favorite = fav
+    c.dataset.icon_created = "no"
     c.title = url
 
     if (fav === "yes") {
@@ -51,7 +52,6 @@ App.on_results = function (items) {
     i.classList.add("item_icon")
     i.width = 25
     i.height = 25
-    jdenticon.update(i, App.get_unit(curl))
     c.append(i)
 
     let t = document.createElement("div")
@@ -216,8 +216,20 @@ App.do_filter = function (value = "") {
   console.log(`Filter Time: ${d}`)
 }
 
+// Generate an item's icon
+App.generate_icon = function (item) {
+  let icon = App.el(".item_icon", item)
+  let curl = item.dataset.clean_url
+  jdenticon.update(icon, App.get_unit(curl))
+  item.dataset.icon_created = "yes"
+}
+
 // Make item visible
 App.show_item = function (item) {
+  if (item.dataset.icon_created === "no") {
+    App.generate_icon(item)
+  }
+
   item.classList.remove("hidden")
 }
 
