@@ -8,13 +8,13 @@ App.start_events = function () {
     App.focus_filter()
 
     if (e.key === "Enter") {
-      if (selected_item) {
-        App.open_tab(selected_item.dataset.url)
+      if (App.selected_item) {
+        App.open_tab(App.selected_item.url)
       }
 
       e.preventDefault()
     } else if (e.key === "ArrowUp") {
-      let item = App.get_prev_visible_item(selected_item)
+      let item = App.get_prev_visible_item(App.selected_item)
 
       if (item) {
         App.select_item(item)
@@ -22,7 +22,7 @@ App.start_events = function () {
 
       e.preventDefault()
     } else if (e.key === "ArrowDown") {
-      let item = App.get_next_visible_item(selected_item)
+      let item = App.get_next_visible_item(App.selected_item)
 
       if (item) {
         App.select_item(item)
@@ -48,16 +48,17 @@ App.start_events = function () {
   // When list items are clicked
   list.addEventListener("click", function (e) {
     if (e.target.closest(".item")) {
-      let item = e.target.closest(".item")
+      let el = e.target.closest(".item")
+      let item = App.items[el.dataset.index]
 
       if (e.target.closest(".item_icon")) {
-        if (item.dataset.favorite === "yes") {
+        if (item.favorite) {
           App.remove_favorite(item)
         } else {
           App.add_favorite(item)
         }
       } else if (e.target.closest(".item_text")) {
-        App.open_tab(item.dataset.url)
+        App.open_tab(item.url)
       }
     }
   })
@@ -65,25 +66,17 @@ App.start_events = function () {
   // When list items are clicked
   list.addEventListener("auxclick", function (e) {
     if (e.target.closest(".item")) {
-      let item = e.target.closest(".item")
-      
-      if (e.button === 1) {
-        if (e.shiftKey) {
-          if (App.active_button.mode === "favorite") {
-            App.remove_favorite(item)
-            item.remove()
-          }
-        } else {
-          App.open_tab(item.dataset.url, false)
-        }
-      }
+      let el = e.target.closest(".item")
+      let item = App.items[el.dataset.index]
+      App.open_tab(item.url, false)
     }
   })
 
   // When list items get hovered
   list.addEventListener("mouseover", function (e) {
     if (e.target.closest(".item")) {
-      let item = e.target.closest(".item")
+      let el = e.target.closest(".item")
+      let item = App.items[el.dataset.index]
       App.select_item(item, false)
     }
   })

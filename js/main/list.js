@@ -3,10 +3,12 @@ App.on_results = function (items) {
   let added = []
   let used_urls = App.link_map.map(x => x.url)
   let base_url = App.unslash(App.root_url)
-  let list = App.el("#list")
   let favorite_urls = App.favorites.map(x => x.url)
+  App.items = []
 
-  for (let item of items) {
+  for (let i=0; i<items.length; i++) {
+    let item = items[i]
+
     if (!item.url.startsWith(App.root_url)) {
       continue
     }
@@ -21,46 +23,26 @@ App.on_results = function (items) {
       continue
     }
 
-    let curl = App.clean_url(url)
-    let text = item.title.substring(0, App.max_title_length)
+    let clean_url = App.clean_url(url)
+    let text = item.title.substring(0, App.max_title_length).trim()
 
     if (!text || added.includes(text)) {
       continue
     }
 
-    let fav
-
-    if (favorite_urls.includes(url)) {
-      fav = "yes"
-    } else {
-      fav = "no"
-    }
-
-    let c = document.createElement("div")
-    c.classList.add("item")
-    c.dataset.url = url
-    c.dataset.clean_url = curl
-    c.dataset.favorite = fav
-    c.dataset.icon_created = "no"
-    c.title = url
-
-    if (fav === "yes") {
-      c.classList.add("favorite")
-    }
-
-    let i = document.createElement("canvas")
-    i.classList.add("item_icon")
-    i.width = 25
-    i.height = 25
-    c.append(i)
-
-    let t = document.createElement("div")
-    t.classList.add("item_text")
-    t.textContent = text
-    c.append(t)
-
-    list.append(c)
     added.push(text)
+
+    let obj = {
+      text: text,
+      url: url,
+      clean_url: clean_url,
+      favorite: favorite_urls.includes(url),
+      created: false,
+      hidden: true,
+      index: i,
+    }
+
+    App.items.push(obj)
   }
 
   // Initial filter
@@ -72,14 +54,43 @@ App.on_results = function (items) {
   console.log(`Results: ${items.length}`)
 }
 
+// Create an item element
+App.create_item_element = function (item) {
+  let container = document.createElement("div")
+  container.classList.add("item")
+  container.title = item.url
+
+  if (item.favorite) {
+    container.classList.add("favorite")
+  }
+
+  let icon = document.createElement("canvas")
+  icon.classList.add("item_icon")
+  icon.width = 25
+  icon.height = 25
+  jdenticon.update(icon, App.get_unit(item.clean_url))
+  container.append(icon)
+
+  let text = document.createElement("div")
+  text.classList.add("item_text")
+  text.textContent = item.text
+  container.append(text)
+
+  item.element = container
+  item.created = true
+  container.dataset.index = item.index
+  App.el("#list").append(container)
+}
+
 // Get next item that is visible
 App.get_next_visible_item = function (o_item) {
   let waypoint = false
-  let items = App.get_items()
 
-  for (let item of items) {
+  for (let i=0; i<App.items.length; i++) {
+    let item = App.items[i]
+
     if (waypoint) {
-      if (!App.is_hidden(item)) {
+      if (item.created && !item.hidden) {
         return item
       }
     }
@@ -93,12 +104,12 @@ App.get_next_visible_item = function (o_item) {
 // Get prev item that is visible
 App.get_prev_visible_item = function (o_item) {
   let waypoint = false
-  let items = App.get_items()
-  items.reverse()
 
-  for (let item of items) {
+  for (let i=App.items.length-1; i>=0; i--) {
+    let item = App.items[i]
+
     if (waypoint) {
-      if (!App.is_hidden(item)) {
+      if (item.created && !item.hidden) {
         return item
       }
     }
@@ -111,7 +122,7 @@ App.get_prev_visible_item = function (o_item) {
 
 // Hide all items
 App.hide_all_items = function () {
-  for (let item of App.get_items()) {
+  for (let item of App.items) {
     App.hide_item(item)
   }
 }
@@ -119,7 +130,7 @@ App.hide_all_items = function () {
 // Filter the list with the filter's value
 App.do_filter = function (value = "") {
   let filter_start = Date.now()
-  selected_item = undefined
+  App.selected_item = undefined
 
   if (value) {
     App.el("#filter").value = value
@@ -145,13 +156,6 @@ App.do_filter = function (value = "") {
     }
   }
 
-  let words = value.toLowerCase().split(" ").filter(x => x !== "")
-  let selected = false
-
-  function matches (text, url) {
-    return words.every(x => text.includes(x)) || words.every(x => url.includes(x))
-  }
-
   let mode
   let mode_number
 
@@ -168,34 +172,39 @@ App.do_filter = function (value = "") {
     return
   }
 
-  for (let item of App.get_items()) {
-    let url = item.dataset.clean_url
-    let text = item.textContent.toLowerCase()
+  let words = value.toLowerCase().split(" ").filter(x => x !== "")
+  let selected = false
 
+  function matches (item) {
+    return words.every(x => item.text.toLowerCase().includes(x)) || 
+           words.every(x => item.url.includes(x))
+  }
+
+  for (let item of App.items) {
     if (mode === "all") {
-      if (!matches(text, url)) {
+      if (!matches(item)) {
         App.hide_item(item)
         continue
       }
     } else if (mode === "favorites") {
-      let includes = favorite_urls.includes(item.dataset.url) && matches(text, url)
+      let includes = favorite_urls.includes(item.url) && matches(item)
 
       if (!includes) {
         App.hide_item(item)
         continue
       }
     } else if (mode === "level") {
-      if (App.count(url, "/") !== mode_number) {
+      if (App.count(item.url, "/") !== mode_number) {
         App.hide_item(item)
         continue
       }
 
-      if (!matches(text, url)) {
+      if (!matches(item)) {
         App.hide_item(item)
         continue
       }
     } else if (mode === "path") {
-      let includes = url.includes(App.active_button.path) && matches(text, url)
+      let includes = item.url.includes(App.active_button.path) && matches(item)
 
       if (!includes) {
         App.hide_item(item)
@@ -216,26 +225,28 @@ App.do_filter = function (value = "") {
   console.log(`Filter Time: ${d}`)
 }
 
-// Generate an item's icon
-App.generate_icon = function (item) {
-  let icon = App.el(".item_icon", item)
-  let curl = item.dataset.clean_url
-  jdenticon.update(icon, App.get_unit(curl))
-  item.dataset.icon_created = "yes"
-}
-
 // Make item visible
 App.show_item = function (item) {
-  if (item.dataset.icon_created === "no") {
-    App.generate_icon(item)
+  if (!item.created) {
+    App.create_item_element(item)
   }
 
-  item.classList.remove("hidden")
+  if (!item.hidden) {
+    return
+  }
+
+  item.element.classList.remove("hidden")
+  item.hidden = false
 }
 
 // Make an item not visible
 App.hide_item = function (item) {
-  item.classList.add("hidden")
+  if (!item.created || item.hidden) {
+    return
+  }
+
+  item.element.classList.add("hidden")
+  item.hidden = true
 }
 
 // Check if item is hidden
@@ -250,23 +261,20 @@ App.clear_filter = function () {
   App.focus_filter()
 }
 
-// Get an array with all list items
-App.get_items = function () {
-  return App.els(".item", App.el("#list"))
-}
-
 // Make an item selected
 // Unselect all the others
 App.select_item = function (s_item, scroll = true) {
-  for (let item of App.get_items()) {
-    item.classList.remove("selected")
+  for (let item of App.items) {
+    if (item.created) {
+      item.element.classList.remove("selected")
+    }
   }
 
-  s_item.classList.add("selected")
-  selected_item = s_item
+  App.selected_item = s_item
+  App.selected_item.element.classList.add("selected")
 
   if (scroll) {
-    s_item.scrollIntoView({block: "nearest"})
+    App.selected_item.element.scrollIntoView({block: "nearest"})
   }
 }
 

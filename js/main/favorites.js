@@ -16,18 +16,18 @@ App.save_favorites = function () {
 App.add_favorite = function (item) {
   // Remove from list first
   for (let i=0; i<App.favorites.length; i++) {
-    if (App.favorites[i].url === item.dataset.url) {
+    if (App.favorites[i].url === item.url) {
       App.favorites.splice(i, 1)
       break
     }
   }
 
-  item.dataset.favorite = "yes"
-  item.classList.add("favorite")
+  item.favorite = true
+  item.element.classList.add("favorite")
   
   let o = {}
-  o.title = item.textContent
-  o.url = item.dataset.url
+  o.title = item.text
+  o.url = item.url
   App.favorites.unshift(o)
   App.favorites = App.favorites.slice(0, App.max_favorites)
   App.save_favorites()
@@ -39,13 +39,13 @@ App.add_favorite = function (item) {
 
 // Remove a favorite item
 App.remove_favorite = function (item) {
-  item.dataset.favorite = "no"
-  item.classList.remove("favorite")
+  item.favorite = false
+  item.element.classList.remove("favorite")
 
   for (let i=0; i<App.favorites.length; i++) {
     let it = App.favorites[i]
 
-    if (it.url === item.dataset.url) {
+    if (it.url === item.url) {
       App.favorites.splice(i, 1)
       App.save_favorites()
       break
