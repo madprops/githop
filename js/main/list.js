@@ -134,20 +134,21 @@ App.do_filter = function (value = "") {
   let words = value.toLowerCase().split(" ").filter(x => x !== "")
   let selected = false
 
+  function matches (text, url) {
+    return words.every(x => text.includes(x)) || words.every(x => url.includes(x))
+  }
+
   for (let item of App.get_items()) {
     let url = item.dataset.clean_url
     let text = item.textContent.toLowerCase()
 
     if (App.active_button.mode === "all") {
-      let includes = words.every(x => text.includes(x)) || words.every(x => url.includes(x))
-
-      if (!includes) {
+      if (!matches(text, url)) {
         App.hide_item(item)
         continue
       }
     } else if (App.active_button.mode === "visited") {
-      let includes = visited_urls.includes(item.dataset.url) &&
-        ( words.every(x => text.includes(x)) || words.every(x => url.includes(x)) )
+      let includes = visited_urls.includes(item.dataset.url) && matches(text, url)
 
       if (!includes) {
         App.hide_item(item)
@@ -161,15 +162,12 @@ App.do_filter = function (value = "") {
         continue
       }
 
-      let includes = words.every(x => text.includes(x)) || words.every(x => url.includes(x))
-
-      if (!includes) {
+      if (!matches(text, url)) {
         App.hide_item(item)
         continue
       }
     } else if (App.active_button.path) {
-      let includes = url.includes(App.active_button.path) &&
-        ( words.every(x => text.includes(x)) || words.every(x => url.includes(x)) )
+      let includes = url.includes(App.active_button.path) && matches(text, url)
 
       if (!includes) {
         App.hide_item(item)
