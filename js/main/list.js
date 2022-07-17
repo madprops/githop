@@ -198,7 +198,7 @@ App.do_filter = function (value = "") {
         continue
       }
     } else if (mode === "level") {
-      if (App.count(item.url, "/") !== mode_number) {
+      if (App.count(item.clean_url, "/") !== mode_number) {
         App.hide_item(item)
         continue
       }
