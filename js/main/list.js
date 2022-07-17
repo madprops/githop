@@ -4,10 +4,10 @@ App.on_results = function (items) {
   let used_urls = App.link_map.map(x => x.url)
   let base_url = App.unslash(App.root_url)
   let favorite_urls = App.favorites.map(x => x.url)
+  let i = 0
   App.items = []
 
-  for (let i=0; i<items.length; i++) {
-    let item = items[i]
+  for (let item of items) {
 
     if (!item.url.startsWith(App.root_url)) {
       continue
@@ -31,7 +31,7 @@ App.on_results = function (items) {
     }
 
     added.push(text)
-
+    
     let obj = {
       text: text,
       url: url,
@@ -41,8 +41,10 @@ App.on_results = function (items) {
       hidden: true,
       index: i,
     }
-
+    
     App.items.push(obj)
+    
+    i += 1
   }
 
   // Initial filter
