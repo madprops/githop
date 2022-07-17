@@ -72,4 +72,10 @@ App.start_events = function () {
       App.select_item(item, false)
     }
   })
+
+  // When the filter clear button is pressed
+  App.filter_clear.addEventListener("click", function () {
+    App.clear_filter()
+    App.filter.focus()
+  })
 }

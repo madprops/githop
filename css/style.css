@@ -33,13 +33,36 @@ body, html {
   text-decoration: underline;
 }
 
+#filter_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+}
+
 #filter {
   background-color: #99A7D6;
   border-width: 0;
   font-size: 1rem;
   padding: 0.25rem;
   color: black;
+  flex-grow: 1;
+}
+
+#filter_clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
   flex-grow: 0;
+  flex-shrink: 0;
+  border: 1px solid grey;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  font-size: 0.7rem;
+  padding: 0.15rem;
 }
 
 #buttons {
@@ -104,11 +127,15 @@ body, html {
   background-color: #99EDC3;
 }
 
-.action {
+.action, .actionbox {
   cursor: pointer;
   transition: text-shadow 250ms, box-shadow 250ms;
 }
 
 .action:hover {
   text-shadow: 0 0 1rem currentColor;
+}
+
+.actionbox:hover {
+	box-shadow: 0 0 0.2rem currentColor;
 }

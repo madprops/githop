@@ -1,6 +1,7 @@
 // DOM elements
 App.links  = document.querySelector("#links")
 App.filter = document.querySelector("#filter")
+App.filter_clear = document.querySelector("#filter_clear")
 App.buttons = document.querySelector("#buttons")
 App.list = document.querySelector("#list")
 
