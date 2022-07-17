@@ -120,7 +120,7 @@ body, html {
 }
 
 .favorite .item_icon {
-  outline: 1px solid yellow;
+  outline: 2px solid yellow;
   border-radius: 50%;
 }
 
