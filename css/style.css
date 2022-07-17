@@ -119,6 +119,11 @@ body, html {
   min-height: 100%;
 }
 
+.favorite .item_icon {
+  outline: 1px solid yellow;
+  border-radius: 50%;
+}
+
 .selected {
   border-color: white;
   background-color: #2B303B;
@@ -130,11 +135,6 @@ body, html {
 
 .highlighted {
   background-color: #99EDC3;
-}
-
-.favorite .item_icon {
-  outline: 1px solid yellow;
-  border-radius: 50%;
 }
 
 .action, .actionbox {
