@@ -138,26 +138,40 @@ App.do_filter = function (value = "") {
     return words.every(x => text.includes(x)) || words.every(x => url.includes(x))
   }
 
+  let mode
+  let mode_number
+
+  if (App.active_button.mode === "all") {
+    mode = "all"
+  } else if (App.active_button.mode === "visited") {
+    mode = "visited"
+  } else if (App.is_number(App.active_button.mode)) {
+    mode_number = parseInt(App.active_button.mode)
+    mode = "level"
+  } else if (App.active_button.path) {
+    mode = "path"
+  } else {
+    return
+  }
+
   for (let item of App.get_items()) {
     let url = item.dataset.clean_url
     let text = item.textContent.toLowerCase()
 
-    if (App.active_button.mode === "all") {
+    if (mode === "all") {
       if (!matches(text, url)) {
         App.hide_item(item)
         continue
       }
-    } else if (App.active_button.mode === "visited") {
+    } else if (mode === "visited") {
       let includes = visited_urls.includes(item.dataset.url) && matches(text, url)
 
       if (!includes) {
         App.hide_item(item)
         continue
       }
-    } else if (App.is_number(App.active_button.mode)) {
-      let num_slashes = url.split("/").length
-
-      if (num_slashes !== parseInt(App.active_button.mode)) {
+    } else if (mode === "level") {
+      if (App.count(url, "/") !== mode_number) {
         App.hide_item(item)
         continue
       }
@@ -166,7 +180,7 @@ App.do_filter = function (value = "") {
         App.hide_item(item)
         continue
       }
-    } else if (App.active_button.path) {
+    } else if (mode === "path") {
       let includes = url.includes(App.active_button.path) && matches(text, url)
 
       if (!includes) {

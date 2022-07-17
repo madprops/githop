@@ -83,3 +83,8 @@ App.el = function (query, root = document) {
 App.els = function (query, root = document) {
   return Array.from(root.querySelectorAll(query))
 }
+
+// Count occurences of a character
+App.count = function (s, b) {
+  return s.split(b).length
+}
