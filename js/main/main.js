@@ -23,6 +23,9 @@ browser.history.search({
 // Get visited local storage object
 App.get_visited()
 
+// Get last mode local storage object
+App.get_last_mode()
+
 // Set filter placeholder
 App.set_placeholder()
 

@@ -6,6 +6,7 @@ App.history_months = 12
 App.max_title_length = 250
 App.max_visited = 250
 App.ls_visited = "visited_v3"
+App.ls_last_mode = "last_mode_v1"
 
 App.link_map = [
   {name: "Homepage", url: "https://github.com"},

@@ -47,3 +47,26 @@ App.open_tab = function (url) {
   browser.tabs.create({url: url})
   window.close()
 }
+
+// Centralized function to get localStorage objects
+App.get_local_storage = function (ls_name) {
+  let obj
+
+  if (localStorage[ls_name]) {
+    try {
+      obj = JSON.parse(localStorage.getItem(ls_name))
+    } catch (err) {
+      localStorage.removeItem(ls_name)
+      obj = null
+    }
+  } else {
+    obj = null
+  }
+
+  return obj
+}
+
+// Centralized function to save localStorage objects
+App.save_local_storage = function (ls_name, obj) {
+  localStorage.setItem(ls_name, JSON.stringify(obj))
+}

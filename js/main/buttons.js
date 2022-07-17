@@ -14,15 +14,13 @@ App.make_buttons = function () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      App.active_button = btn
+      App.activate_button(btn)
       App.do_filter()
       App.filter.focus()
     })
 
     buttons.append(el)
   }
-
-  App.active_button = App.button_map[0]
 }
 
 // Move to the next button
@@ -42,7 +40,7 @@ App.cycle_buttons = function (direction) {
     }
 
     if (waypoint) {
-      App.active_button = button
+      App.activate_button(button)
       App.do_filter()
       return
     }
@@ -53,7 +51,7 @@ App.cycle_buttons = function (direction) {
   }
 
   if (first) {
-    App.active_button = first
+    App.activate_button(first)
     App.do_filter()
   }  
 }
@@ -72,4 +70,40 @@ App.highlight_button = function (btn) {
       button.classList.remove("highlighted")
     }
   }
+}
+
+// Activates a button
+App.activate_button = function (button) {
+  App.active_button = button
+  App.last_mode = button.mode
+  App.save_last_mode()
+}
+
+// Get remembered mode state
+App.get_last_mode = function () {
+  App.last_mode = App.get_local_storage(App.ls_last_mode)
+
+  if (App.last_mode === null) {
+    App.last_mode = ""
+  }
+
+  let found = false
+
+  for (let button of App.button_map) {
+    if (button.mode === App.last_mode) {
+      App.active_button = button
+      App.activate_button(button)
+      found = true
+      break
+    }
+  }
+
+  if (!found) {
+    App.activate_button(App.button_map[0])
+  }
+}
+
+// Saves the last mode localStorage object
+App.save_last_mode = function () {
+  App.save_local_storage(App.ls_last_mode, App.last_mode)
 }

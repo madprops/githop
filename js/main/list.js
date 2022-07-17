@@ -165,7 +165,7 @@ App.do_filter = function (value = "") {
         App.hide_item(item)
         continue
       }
-    } else {
+    } else if (App.active_button.path) {
       let includes = url.includes(App.active_button.path) && words.every(x => text.includes(x))
 
       if (!includes) {
