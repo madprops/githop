@@ -1,13 +1,21 @@
 App.name = "GitHop"
 App.description = "Type to filter - Enter to select - Tab to cycle"
 App.root_url = "https://github.com/"
+
+// Max results to fetch from the history
 App.max_results = 1000
+
+// How far back to search for results
 App.history_months = 12
+
 App.max_title_length = 250
 App.max_favorites = 250
+
+// localStorage settings
 App.ls_favorites = "favorites_v1"
 App.ls_last_mode = "last_mode_v1"
 
+// Show About info in an alert window
 App.show_about = function () {
   let manifest = browser.runtime.getManifest()
   let ver = manifest.version
@@ -15,6 +23,13 @@ App.show_about = function () {
   alert(s)
 }
 
+// name: The label in the button
+// mode: The internal name of the button
+// Special modes: "all" and "favorites"
+// path: Use a url substring when filtering
+// level: Use a path level when filtering
+// link: Open a link in a new tab when clicked
+// callback: Run a function when clicekd
 App.button_map = [
   {name: "All", mode: "all", title: "Show all items"},
   {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle."},
