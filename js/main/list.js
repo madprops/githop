@@ -16,10 +16,7 @@ App.start_observer = function () {
       let item = App.items[entry.target.dataset.index]
 
       if (item.created && !item.hidden && !item.icon_created) {
-        let icon = App.el(".item_icon", entry.target)
-        jdenticon.update(icon, App.get_unit(item.clean_url))
-        item.icon_created = true
-        console.log("Icon created")
+        App.create_item_icon(item)
       }
     }
   }, options)
@@ -112,6 +109,14 @@ App.create_item_element = function (item) {
   item.element.append(text)
 
   item.created = true
+}
+
+// Create an item's icon
+App.create_item_icon = function (item) {
+  let icon = App.el(".item_icon", item.element)
+  jdenticon.update(icon, App.get_unit(item.clean_url))
+  item.icon_created = true
+  console.log("Icon created")
 }
 
 // Get next item that is visible
