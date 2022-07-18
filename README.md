@@ -4,14 +4,18 @@ Find GitHub locations quickly using your browser's history.
 
 ![](https://i.imgur.com/C5mmGZ2.jpg)
 
+## Usage
+
 Use your mouse or keyboard. Use the filter to search for a specific item.
 
 The filter works by checking the titles and urls.
 
 Buttons like "Commits" focus on certain kinds of items by matching against a url substring like "/commit/" plus the filter you enter.
 
-Buttons 1, 2, and 3, refer to path levels. 
+Buttons 1, and 2 refer to path levels. 
 For instance aa/bb is a 2-level path.
+
+## Icons
 
 Each item gets an icon based on the first level of the url.
 
@@ -26,3 +30,11 @@ Clicking the icons makes an item a "favorite", making it appear in the Favorites
 ![](https://i.imgur.com/OQnZUAQ.jpg)
 
 All the information is gathered from the browser's history, it does zero network requests.
+
+## Settings
+
+Clicking the "?" button reveals the settings editor.
+
+This can be used to make GitHop work with another source instead of GitHub.
+
+It can easily be adjusted to work with GitLab instead, for example.
