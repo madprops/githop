@@ -1,5 +1,5 @@
 // Start intersection observer to check visibility
-// Used for lazy loading some heavy items
+// Used for lazy-loading components
 App.start_observer = function () {
   let options = {
     root: App.el("#list"),
