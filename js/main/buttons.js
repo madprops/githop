@@ -9,7 +9,7 @@ App.make_buttons = function () {
     
     if (button.link || button.callback) {
       el.classList.add("button_2")
-      el.classList.add("action")
+      el.classList.add("actionbox")
     }
 
     if (button.title) {
