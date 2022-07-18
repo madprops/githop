@@ -151,12 +151,6 @@ body, html {
   height: 100%;
 }
 
-#editor_info {
-  flex-grow: 0;
-  padding: 0.5rem;
-  padding-left: 0;
-}
-
 #editor {
   flex-grow: 1;
   font-size: 0.9rem;
@@ -167,9 +161,15 @@ body, html {
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
 }
 
-#editor_buttons > div {
+#editor_info {
+  margin-left: auto;
+  padding-right: 0.5rem;
+}
+
+.underline {
   text-decoration: underline;
 }

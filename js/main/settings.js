@@ -17,7 +17,7 @@ App.show_editor = function () {
   App.editor_on = true
   let manifest = browser.runtime.getManifest()
   let ver = manifest.version
-  let info = `This is GitHop v${ver}. You can edit the settings below.`
+  let info = `This is GitHop v${ver}`
   editor_info.textContent = info
   App.el("#main").classList.add("hidden")
   App.el("#editor_container").classList.remove("hidden")
