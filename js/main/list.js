@@ -1,3 +1,30 @@
+// Start intersection observer to check visibility
+// Used for lazy loading some heavy items
+App.start_observer = function () {
+  let options = {
+    root: App.el("#list"),
+    rootMargin: "0px",
+    threshold: 0.1,
+  }
+  
+  App.observer = new IntersectionObserver(function (entries) {
+    for (let entry of entries) {
+      if (!entry.isIntersecting) {
+        continue
+      }
+
+      let item = App.items[entry.target.dataset.index]
+
+      if (item.created && !item.hidden && !item.icon_created) {
+        let icon = App.el(".item_icon", entry.target)
+        jdenticon.update(icon, App.get_unit(item.clean_url))
+        item.icon_created = true
+        console.log("Icon created")
+      }
+    }
+  }, options)
+}
+
 // When results are found
 App.on_results = function (items) {
   let added = []
@@ -35,6 +62,8 @@ App.on_results = function (items) {
     added.push(text)
 
     let el = App.div("item hidden")
+    el.dataset.index = i
+    App.observer.observe(el)
 
     let obj = {
       index: i,
@@ -43,6 +72,7 @@ App.on_results = function (items) {
       clean_url: clean_url,
       favorite: favorite_urls.includes(url),
       created: false,
+      icon_created: false,
       hidden: true,
       element: el
     }
@@ -74,7 +104,6 @@ App.create_item_element = function (item) {
   icon.classList.add("item_icon")
   icon.width = 25
   icon.height = 25
-  jdenticon.update(icon, App.get_unit(item.clean_url))
   item.element.append(icon)
 
   let text = document.createElement("div")
@@ -83,7 +112,6 @@ App.create_item_element = function (item) {
   item.element.append(text)
 
   item.created = true
-  item.element.dataset.index = item.index
 }
 
 // Get next item that is visible
