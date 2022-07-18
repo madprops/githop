@@ -155,6 +155,8 @@ body, html {
   flex-grow: 1;
   font-size: 0.9rem;
   resize: none;
+  color: black;
+  background-color: white;
 }
 
 #editor_buttons {
