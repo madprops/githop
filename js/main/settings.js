@@ -24,12 +24,13 @@ App.show_about = function () {
 }
 
 // name: The label in the button
-// mode: The internal name of the button
-// Special modes: "all" and "favorites"
+// mode: Filtering mode
+// Special modes: "all" and "favorites" --
+// title: Show as a tooltip when hovered
 // path: Use a url substring when filtering
 // level: Use a path level when filtering
 // link: Open a link in a new tab when clicked
-// callback: Run a function when clicekd
+// callback: Run a function when clicked
 App.button_map = [
   {name: "All", mode: "all", title: "Show all items"},
   {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle."},
