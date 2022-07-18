@@ -11,7 +11,7 @@ App.unslash = function (url) {
 // Remove root url from the start of a url
 App.clean_url = function (url) {
   let escaped = App.escape_special_chars(App.settings.root_url)
-  let regex = new RegExp(`^${escaped}`, "i")
+  let regex = new RegExp(`^${escaped}\\/?`, "i")
   return url.replace(regex, "")
 }
 
