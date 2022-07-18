@@ -12,7 +12,7 @@ App.go_home = function () {
   App.open_tab(App.settings.root_url)
 }
 
-// Show about info & config
+// Show the editor
 App.show_editor = function () {
   App.editor_on = true
   let manifest = browser.runtime.getManifest()
@@ -25,6 +25,13 @@ App.show_editor = function () {
   editor.value = JSON.stringify(App.settings, undefined, 2)
   editor.setSelectionRange(0, 0)
   editor.focus()
+}
+
+// Hide the editor
+App.hide_editor = function () {
+  App.editor_on = false
+  App.el("#main").classList.remove("hidden")
+  App.el("#editor_container").classList.add("hidden")
 }
 
 // These buttons are always present
@@ -90,6 +97,10 @@ App.get_settings = function () {
     if (confirm("Restore defaults?")) {
       App.save_settings(App.default_settings)
     }
+  })
+
+  App.el("#editor_cancel").addEventListener("click", function () {
+    App.hide_editor()
   })
 }
 
