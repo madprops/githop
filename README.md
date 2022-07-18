@@ -38,3 +38,7 @@ Clicking the "?" button reveals the settings editor.
 This can be used to make GitHop work with another source instead of GitHub.
 
 It can easily be adjusted to work with GitLab instead, for example.
+
+This can also be used to add/remove custom buttons.
+
+For instance you can have a Blender button with a "/blender/" path.
