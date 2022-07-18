@@ -162,3 +162,14 @@ body, html {
   font-size: 0.9rem;
   resize: none;
 }
+
+#editor_buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+#editor_buttons > div {
+  text-decoration: underline;
+}

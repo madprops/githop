@@ -14,31 +14,17 @@ App.go_home = function () {
 
 // Show about info & config
 App.show_editor = function () {
-  let list = App.el("#list")
-  let editor_container = App.el("#editor_container")
-  let editor_info = App.el("#editor_info")
-  let editor = App.el("#editor")
+  App.editor_on = true
   let manifest = browser.runtime.getManifest()
   let ver = manifest.version
   let info = `This is GitHop v${ver}. You can edit the settings below.`
   editor_info.textContent = info
-
-  if (App.editor_on) {
-    try {
-      let obj = JSON.parse(editor.value)
-      App.save_local_storage(App.ls_settings, obj)
-      alert("Settings saved. Restart the app.")
-      window.close()
-    } catch (err) {
-      alert("Parsing error.")
-      return
-    }
-  } else {
-    App.editor_on = true
-    list.classList.add("hidden")
-    editor_container.classList.remove("hidden")
-    editor.value = JSON.stringify(App.settings, undefined, 2)
-  }
+  App.el("#main").classList.add("hidden")
+  App.el("#editor_container").classList.remove("hidden")
+  let editor = App.el("#editor")
+  editor.value = JSON.stringify(App.settings, undefined, 2)
+  editor.setSelectionRange(0, 0)
+  editor.focus()
 }
 
 // These buttons are always present
@@ -89,4 +75,27 @@ App.get_settings = function () {
     App.button_map_core.Home,
     App.button_map_core.About,
   ]
+
+  App.el("#editor_save").addEventListener("click", function () {
+    try {
+      let obj = JSON.parse(editor.value)
+      App.save_settings(obj)
+    } catch (err) {
+      alert("Parsing error.")
+      return
+    }
+  })
+
+  App.el("#editor_defaults").addEventListener("click", function () {
+    if (confirm("Restore defaults?")) {
+      App.save_settings(App.default_settings)
+    }
+  })
+}
+
+// Save settings obj
+App.save_settings = function (obj) {
+  App.save_local_storage(App.ls_settings, obj)
+  alert("Settings saved. Restart the app.")
+  window.close()
 }

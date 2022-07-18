@@ -26,11 +26,6 @@ App.make_buttons = function () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      if (App.editor_on) {
-        App.show_editor()
-        return
-      }
-
       if (btn.alt) {
         if (btn.mode === "home") {
           App.go_home()
