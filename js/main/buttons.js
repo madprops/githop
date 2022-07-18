@@ -2,7 +2,7 @@
 App.make_buttons = function () {
   let buttons = App.el("#buttons")
 
-  for (let button of App.button_map) {
+  for (let button of App.buttons) {
     let el = document.createElement("button")
     el.textContent = button.name
     el.classList.add("button")
@@ -44,7 +44,7 @@ App.make_buttons = function () {
 
 // Move to the next button
 App.cycle_buttons = function (direction) {
-  let map = App.button_map.slice(0)
+  let map = App.buttons.slice(0)
 
   if (direction === "left") {
     map.reverse()
@@ -113,7 +113,7 @@ App.get_last_button = function () {
 
   let found = false
 
-  for (let button of App.button_map) {
+  for (let button of App.buttons) {
     if (button.name === App.last_button) {
       App.do_button_select(button)
       found = true
@@ -122,7 +122,7 @@ App.get_last_button = function () {
   }
 
   if (!found) {
-    App.do_button_select(App.button_map[0])
+    App.do_button_select(App.buttons[0])
   }
 }
 

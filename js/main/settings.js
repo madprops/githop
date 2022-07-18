@@ -35,7 +35,7 @@ App.hide_editor = function () {
 }
 
 // These buttons are always present
-App.button_map_core = {
+App.buttons_core = {
   "All": {name: "All", mode: "all", title: "Show all items"},
   "Favorites": {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle"},
   "Home": {name: "Home", mode: "home", title: "Go to the Homepage", alt: true},
@@ -58,7 +58,7 @@ App.default_settings.max_title_length = 250
 App.default_settings.max_favorites = 250
 
 // Configurable buttons
-App.default_settings.button_map = [
+App.default_settings.buttons = [
   {name: "Commits", path: "/commit/"},
   {name: "Issues", path: "/issues/"},
   {name: "Pulls", path: "/pull/"},
@@ -75,12 +75,12 @@ App.get_settings = function () {
     App.settings = App.default_settings
   }
 
-  App.button_map = [
-    App.button_map_core.All,
-    App.button_map_core.Favorites,
-    ...App.settings.button_map,
-    App.button_map_core.Home,
-    App.button_map_core.About,
+  App.buttons = [
+    App.buttons_core.All,
+    App.buttons_core.Favorites,
+    ...App.settings.buttons,
+    App.buttons_core.Home,
+    App.buttons_core.About,
   ]
 
   App.el("#editor_save").addEventListener("click", function () {
