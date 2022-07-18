@@ -131,7 +131,6 @@ body, html {
 }
 
 .action, .actionbox {
-  cursor: pointer;
   transition: text-shadow 100ms, box-shadow 100ms;
 }
 
