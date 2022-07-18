@@ -75,6 +75,28 @@ App.get_settings = function () {
     App.settings = App.default_settings
   }
 
+  let save = false
+
+  for (let p in App.default_settings) {
+    if (App.settings[p] === undefined) {
+      App.settings[p] = App.default_settings[p]
+      console.log(`Setting '${p}' set to default`)
+      save = true
+    }
+  }
+
+  for (let p in App.settings) {
+    if (App.default_settings[p] === undefined) {
+      App.settings[p] = undefined
+      console.log(`Setting '${p}' removed`)
+      save = true
+    }
+  }
+
+  if (save) {
+    App.save_settings(App.settings, false)
+  }
+
   App.buttons = [
     App.buttons_core.All,
     App.buttons_core.Favorites,
@@ -105,8 +127,11 @@ App.get_settings = function () {
 }
 
 // Save settings obj
-App.save_settings = function (obj) {
+App.save_settings = function (obj, restart = true) {
   App.save_local_storage(App.ls_settings, obj)
-  alert("Settings saved. Restart the app.")
-  window.close()
+
+  if (restart) {
+    alert("Settings saved. Restart the app.")
+    window.close()
+  }
 }
