@@ -29,7 +29,7 @@ App.add_favorite = function (item) {
   o.title = item.text
   o.url = item.url
   App.favorites.unshift(o)
-  App.favorites = App.favorites.slice(0, App.max_favorites)
+  App.favorites = App.favorites.slice(0, App.settings.max_favorites)
   App.save_favorites()
 
   if (App.selected_button.mode === "favorites") {

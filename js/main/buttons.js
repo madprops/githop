@@ -7,7 +7,7 @@ App.make_buttons = function () {
     el.textContent = button.name
     el.classList.add("button")
     
-    if (button.link || button.callback) {
+    if (button.alt) {
       el.classList.add("button_2")
       el.classList.add("actionbox")
     }
@@ -20,10 +20,17 @@ App.make_buttons = function () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      if (btn.link) {
-        App.open_tab(btn.link)
-      } else if (btn.callback) {
-        btn.callback()
+      if (App.editor_on) {
+        App.show_editor()
+        return
+      }
+
+      if (btn.alt) {
+        if (btn.mode === "home") {
+          App.go_home()
+        } else if (btn.mode === "about") {
+          App.show_editor()
+        }
       } else {
         App.do_button_select(btn)
         App.clear_filter()
@@ -46,7 +53,7 @@ App.cycle_buttons = function (direction) {
   let first
   
   for (let button of map) {
-    if (button.link || button.callback) {
+    if (button.alt) {
       continue
     }
 
@@ -90,22 +97,23 @@ App.highlight_button = function (btn) {
 // Activates a button
 App.do_button_select = function (button) {
   App.selected_button = button
-  App.last_mode = button.mode
-  App.save_last_mode()
+  App.highlight_button(button)
+  App.last_button = button.name
+  App.save_last_button()
 }
 
 // Get remembered mode state
-App.get_last_mode = function () {
-  App.last_mode = App.get_local_storage(App.ls_last_mode)
+App.get_last_button = function () {
+  App.last_button = App.get_local_storage(App.ls_last_button)
 
-  if (App.last_mode === null) {
-    App.last_mode = ""
+  if (App.last_button === null) {
+    App.last_button = ""
   }
 
   let found = false
 
   for (let button of App.button_map) {
-    if (button.mode === App.last_mode) {
+    if (button.name === App.last_button) {
       App.do_button_select(button)
       found = true
       break
@@ -118,6 +126,6 @@ App.get_last_mode = function () {
 }
 
 // Saves the last mode localStorage object
-App.save_last_mode = function () {
-  App.save_local_storage(App.ls_last_mode, App.last_mode)
+App.save_last_button = function () {
+  App.save_local_storage(App.ls_last_button, App.last_button)
 }

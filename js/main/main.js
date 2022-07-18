@@ -1,5 +1,10 @@
+App.editor_on = false
+
 // Used for performance measuring
 App.date_start = Date.now()
+
+// Get the settings
+App.get_settings()
 
 // Place the buttons
 App.make_buttons()
@@ -7,8 +12,8 @@ App.make_buttons()
 // Get favorites local storage object
 App.get_favorites()
 
-// Get last mode local storage object
-App.get_last_mode()
+// Get last button local storage object
+App.get_last_button()
 
 // Set filter placeholder
 App.set_placeholder()
@@ -24,7 +29,7 @@ App.focus_filter()
 
 // Do the history search
 browser.history.search({
-  text: App.root_url,
-  maxResults: App.max_results,
-  startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.history_months)
+  text: App.settings.root_url,
+  maxResults: App.settings.max_results,
+  startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months)
 }).then(App.on_results)

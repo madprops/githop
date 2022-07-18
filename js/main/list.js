@@ -25,7 +25,7 @@ App.start_observer = function () {
 // When results are found
 App.on_results = function (items) {
   let added = []
-  let base_url = App.unslash(App.root_url)
+  let base_url = App.unslash(App.settings.root_url)
   let favorite_urls = App.favorites.map(x => x.url)
   let list = App.el("#list")
   let i = 0
@@ -34,7 +34,7 @@ App.on_results = function (items) {
 
   for (let item of items) {
 
-    if (!item.url.startsWith(App.root_url)) {
+    if (!item.url.startsWith(App.settings.root_url)) {
       continue
     }
 
@@ -45,7 +45,7 @@ App.on_results = function (items) {
     }
 
     let clean_url = App.clean_url(url)
-    let text = item.title.substring(0, App.max_title_length).trim()
+    let text = item.title.substring(0, App.settings.max_title_length).trim()
 
     if (!text || added.includes(text)) {
       continue
@@ -169,13 +169,6 @@ App.do_filter = function (value = "") {
     App.el("#filter").value = value
   } else {
     value = App.el("#filter").value
-  }
-
-  for (let button of App.button_map) {
-    if (App.selected_button.mode === button.mode) {
-      App.highlight_button(button)
-      break
-    }
   }
 
   let favorite_urls

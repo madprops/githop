@@ -5,6 +5,10 @@ App.start_events = function () {
 
   // When another key is pressed
   document.addEventListener("keydown", function (e) {
+    if (App.editor_on) {
+      return
+    }
+
     App.focus_filter()
 
     if (e.key === "Enter") {
@@ -42,6 +46,10 @@ App.start_events = function () {
 
   // When a user types something
   filter.addEventListener("input", function (e) {
+    if (App.editor_on) {
+      return
+    }
+    
     App.do_filter()
   })
 
