@@ -7,8 +7,8 @@ App.make_buttons = function () {
     el.textContent = button.name
     el.classList.add("button")
     
-    if (button.link) {
-      el.classList.add("link_button")
+    if (button.link || button.callback) {
+      el.classList.add("button_2")
       el.classList.add("action")
     }
 
@@ -22,6 +22,8 @@ App.make_buttons = function () {
     el.addEventListener("click", function (e) {
       if (btn.link) {
         App.open_tab(btn.link)
+      } else if (btn.callback) {
+        btn.callback()
       } else {
         App.do_button_select(btn)
         App.clear_filter()
@@ -44,7 +46,7 @@ App.cycle_buttons = function (direction) {
   let first
   
   for (let button of map) {
-    if (button.link) {
+    if (button.link || button.callback) {
       continue
     }
 

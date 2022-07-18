@@ -8,6 +8,13 @@ App.max_favorites = 250
 App.ls_favorites = "favorites_v1"
 App.ls_last_mode = "last_mode_v1"
 
+App.show_about = function () {
+  let manifest = browser.runtime.getManifest()
+  let ver = manifest.version
+  let s = `This is GitHop v${ver}`
+  alert(s)
+}
+
 App.button_map = [
   {name: "All", mode: "all", title: "Show all items"},
   {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle."},
@@ -19,4 +26,5 @@ App.button_map = [
   {name: "2", mode: "2", level: 2, title: "Path Level 2"},
   {name: "3", mode: "3", level: 3, title: "Path Level 3"},
   {name: "Home", link: "https://github.com", title: "Go to GitHub"},
+  {name: "?", callback: App.show_about, title: "About"},
 ]
