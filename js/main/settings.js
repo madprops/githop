@@ -8,16 +8,6 @@ App.max_favorites = 250
 App.ls_favorites = "favorites_v1"
 App.ls_last_mode = "last_mode_v1"
 
-App.link_map = [
-  {name: "Homepage", url: "https://github.com"},
-  {name: "Notifications", url: "https://github.com/notifications"},
-  {name: "Issues", url: "https://github.com/issues"},
-  {name: "Pulls", url: "https://github.com/pulls"},
-  {name: "Gists", url: "https://gist.github.com/mine"},
-  {name: "Market", url: "https://github.com/marketplace"},
-  {name: "Explore", url: "https://github.com/explore"},
-]
-
 App.button_map = [
   {name: "All", mode: "all", title: "Show all items"},
   {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle."},

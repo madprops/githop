@@ -25,7 +25,6 @@ App.start_observer = function () {
 // When results are found
 App.on_results = function (items) {
   let added = []
-  let used_urls = App.link_map.map(x => x.url)
   let base_url = App.unslash(App.root_url)
   let favorite_urls = App.favorites.map(x => x.url)
   let list = App.el("#list")
@@ -36,10 +35,6 @@ App.on_results = function (items) {
   for (let item of items) {
 
     if (!item.url.startsWith(App.root_url)) {
-      continue
-    }
-
-    if (used_urls.includes(item.url)) {
       continue
     }
 

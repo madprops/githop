@@ -1,9 +1,6 @@
 // Used for performance measuring
 App.date_start = Date.now()
 
-// Place the links at the top
-App.make_links()
-
 // Place the buttons
 App.make_buttons()
 

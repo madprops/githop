@@ -19,21 +19,6 @@ body, html {
   box-sizing: border-box;
 }
 
-#links {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  padding-bottom: 0.77rem;
-  color: white;
-  flex-shrink: 0;
-  flex-grow: 0;
-  user-select: none;
-}
-
-.link {
-  text-decoration: underline;
-}
-
 #filter_container {
   display: flex;
   flex-direction: row;
