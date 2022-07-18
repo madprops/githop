@@ -87,6 +87,7 @@ App.on_results = function (items) {
   let d = Date.now() - App.date_start
   console.log(`Time: ${d}`)
   console.log(`Results: ${items.length}`)
+  console.log(`Items: ${App.items.length}`)
 }
 
 // Create an item element
