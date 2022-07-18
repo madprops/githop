@@ -23,7 +23,7 @@ App.make_buttons = function () {
       if (btn.link) {
         App.open_tab(btn.link)
       } else {
-        App.activate_button(btn)
+        App.do_button_select(btn)
         App.clear_filter()
       }
     })
@@ -53,18 +53,18 @@ App.cycle_buttons = function (direction) {
     }
 
     if (waypoint) {
-      App.activate_button(button)
+      App.do_button_select(button)
       App.do_filter()
       return
     }
 
-    if (App.active_button.mode === button.mode) {
+    if (App.selected_button.mode === button.mode) {
       waypoint = true
     }
   }
 
   if (first) {
-    App.activate_button(first)
+    App.do_button_select(first)
     App.do_filter()
   }  
 }
@@ -86,8 +86,8 @@ App.highlight_button = function (btn) {
 }
 
 // Activates a button
-App.activate_button = function (button) {
-  App.active_button = button
+App.do_button_select = function (button) {
+  App.selected_button = button
   App.last_mode = button.mode
   App.save_last_mode()
 }
@@ -104,15 +104,14 @@ App.get_last_mode = function () {
 
   for (let button of App.button_map) {
     if (button.mode === App.last_mode) {
-      App.active_button = button
-      App.activate_button(button)
+      App.do_button_select(button)
       found = true
       break
     }
   }
 
   if (!found) {
-    App.activate_button(App.button_map[0])
+    App.do_button_select(App.button_map[0])
   }
 }
 

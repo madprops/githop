@@ -32,7 +32,7 @@ App.add_favorite = function (item) {
   App.favorites = App.favorites.slice(0, App.max_favorites)
   App.save_favorites()
 
-  if (App.active_button.mode === "favorites") {
+  if (App.selected_button.mode === "favorites") {
     this.do_filter()
   }
 }
@@ -52,7 +52,7 @@ App.remove_favorite = function (item) {
     }
   }
 
-  if (App.active_button.mode === "favorites") {
+  if (App.selected_button.mode === "favorites") {
     this.do_filter()
   }
 }

@@ -172,7 +172,7 @@ App.do_filter = function (value = "") {
   }
 
   for (let button of App.button_map) {
-    if (App.active_button.mode === button.mode) {
+    if (App.selected_button.mode === button.mode) {
       App.highlight_button(button)
       break
     }
@@ -180,7 +180,7 @@ App.do_filter = function (value = "") {
 
   let favorite_urls
 
-  if (App.active_button.mode === "favorites") {
+  if (App.selected_button.mode === "favorites") {
     favorite_urls = App.favorites.map(x => x.url)
 
     if (favorite_urls.length === 0) {
@@ -191,13 +191,13 @@ App.do_filter = function (value = "") {
 
   let mode
 
-  if (App.active_button.mode === "all") {
+  if (App.selected_button.mode === "all") {
     mode = "all"
-  } else if (App.active_button.mode === "favorites") {
+  } else if (App.selected_button.mode === "favorites") {
     mode = "favorites"
-  } else if (App.activate_button.level) {
+  } else if (App.selected_button.level) {
     mode = "level"
-  } else if (App.active_button.path) {
+  } else if (App.selected_button.path) {
     mode = "path"
   } else {
     return
@@ -225,7 +225,7 @@ App.do_filter = function (value = "") {
         continue
       }
     } else if (mode === "level") {
-      if (App.count(item.clean_url, "/") !== App.active_button.level) {
+      if (App.count(item.clean_url, "/") !== App.selected_button.level) {
         App.hide_item(item)
         continue
       }
@@ -235,7 +235,7 @@ App.do_filter = function (value = "") {
         continue
       }
     } else if (mode === "path") {
-      let includes = item.url.includes(App.active_button.path) && matches(item)
+      let includes = item.url.includes(App.selected_button.path) && matches(item)
 
       if (!includes) {
         App.hide_item(item)
