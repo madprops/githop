@@ -18,5 +18,5 @@ App.button_map = [
   {name: "1", mode: "1", level: 1, title: "Path Level 1"},
   {name: "2", mode: "2", level: 2, title: "Path Level 2"},
   {name: "3", mode: "3", level: 3, title: "Path Level 3"},
-  {name: "Home", link: "https://github.com", title: "Got to the homepage"},
+  {name: "Home", link: "https://github.com", title: "Go to GitHub"},
 ]
