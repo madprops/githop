@@ -9,7 +9,7 @@ App.ls_settings = "settings_v1"
 
 // Go to homepage
 App.go_home = function () {
-  App.open_tab(App.settings.root_url)
+  App.open_tab(App.settings.homepage)
 }
 
 // Show the editor
@@ -45,7 +45,7 @@ App.buttons_core = {
 
 // Basic information
 App.default_settings = {}
-App.default_settings.root_url = "https://github.com"
+App.default_settings.homepage = "https://github.com"
 
 // Max results to fetch from the history
 App.default_settings.max_results = 1000

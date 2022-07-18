@@ -29,7 +29,7 @@ App.focus_filter()
 
 // Do the history search
 browser.history.search({
-  text: App.settings.root_url,
+  text: App.settings.homepage,
   maxResults: App.settings.max_results,
   startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months)
 }).then(App.on_results)

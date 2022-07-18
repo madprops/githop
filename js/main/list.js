@@ -25,7 +25,7 @@ App.start_observer = function () {
 // When results are found
 App.on_results = function (items) {
   let added = []
-  let base_url = App.unslash(App.settings.root_url)
+  let base_url = App.unslash(App.settings.homepage)
   let favorite_urls = App.favorites.map(x => x.url)
   let list = App.el("#list")
   let i = 0
@@ -34,7 +34,7 @@ App.on_results = function (items) {
 
   for (let item of items) {
 
-    if (!item.url.startsWith(App.settings.root_url)) {
+    if (!item.url.startsWith(App.settings.homepage)) {
       continue
     }
 
