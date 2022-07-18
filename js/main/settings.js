@@ -41,10 +41,11 @@ App.show_editor = function () {
   }
 }
 
+// These buttons are always present
 App.button_map_core = {
   "All": {name: "All", mode: "all", title: "Show all items"},
   "Favorites": {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle."},
-  "Home": {name: "Home", mode: "home", title: "Go to the homepage", alt: true},
+  "Home": {name: "Home", mode: "home", title: "Go to the Homepage", alt: true},
   "About": {name: "?", mode: "about", title: "About & Configure", alt: true},
 
 }
@@ -63,21 +64,14 @@ App.default_settings.history_months = 12
 App.default_settings.max_title_length = 250
 App.default_settings.max_favorites = 250
 
-// name: The label in the button
-// mode: Filtering mode
-// Special modes: "all" and "favorites" --
-// title: Show as a tooltip when hovered
-// path: Use a url substring when filtering
-// level: Use a path level when filtering
-// link: Open a link in a new tab when clicked
-// callback: Run a function when clicked
+// Configurable buttons
 App.default_settings.button_map = [
-  {name: "Commits", path: "/commit/", title: "Matches /commit/"},
-  {name: "Issues", path: "/issues/", title: "Matches /issues/"},
-  {name: "Pulls", path: "/pull/", title: "Matches /pull/"},
-  {name: "Tags", path: "/tag/", title: "Matches /tag/"},
-  {name: "1", level: 1, title: "Path Level 1"},
-  {name: "2", level: 2, title: "Path Level 2"},
+  {name: "Commits", path: "/commit/"},
+  {name: "Issues", path: "/issues/"},
+  {name: "Pulls", path: "/pull/"},
+  {name: "Tags", path: "/tag/"},
+  {name: "1", level: 1},
+  {name: "2", level: 2},
 ]
 
 // Get the saved settings

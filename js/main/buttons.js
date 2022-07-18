@@ -14,6 +14,12 @@ App.make_buttons = function () {
 
     if (button.title) {
       el.title = button.title
+    } else {
+      if (button.path) {
+        el.title = `Matches ${button.path}`
+      } else if (button.level) {
+        el.title = `Path Level ${button.level}`
+      }
     }
 
     // Avoid reference problems
