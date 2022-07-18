@@ -45,7 +45,7 @@ App.button_map_core = {
 
 // Basic information
 App.default_settings = {}
-App.default_settings.root_url = "https://github.com/"
+App.default_settings.root_url = "https://github.com"
 
 // Max results to fetch from the history
 App.default_settings.max_results = 1000
