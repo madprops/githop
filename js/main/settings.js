@@ -39,7 +39,7 @@ App.button_map_core = {
   "All": {name: "All", mode: "all", title: "Show all items"},
   "Favorites": {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle."},
   "Home": {name: "Home", mode: "home", title: "Go to the Homepage", alt: true},
-  "About": {name: "?", mode: "about", title: "About & Configure", alt: true},
+  "About": {name: "?", mode: "about", title: "Open the Editor", alt: true},
 
 }
 
