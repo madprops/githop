@@ -190,14 +190,12 @@ App.do_filter = function (value = "") {
   }
 
   let mode
-  let mode_number
 
   if (App.active_button.mode === "all") {
     mode = "all"
   } else if (App.active_button.mode === "favorites") {
     mode = "favorites"
-  } else if (App.is_number(App.active_button.mode)) {
-    mode_number = parseInt(App.active_button.mode)
+  } else if (App.activate_button.level) {
     mode = "level"
   } else if (App.active_button.path) {
     mode = "path"
@@ -227,7 +225,7 @@ App.do_filter = function (value = "") {
         continue
       }
     } else if (mode === "level") {
-      if (App.count(item.clean_url, "/") !== mode_number) {
+      if (App.count(item.clean_url, "/") !== App.active_button.level) {
         App.hide_item(item)
         continue
       }

@@ -15,7 +15,8 @@ App.button_map = [
   {name: "Issues", mode: "issues", path: "/issues/", title: "Matches /issues/"},
   {name: "Pulls", mode: "pulls", path: "/pull/", title: "Matches /pull/"},
   {name: "Tags", mode: "tags", path: "/tag/", title: "Matches /tag/"},
-  {name: "1", mode: "1", title: "Path Level 1"},
-  {name: "2", mode: "2", title: "Path Level 2"},
-  {name: "3", mode: "3", title: "Path Level 3"},
+  {name: "1", mode: "1", level: 1, title: "Path Level 1"},
+  {name: "2", mode: "2", level: 2, title: "Path Level 2"},
+  {name: "3", mode: "3", level: 3, title: "Path Level 3"},
+  {name: "Home", link: "https://github.com", title: "Got to the homepage"},
 ]

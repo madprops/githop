@@ -65,6 +65,12 @@ body, html {
 .button {
   font-size: 1rem;
   min-width: 2rem;
+  cursor: pointer;
+}
+
+.link_button {
+  background-color: transparent;
+  color: white;
 }
 
 #list {

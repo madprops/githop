@@ -20,17 +20,6 @@ App.get_unit = function (curl) {
   return curl.split("/")[0].split("?")[0].split("#")[0]
 }
 
-// Check if string is a number
-App.is_number = function (s) {
-  let regex = new RegExp("^[0-9]+$")
-
-  if (s.match(regex)) {
-    return true
-  } else {
-    return false
-  }
-}
-
 // Set the filter placeholder
 App.set_placeholder = function () {
   let s = App.name

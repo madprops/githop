@@ -6,7 +6,11 @@ App.make_buttons = function () {
     let el = document.createElement("button")
     el.textContent = button.name
     el.classList.add("button")
-    el.classList.add("action")
+    
+    if (button.link) {
+      el.classList.add("link_button")
+      el.classList.add("action")
+    }
 
     if (button.title) {
       el.title = button.title
@@ -16,8 +20,12 @@ App.make_buttons = function () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      App.activate_button(btn)
-      App.clear_filter()
+      if (btn.link) {
+        App.open_tab(btn.link)
+      } else {
+        App.activate_button(btn)
+        App.clear_filter()
+      }
     })
 
     buttons.append(el)
@@ -36,6 +44,10 @@ App.cycle_buttons = function (direction) {
   let first
   
   for (let button of map) {
+    if (button.link) {
+      continue
+    }
+
     if (!first) {
       first = button
     }
