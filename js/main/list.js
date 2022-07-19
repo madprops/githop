@@ -62,6 +62,7 @@ App.on_results = function (items) {
       text: text,
       url: url,
       clean_url: clean_url,
+      date: item.lastVisitTime,
       favorite: favorite_urls.includes(url),
       created: false,
       icon_created: false,
@@ -184,6 +185,9 @@ App.do_filter = function (value = "") {
 
   let mode
   let path
+  let level
+  let hours
+  let now
 
   if (App.selected_button.mode === "all") {
     mode = "all"
@@ -191,6 +195,11 @@ App.do_filter = function (value = "") {
     mode = "favorites"
   } else if (App.selected_button.level) {
     mode = "level"
+    level = parseInt(App.selected_button.level)
+  }  else if (App.selected_button.hours) {
+    mode = "hours"
+    hours = parseInt(App.selected_button.hours)
+    now = Date.now()
   } else if (App.selected_button.path) {
     mode = "path"
     path = App.selected_button.path.toLowerCase()
@@ -207,42 +216,44 @@ App.do_filter = function (value = "") {
   }
 
   for (let item of App.items) {
+    let includes
+
     if (mode === "all") {
-      if (!matches(item)) {
-        App.hide_item(item)
-        continue
-      }
-    } else if (mode === "favorites") {
-      let includes = favorite_urls.includes(item.url) && matches(item)
-
-      if (!includes) {
-        App.hide_item(item)
-        continue
-      }
-    } else if (mode === "level") {
-      if (App.count(item.clean_url, "/") !== App.selected_button.level) {
+      includes = matches(item)
+    } 
+    
+    else if (mode === "favorites") {
+      includes = favorite_urls.includes(item.url) && matches(item)
+    } 
+    
+    else if (mode === "level") {
+      if (App.count(item.clean_url, "/") !== level) {
         App.hide_item(item)
         continue
       }
 
-      if (!matches(item)) {
-        App.hide_item(item)
-        continue
-      }
-    } else if (mode === "path") {
-      let includes = item.url.toLowerCase().includes(path) && matches(item)
-
-      if (!includes) {
-        App.hide_item(item)
-        continue
-      }
+      includes = matches(item)
+    } 
+    
+    else if (mode === "hours") {
+      let h = ((now - item.date) / 1000 / 60 / 60)
+      includes = h <= hours && matches(item)
+    } 
+    
+    else if (mode === "path") {
+      includes = item.url.toLowerCase().includes(path) && matches(item)
     }
 
-    App.show_item(item)
+    if (includes) {
+      App.show_item(item)
 
-    if (!selected) {
-      App.select_item(item)
-      selected = true
+      if (!selected) {
+        App.select_item(item)
+        selected = true
+      }      
+    } else {
+      App.hide_item(item)
+      continue
     }
   }
 

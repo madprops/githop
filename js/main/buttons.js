@@ -19,6 +19,8 @@ App.make_buttons = function () {
         el.title = `Matches ${button.path}`
       } else if (button.level) {
         el.title = `Path Level ${button.level}`
+      } else if (button.hours) {
+        el.title = `Visited in the last ${button.hours} hours`
       }
     }
 

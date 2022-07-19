@@ -62,6 +62,7 @@ App.default_settings.buttons = [
   {name: "Issues", path: "/issues/"},
   {name: "Pulls", path: "/pull/"},
   {name: "Tags", path: "/tag/"},
+  {name: "Day", hours: 24},
   {name: "1", level: 1},
   {name: "2", level: 2},
 ]
