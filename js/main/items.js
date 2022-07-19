@@ -29,7 +29,9 @@ App.setup_items = function (items) {
 
     added.push(text)
 
-    let el = App.div("item hidden")
+    let el = document.createElement("div")
+    el.classList.add("item")
+    el.classList.add("hidden")
     el.dataset.index = i
     App.item_observer.observe(el)
 
