@@ -46,3 +46,34 @@ This can also be used to add/remove custom buttons.
 For instance you can have a Blender button with a "/blender/" path.
 
 ![](https://i.imgur.com/zcPdb5b.jpg)
+
+## Modes
+
+Buttons can have multiple modes.
+
+>path
+
+This will match items that contain the defined path inside the URL.
+For instance /code/ will match something/code/myrepo/etc
+
+>level
+
+This will match items that contain the right number of slashes.
+For instance aa/bb/cc will match a level of 3.
+
+>hours
+
+This will match items that were visited before the hours defined.
+For instance an item visited 30 minutes ago will match with hours: 1.
+An item visited 3 hours ago won't match that.
+
+These modes can be combined for more precise results:
+
+```
+{
+  "name": "Test",
+  "path": "/cat/",
+  "hours": 24,
+  "level": 2
+}
+```
