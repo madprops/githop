@@ -131,6 +131,10 @@ body, html {
   background-color: #99EDC3;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .action, .actionbox {
   cursor: pointer;
   transition: text-shadow 100ms, box-shadow 100ms;
@@ -163,15 +167,9 @@ body, html {
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.5rem;
+  padding: 0.5rem;
 }
 
 #editor_info {
   margin-left: auto;
-  padding-right: 0.5rem;
-}
-
-.underline {
-  text-decoration: underline;
 }
