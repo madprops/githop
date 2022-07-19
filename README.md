@@ -2,7 +2,7 @@ Currently a [Firefox addon](https://addons.mozilla.org/en-US/firefox/addon/githo
 
 Find GitHub locations quickly using your browser's history.
 
-![](https://i.imgur.com/C5mmGZ2.jpg)
+![](https://i.imgur.com/NjgRB7V.jpg)
 
 ## Usage
 
