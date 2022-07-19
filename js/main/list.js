@@ -183,6 +183,7 @@ App.do_filter = function (value = "") {
   }
 
   let mode
+  let path
 
   if (App.selected_button.mode === "all") {
     mode = "all"
@@ -192,6 +193,7 @@ App.do_filter = function (value = "") {
     mode = "level"
   } else if (App.selected_button.path) {
     mode = "path"
+    path = App.selected_button.path.toLowerCase()
   } else {
     return
   }
@@ -228,7 +230,7 @@ App.do_filter = function (value = "") {
         continue
       }
     } else if (mode === "path") {
-      let includes = item.url.includes(App.selected_button.path) && matches(item)
+      let includes = item.url.toLowerCase().includes(path) && matches(item)
 
       if (!includes) {
         App.hide_item(item)
