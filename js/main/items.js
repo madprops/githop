@@ -1,29 +1,5 @@
-// Start intersection observer to check visibility
-// Used for lazy-loading components
-App.start_observer = function () {
-  let options = {
-    root: App.el("#list"),
-    rootMargin: "0px",
-    threshold: 0.1,
-  }
-  
-  App.observer = new IntersectionObserver(function (entries) {
-    for (let entry of entries) {
-      if (!entry.isIntersecting) {
-        continue
-      }
-
-      let item = App.items[entry.target.dataset.index]
-
-      if (item.created && !item.hidden && !item.filled) {
-        App.fill_item_element(item)
-      }
-    }
-  }, options)
-}
-
 // When results are found
-App.on_results = function (items) {
+App.setup_items = function (items) {
   let added = []
   let base_url = App.unslash(App.settings.homepage)
   let favorite_urls = App.favorites.map(x => x.url)
@@ -55,7 +31,7 @@ App.on_results = function (items) {
 
     let el = App.div("item hidden")
     el.dataset.index = i
-    App.observer.observe(el)
+    App.item_observer.observe(el)
 
     let obj = {
       index: i,
@@ -84,6 +60,30 @@ App.on_results = function (items) {
   console.log(`Time: ${d}`)
   console.log(`Results: ${items.length}`)
   console.log(`Items: ${App.items.length}`)
+}
+
+// Start intersection observer to check visibility
+// Used for lazy-loading components
+App.start_item_observer = function () {
+  let options = {
+    root: App.el("#list"),
+    rootMargin: "0px",
+    threshold: 0.1,
+  }
+  
+  App.item_observer = new IntersectionObserver(function (entries) {
+    for (let entry of entries) {
+      if (!entry.isIntersecting) {
+        continue
+      }
+
+      let item = App.items[entry.target.dataset.index]
+
+      if (item.created && !item.hidden && !item.filled) {
+        App.fill_item_element(item)
+      }
+    }
+  }, options)
 }
 
 // Create an item element
@@ -164,103 +164,13 @@ App.hide_all_items = function () {
   }
 }
 
-// Filter the list with the filter's value
-App.do_filter = function (value = "") {
-  let filter_start = Date.now()
-  App.selected_item = undefined
-
-  if (value) {
-    App.el("#filter").value = value
-  } else {
-    value = App.el("#filter").value
-  }
-
-  let favorite_urls
-
-  if (App.selected_button.mode === "favorites") {
-    favorite_urls = App.favorites.map(x => x.url)
-
-    if (favorite_urls.length === 0) {
-      App.hide_all_items()
-      return
-    }
-  }
-
-  let mode
-  let path
-  let level
-  let hours
-
-  if (App.selected_button.mode === "all") {
-    mode = "all"
-  } else if (App.selected_button.mode === "favorites") {
-    mode = "favorites"
-  } else if (App.selected_button.level) {
-    mode = "level"
-    level = parseInt(App.selected_button.level)
-  }  else if (App.selected_button.hours) {
-    mode = "hours"
-    hours = parseInt(App.selected_button.hours)
-  } else if (App.selected_button.path) {
-    mode = "path"
-    path = App.selected_button.path.toLowerCase()
-  } else {
-    return
-  }
-
-  let words = value.toLowerCase().split(" ").filter(x => x !== "")
-  let selected = false
-
-  function matches (item) {
-    return words.every(x => item.text.toLowerCase().includes(x)) || 
-           words.every(x => item.url.includes(x))
-  }
-
+// Get the item of a favorite
+App.get_item_by_url = function (url) {
   for (let item of App.items) {
-    let includes
-
-    if (mode === "all") {
-      includes = matches(item)
-    } 
-    
-    else if (mode === "favorites") {
-      includes = favorite_urls.includes(item.url) && matches(item)
-    } 
-    
-    else if (mode === "level") {
-      if (App.count(item.clean_url, "/") !== level) {
-        App.hide_item(item)
-        continue
-      }
-
-      includes = matches(item)
-    } 
-    
-    else if (mode === "hours") {
-      let h = App.get_hours(item.date)
-      includes = h <= hours && matches(item)
-    } 
-    
-    else if (mode === "path") {
-      includes = item.url.toLowerCase().includes(path) && matches(item)
-    }
-
-    if (includes) {
-      App.show_item(item)
-
-      if (!selected) {
-        App.select_item(item)
-        selected = true
-      }      
-    } else {
-      App.hide_item(item)
-      continue
+    if (item.url === url) {
+      return item
     }
   }
-
-  // Check performance
-  let d = Date.now() - filter_start
-  console.log(`Filter Time: ${d}`)
 }
 
 // Make item visible
@@ -285,18 +195,6 @@ App.hide_item = function (item) {
   item.element.classList.add("hidden")
 }
 
-// Check if item is hidden
-App.is_hidden = function (item) {
-  return item.classList.contains("hidden")
-}
-
-// Clear filter
-App.clear_filter = function () {
-  App.el("#filter").value = ""
-  App.do_filter()
-  App.focus_filter()
-}
-
 // Make an item selected
 // Unselect all the others
 App.select_item = function (s_item, scroll = true) {
@@ -311,19 +209,5 @@ App.select_item = function (s_item, scroll = true) {
 
   if (scroll) {
     App.selected_item.element.scrollIntoView({block: "nearest"})
-  }
-}
-
-// Focus the filter
-App.focus_filter = function () {
-  App.el("#filter").focus()
-}
-
-// Get the item of a favorite
-App.get_item_by_url = function (url) {
-  for (let item of App.items) {
-    if (item.url === url) {
-      return item
-    }
   }
 }

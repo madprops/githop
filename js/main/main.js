@@ -22,7 +22,7 @@ App.set_placeholder()
 App.start_events()
 
 // Start the intersection observer
-App.start_observer()
+App.start_item_observer()
 
 // Focus the filter
 App.focus_filter()
@@ -32,4 +32,4 @@ browser.history.search({
   text: App.settings.homepage,
   maxResults: App.settings.max_results,
   startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months)
-}).then(App.on_results)
+}).then(App.setup_items)
