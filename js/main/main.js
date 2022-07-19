@@ -27,6 +27,9 @@ App.start_item_observer()
 // Focus the filter
 App.focus_filter()
 
+// Configure the editor
+App.setup_editor()
+
 // Do the history search
 browser.history.search({
   text: App.settings.homepage,

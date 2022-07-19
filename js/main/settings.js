@@ -12,20 +12,36 @@ App.go_home = function () {
   App.open_tab(App.settings.homepage)
 }
 
+// Setup the settings editor
+App.setup_editor = function () {
+  App.nice_editor = ace.edit("editor")
+
+  App.nice_editor.session.setOptions({
+    mode: "ace/mode/json",
+    tabSize: 2
+  })
+}
+
 // Show the editor
 App.show_editor = function () {
   App.editor_on = true
+  
   let manifest = browser.runtime.getManifest()
   let ver = manifest.version
   let info = `${App.name} v${ver}`
   editor_info.textContent = info
+  
   App.el("#main").classList.add("hidden")
   App.el("#editor_container").classList.remove("hidden")
-  let editor = App.el("#editor")
-  editor.value = JSON.stringify(App.settings, undefined, 2)
-  App.original_editor_value = editor.value
-  editor.setSelectionRange(0, 0)
-  editor.focus()
+  
+  let value = JSON.stringify(App.settings, undefined, 2)
+  
+  App.nice_editor.setValue(value)
+  App.nice_editor.clearSelection()
+  App.nice_editor.gotoLine(1)
+  App.nice_editor.focus()
+
+  App.original_editor_value = App.nice_editor.getValue()
 }
 
 // Hide the editor
@@ -113,11 +129,11 @@ App.get_settings = function () {
     }
 
     try {
-      let value = App.el("#editor").value
+      let value = App.nice_editor.getValue()
       let obj = JSON.parse(value)
       App.save_settings(obj, true)
     } catch (err) {
-      alert("Parsing error.")
+      alert(err)
       return
     }
   })
