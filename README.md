@@ -33,7 +33,7 @@ Clicking the icons makes an item a "favorite", making it appear in the Favorites
 
 All the information is gathered from the browser's history, it does zero network requests.
 
-## Settings
+## Editor
 
 Clicking the "?" button reveals the settings editor.
 
@@ -44,3 +44,5 @@ It can easily be adjusted to work with GitLab instead, for example.
 This can also be used to add/remove custom buttons.
 
 For instance you can have a Blender button with a "/blender/" path.
+
+![](https://i.imgur.com/aTxacqv.jpg)
