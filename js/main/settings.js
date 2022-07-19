@@ -40,7 +40,6 @@ App.buttons_core = {
   "Favorites": {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle"},
   "Home": {name: "Home", mode: "home", title: "Go to the Homepage", alt: true},
   "About": {name: "?", mode: "about", title: "Open the Editor", alt: true},
-
 }
 
 // Basic information
