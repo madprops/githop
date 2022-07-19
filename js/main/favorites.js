@@ -30,6 +30,21 @@ App.add_favorite = function (item) {
   o.url = item.url
   App.favorites.unshift(o)
   App.favorites = App.favorites.slice(0, App.settings.max_favorites)
+  let urls = App.favorites.map(x => x.url)
+
+  // Remove favorite for some items
+  for (let item of App.items) {
+    if (item.favorite) {
+      if (!urls.includes(item.url)) {
+        item.favorite = false
+        
+        if (item.filled) {
+          item.element.classList.remove("favorite")
+        }
+      }
+    }
+  }
+
   App.save_favorites()
 
   if (App.selected_button.mode === "favorites") {
