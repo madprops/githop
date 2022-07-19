@@ -20,7 +20,8 @@ App.make_buttons = function () {
       } else if (button.level) {
         el.title = `Path Level ${button.level}`
       } else if (button.hours) {
-        el.title = `Visited in the last ${button.hours} hours`
+        let s = App.plural(button.hours, "hour", "hours")
+        el.title = `Visited in the last ${s}`
       }
     }
 

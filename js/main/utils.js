@@ -101,3 +101,12 @@ App.count = function (s, b) {
 App.get_hours = function (hours) {
   return (Date.now() - hours) / 1000 / 60 / 60
 }
+
+// Get singular or plural
+App.plural = function (n, singular, plural) {
+  if (n === 1) {
+    return `${n} ${singular}`
+  } else {
+    return `${n} ${plural}`
+  }
+}
