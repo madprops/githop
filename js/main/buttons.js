@@ -57,6 +57,7 @@ App.cycle_buttons = function (direction) {
   let first
   
   for (let button of map) {
+    console.log(button.name)
     if (button.alt) {
       continue
     }
@@ -71,7 +72,7 @@ App.cycle_buttons = function (direction) {
       return
     }
 
-    if (App.selected_button.mode === button.mode) {
+    if (App.selected_button.name === button.name) {
       waypoint = true
     }
   }
