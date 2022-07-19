@@ -8,7 +8,7 @@ App.ls_last_button = "last_button_v1"
 App.ls_settings = "settings_v1"
 
 // Setup the settings editor
-App.setup_editor = function () {
+App.start_nice_editor = function () {
   App.nice_editor = ace.edit("editor")
 
   App.nice_editor.session.setOptions({
@@ -20,6 +20,10 @@ App.setup_editor = function () {
 // Show the editor
 App.show_editor = function () {
   App.editor_on = true
+
+  if (!App.nice_editor) {
+    App.start_nice_editor()
+  }
   
   let manifest = browser.runtime.getManifest()
   let ver = manifest.version
