@@ -148,3 +148,8 @@ App.get_last_button = function () {
 App.save_last_button = function () {
   App.save_local_storage(App.ls_last_button, App.last_button)
 }
+
+// Go to homepage
+App.go_home = function () {
+  App.open_tab(App.settings.homepage)
+}

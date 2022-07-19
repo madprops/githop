@@ -7,11 +7,6 @@ App.ls_favorites = "favorites_v1"
 App.ls_last_button = "last_button_v1"
 App.ls_settings = "settings_v1"
 
-// Go to homepage
-App.go_home = function () {
-  App.open_tab(App.settings.homepage)
-}
-
 // Setup the settings editor
 App.setup_editor = function () {
   App.nice_editor = ace.edit("editor")
@@ -143,6 +138,10 @@ App.get_settings = function () {
       App.save_settings(App.default_settings, true)
     }
   })
+
+  App.el("#editor_help").addEventListener("click", function () {
+    App.show_help()
+  })
 }
 
 // Save settings obj
@@ -153,4 +152,17 @@ App.save_settings = function (obj, restart = false) {
     alert("Changes saved.")
     window.close()
   }
+}
+
+// Show a help message about the editor
+App.show_help = function () {
+  let s = ""
+
+  s += "Button modes:\n"
+  s += "path = Substring of the URL\n"
+  s += "title = Substring of the title\n"
+  s += "level = Path level (aa/bb = 2)\n"
+  s += "hours = Visited before these hours ago\n"
+
+  alert(s)
 }
