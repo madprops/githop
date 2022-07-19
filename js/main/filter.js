@@ -108,3 +108,14 @@ App.clear_filter = function () {
 App.focus_filter = function () {
   App.el("#filter").focus()
 }
+
+// Set the filter placeholder
+App.set_filter_placeholder = function () {
+  let s = App.name
+
+  if (App.description) {
+    s += ` - ${App.description}`
+  }
+
+  App.el("#filter").placeholder = s
+}

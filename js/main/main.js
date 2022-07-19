@@ -15,8 +15,8 @@ App.get_favorites()
 // Get last button local storage object
 App.get_last_button()
 
-// Set filter placeholder
-App.set_placeholder()
+// Set filter placeholder with name and description
+App.set_filter_placeholder()
 
 // Start the mouse and kb events
 App.start_events()

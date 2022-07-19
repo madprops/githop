@@ -20,17 +20,6 @@ App.get_unit = function (curl) {
   return curl.split("/")[0].split("?")[0].split("#")[0]
 }
 
-// Set the filter placeholder
-App.set_placeholder = function () {
-  let s = App.name
-
-  if (App.description) {
-    s += ` - ${App.description}`
-  }
-
-  App.el("#filter").placeholder = s
-}
-
 // Open a new tab with a url
 App.open_tab = function (url, close = true) {
   browser.tabs.create({url: url})
