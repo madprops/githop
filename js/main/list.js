@@ -318,3 +318,12 @@ App.select_item = function (s_item, scroll = true) {
 App.focus_filter = function () {
   App.el("#filter").focus()
 }
+
+// Get the item of a favorite
+App.get_item_by_url = function (url) {
+  for (let item of App.items) {
+    if (item.url === url) {
+      return item
+    }
+  }
+}

@@ -35,7 +35,7 @@ App.add_favorite = function (item) {
 
   // Remove items that are no longer favorite
   for (let r of removed) {
-    let r_item = App.get_favorite_item(r)
+    let r_item = App.get_item_by_url(r.url)
 
     if (r_item) {
       r_item.favorite = false
@@ -67,14 +67,5 @@ App.remove_favorite = function (item) {
 
   if (App.selected_button.mode === "favorites") {
     this.do_filter()
-  }
-}
-
-// Get the item of a favorite
-App.get_favorite_item = function (fav) {
-  for (let item of App.items) {
-    if (item.url === fav.url) {
-      return item
-    }
   }
 }
