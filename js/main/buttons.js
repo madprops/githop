@@ -54,10 +54,10 @@ App.cycle_buttons = function (direction) {
   }
 
   let waypoint = false
+  let selected
   let first
   
   for (let button of map) {
-    console.log(button.name)
     if (button.alt) {
       continue
     }
@@ -67,9 +67,8 @@ App.cycle_buttons = function (direction) {
     }
 
     if (waypoint) {
-      App.do_button_select(button)
-      App.do_filter()
-      return
+      selected = button
+      break
     }
 
     if (App.selected_button.name === button.name) {
@@ -77,10 +76,14 @@ App.cycle_buttons = function (direction) {
     }
   }
 
-  if (first) {
-    App.do_button_select(first)
-    App.do_filter()
-  }  
+  if (!selected && first) {
+    selected = first
+  }
+
+  if (selected) {
+    App.do_button_select(selected)
+    App.clear_filter()
+  }
 }
 
 // Get button elements
