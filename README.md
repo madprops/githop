@@ -45,4 +45,4 @@ This can also be used to add/remove custom buttons.
 
 For instance you can have a Blender button with a "/blender/" path.
 
-![](https://i.imgur.com/aTxacqv.jpg)
+![](https://i.imgur.com/zcPdb5b.jpg)
