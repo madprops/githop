@@ -114,8 +114,8 @@ App.fill_item_element = function (item) {
 
   let icon = App.el(".item_icon", item.element)
   jdenticon.update(icon, App.get_unit(item.clean_url))
-  item.filled = true
   
+  item.filled = true
   console.log("Element created")
 }
 
