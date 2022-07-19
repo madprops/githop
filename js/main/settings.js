@@ -161,8 +161,8 @@ App.show_help = function () {
   s += "Button modes:\n"
   s += "path = Substring of the URL\n"
   s += "title = Substring of the title\n"
-  s += "level = Path level (aa/bb = 2)\n"
   s += "hours = Visited before these hours ago\n"
+  s += "level = Path level (aa/bb = 2)\n"
 
   alert(s)
 }

@@ -56,10 +56,10 @@ Buttons can have multiple modes.
 This will match items that contain the defined path inside the URL.
 For instance /code/ will match something/code/myrepo/etc
 
->level
+>title
 
-This will match items that contain the right number of slashes.
-For instance aa/bb/cc will match a level of 3.
+This will match with the title content.
+This is the visible text on the items.
 
 >hours
 
@@ -67,10 +67,10 @@ This will match items that were visited before the hours defined.
 For instance an item visited 30 minutes ago will match with hours: 1.
 An item visited 3 hours ago won't match that.
 
->title
+>level
 
-This will match with the title content.
-This is the visible text on the items.
+This will match items that contain the right number of slashes.
+For instance aa/bb/cc will match a level of 3.
 
 ### Combining Modes
 
