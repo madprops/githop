@@ -15,6 +15,8 @@ Buttons like "Commits" focus on certain kinds of items by matching against a url
 Buttons 1, and 2 refer to path levels. 
 For instance aa/bb is a 2-level path.
 
+The Day button shows items that were visited in the last 24 hours.
+
 ## Icons
 
 Each item gets an icon based on the first level of the url.
