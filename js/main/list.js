@@ -15,8 +15,8 @@ App.start_observer = function () {
 
       let item = App.items[entry.target.dataset.index]
 
-      if (item.created && !item.hidden && !item.icon_created) {
-        App.create_item_icon(item)
+      if (item.created && !item.hidden && !item.filled) {
+        App.fill_item_element(item)
       }
     }
   }, options)
@@ -65,7 +65,7 @@ App.on_results = function (items) {
       date: item.lastVisitTime,
       favorite: favorite_urls.includes(url),
       created: false,
-      icon_created: false,
+      filled: false,
       hidden: true,
       element: el
     }
@@ -88,12 +88,6 @@ App.on_results = function (items) {
 
 // Create an item element
 App.create_item_element = function (item) {
-  item.element.title = item.url
-
-  if (item.favorite) {
-    item.element.classList.add("favorite")
-  }
-
   let icon = document.createElement("canvas")
   icon.classList.add("item_icon")
   icon.width = 25
@@ -108,12 +102,21 @@ App.create_item_element = function (item) {
   item.created = true
 }
 
-// Create an item's icon
-App.create_item_icon = function (item) {
+// Fully create the item element
+App.fill_item_element = function (item) {
+  let hours = Math.round(App.get_hours(item.date) / 24)
+  let title = `${item.url} - Visited: ${hours} days ago`
+  item.element.title = title
+
+  if (item.favorite) {
+    item.element.classList.add("favorite")
+  }
+
   let icon = App.el(".item_icon", item.element)
   jdenticon.update(icon, App.get_unit(item.clean_url))
-  item.icon_created = true
-  console.log("Icon created")
+  item.filled = true
+  
+  console.log("Element created")
 }
 
 // Get next item that is visible
@@ -187,7 +190,6 @@ App.do_filter = function (value = "") {
   let path
   let level
   let hours
-  let now
 
   if (App.selected_button.mode === "all") {
     mode = "all"
@@ -199,7 +201,6 @@ App.do_filter = function (value = "") {
   }  else if (App.selected_button.hours) {
     mode = "hours"
     hours = parseInt(App.selected_button.hours)
-    now = Date.now()
   } else if (App.selected_button.path) {
     mode = "path"
     path = App.selected_button.path.toLowerCase()
@@ -236,7 +237,7 @@ App.do_filter = function (value = "") {
     } 
     
     else if (mode === "hours") {
-      let h = ((now - item.date) / 1000 / 60 / 60)
+      let h = App.get_hours(item.date)
       includes = h <= hours && matches(item)
     } 
     

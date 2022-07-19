@@ -96,3 +96,8 @@ App.div = function (classes = "", id = "") {
 App.count = function (s, b) {
   return s.split(b).length
 }
+
+// Get hours diff between from now
+App.get_hours = function (hours) {
+  return (Date.now() - hours) / 1000 / 60 / 60
+}
