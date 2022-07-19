@@ -23,6 +23,7 @@ App.show_editor = function () {
   App.el("#editor_container").classList.remove("hidden")
   let editor = App.el("#editor")
   editor.value = JSON.stringify(App.settings, undefined, 2)
+  App.original_editor_value = editor.value
   editor.setSelectionRange(0, 0)
   editor.focus()
 }
@@ -94,7 +95,7 @@ App.get_settings = function () {
   }
 
   if (save) {
-    App.save_settings(App.settings, false)
+    App.save_settings(App.settings)
   }
 
   App.buttons = [
@@ -105,10 +106,16 @@ App.get_settings = function () {
     App.buttons_core.About,
   ]
 
-  App.el("#editor_save").addEventListener("click", function () {
+  App.el("#editor_done").addEventListener("click", function () {
+    if (App.original_editor_value === App.el("#editor").value) {
+      App.hide_editor()
+      return
+    }
+
     try {
-      let obj = JSON.parse(editor.value)
-      App.save_settings(obj)
+      let value = App.el("#editor").value
+      let obj = JSON.parse(value)
+      App.save_settings(obj, true)
     } catch (err) {
       alert("Parsing error.")
       return
@@ -117,21 +124,17 @@ App.get_settings = function () {
 
   App.el("#editor_defaults").addEventListener("click", function () {
     if (confirm("Restore defaults?")) {
-      App.save_settings(App.default_settings)
+      App.save_settings(App.default_settings, true)
     }
-  })
-
-  App.el("#editor_cancel").addEventListener("click", function () {
-    App.hide_editor()
   })
 }
 
 // Save settings obj
-App.save_settings = function (obj, restart = true) {
+App.save_settings = function (obj, restart = false) {
   App.save_local_storage(App.ls_settings, obj)
 
   if (restart) {
-    alert("Settings saved. Restart the app.")
+    alert("Changes saved.")
     window.close()
   }
 }
