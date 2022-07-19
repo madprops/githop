@@ -29,16 +29,17 @@ App.add_favorite = function (item) {
   o.title = item.text
   o.url = item.url
   App.favorites.unshift(o)
-  App.favorites = App.favorites.slice(0, App.settings.max_favorites)
-  let urls = App.favorites.map(x => x.url)
 
-  // Remove favorite for some items
-  for (let item of App.items) {
-    if (item.favorite) {
-      if (!urls.includes(item.url)) {
-        item.favorite = false
-        item.element.classList.remove("favorite")
-      }
+  let removed = App.favorites.slice(App.settings.max_favorites)
+  App.favorites = App.favorites.slice(0, App.settings.max_favorites)
+
+  // Remove items that are no longer favorite
+  for (let r of removed) {
+    let r_item = App.get_favorite_item(r)
+
+    if (r_item) {
+      r_item.favorite = false
+      r_item.element.classList.remove("favorite")
     }
   }
 
@@ -66,5 +67,14 @@ App.remove_favorite = function (item) {
 
   if (App.selected_button.mode === "favorites") {
     this.do_filter()
+  }
+}
+
+// Get the item of a favorite
+App.get_favorite_item = function (fav) {
+  for (let item of App.items) {
+    if (item.url === fav.url) {
+      return item
+    }
   }
 }
