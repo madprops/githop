@@ -18,7 +18,7 @@ App.setup_editor = function () {
 
   App.nice_editor.session.setOptions({
     mode: "ace/mode/json",
-    tabSize: 2
+    tabSize: 2,
   })
 }
 
