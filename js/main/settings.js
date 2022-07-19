@@ -123,7 +123,7 @@ App.get_settings = function () {
   ]
 
   App.el("#editor_done").addEventListener("click", function () {
-    if (App.original_editor_value === App.el("#editor").value) {
+    if (App.original_editor_value === App.nice_editor.getValue()) {
       App.hide_editor()
       return
     }
