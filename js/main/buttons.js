@@ -15,14 +15,21 @@ App.make_buttons = function () {
     if (button.title) {
       el.title = button.title
     } else {
+      let titles = []
+
       if (button.path) {
-        el.title = `Matches ${button.path}`
-      } else if (button.level) {
-        el.title = `Path Level ${button.level}`
-      } else if (button.hours) {
-        let s = App.plural(button.hours, "hour", "hours")
-        el.title = `Visited in the last ${s}`
+        titles.push(`Path ${button.path}`)
+      } 
+      
+      if (button.level) {
+        titles.push(`Level ${button.level}`)
+      } 
+      
+      if (button.hours) {
+        titles.push(`Hours ${button.hours}`)
       }
+
+      el.title = titles.join("   |   ")
     }
 
     // Avoid reference problems

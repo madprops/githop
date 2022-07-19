@@ -9,36 +9,40 @@ App.do_filter = function (value = "") {
     value = App.el("#filter").value
   }
 
+  let path
+  let level
+  let hours
+  let modes = []
   let favorite_urls
 
-  if (App.selected_button.mode === "favorites") {
+  if (App.selected_button.mode === "all") {
+    modes.push("all")
+  } else if (App.selected_button.mode === "favorites") {
+    modes.push("favorites")
     favorite_urls = App.favorites.map(x => x.url)
 
     if (favorite_urls.length === 0) {
       App.hide_all_items()
       return
     }
+  } 
+  
+  if (App.selected_button.level) {
+    modes.push("level")
+    level = parseInt(App.selected_button.level)
+  }
+  
+  if (App.selected_button.hours) {
+    modes.push("hours")
+    hours = parseInt(App.selected_button.hours)
+  } 
+  
+  if (App.selected_button.path) {
+    modes.push("path")
+    path = App.selected_button.path.toLowerCase()
   }
 
-  let mode
-  let path
-  let level
-  let hours
-
-  if (App.selected_button.mode === "all") {
-    mode = "all"
-  } else if (App.selected_button.mode === "favorites") {
-    mode = "favorites"
-  } else if (App.selected_button.level) {
-    mode = "level"
-    level = parseInt(App.selected_button.level)
-  }  else if (App.selected_button.hours) {
-    mode = "hours"
-    hours = parseInt(App.selected_button.hours)
-  } else if (App.selected_button.path) {
-    mode = "path"
-    path = App.selected_button.path.toLowerCase()
-  } else {
+  if (modes.length === 0) {
     return
   }
 
@@ -50,35 +54,49 @@ App.do_filter = function (value = "") {
            words.every(x => item.url.includes(x))
   }
 
+  function check_modes (item) {
+    if (!matches(item)) {
+      return false
+    }
+
+    if (modes.includes("level")) {  
+      if (App.count(item.clean_url, "/") !== level) {
+        return false
+      }
+    } 
+    
+    if (modes.includes("hours")) {
+      let h = App.get_hours(item.date)
+
+      if (h > hours) {
+        return false
+      }
+    } 
+    
+    if (modes.includes("path")) {
+      if (!item.url.toLowerCase().includes(path)) {
+        return false
+      }
+    }
+
+    return true
+  }
+
   for (let item of App.items) {
     let includes
 
-    if (mode === "all") {
+    if (modes.includes("all")) {
       includes = matches(item)
     } 
     
-    else if (mode === "favorites") {
+    else if (modes.includes("favorites")) {
       includes = favorite_urls.includes(item.url) && matches(item)
     } 
     
-    else if (mode === "level") {
-      if (App.count(item.clean_url, "/") !== level) {
-        App.hide_item(item)
-        continue
-      }
-
-      includes = matches(item)
-    } 
-    
-    else if (mode === "hours") {
-      let h = App.get_hours(item.date)
-      includes = h <= hours && matches(item)
-    } 
-    
-    else if (mode === "path") {
-      includes = item.url.toLowerCase().includes(path) && matches(item)
+    else {
+      includes = check_modes(item)
     }
-
+    
     if (includes) {
       App.show_item(item)
 
