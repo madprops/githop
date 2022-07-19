@@ -49,7 +49,7 @@ App.start_events = function () {
     if (App.editor_on) {
       return
     }
-    
+
     App.do_filter()
   })
 
@@ -65,7 +65,7 @@ App.start_events = function () {
         } else {
           App.add_favorite(item)
         }
-      } else if (e.target.closest(".item_text")) {
+      } else if (e.target.closest(".item_title")) {
         App.open_tab(item.url)
       }
     }

@@ -12,8 +12,8 @@ App.make_buttons = function () {
       el.classList.add("actionbox")
     }
 
-    if (button.title) {
-      el.title = button.title
+    if (button.tooltip) {
+      el.title = button.tooltip
     } else {
       let titles = []
 
@@ -28,6 +28,10 @@ App.make_buttons = function () {
       if (button.hours) {
         titles.push(`Hours ${button.hours}`)
       }
+
+      if (button.title) {
+        titles.push(`Title ${button.title}`)
+      } 
 
       el.title = titles.join("   |   ")
     }

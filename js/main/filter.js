@@ -12,6 +12,7 @@ App.do_filter = function (value = "") {
   let path
   let level
   let hours
+  let title
   let modes = []
   let favorite_urls
 
@@ -42,6 +43,11 @@ App.do_filter = function (value = "") {
     path = App.selected_button.path.toLowerCase()
   }
 
+  if (App.selected_button.title) {
+    modes.push("title")
+    title = App.selected_button.title.toLowerCase()
+  }
+
   if (modes.length === 0) {
     return
   }
@@ -50,7 +56,7 @@ App.do_filter = function (value = "") {
   let selected = false
 
   function matches (item) {
-    return words.every(x => item.text.toLowerCase().includes(x)) || 
+    return words.every(x => item.title.toLowerCase().includes(x)) || 
            words.every(x => item.url.includes(x))
   }
 
@@ -75,6 +81,12 @@ App.do_filter = function (value = "") {
     
     if (modes.includes("path")) {
       if (!item.url.toLowerCase().includes(path)) {
+        return false
+      }
+    }
+
+    if (modes.includes("title")) {
+      if (!item.title.toLowerCase().includes(title)) {
         return false
       }
     }

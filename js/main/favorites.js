@@ -26,7 +26,7 @@ App.add_favorite = function (item) {
   item.element.classList.add("favorite")
   
   let o = {}
-  o.title = item.text
+  o.title = item.title
   o.url = item.url
   App.favorites.unshift(o)
 

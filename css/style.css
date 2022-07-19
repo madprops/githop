@@ -97,7 +97,7 @@ body, html {
   align-items: center;
 }
 
-.item_text {
+.item_title {
   overflow-wrap: break-word;
 	word-break: break-word;
   padding-top: 0.5rem;

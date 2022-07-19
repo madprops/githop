@@ -67,7 +67,14 @@ This will match items that were visited before the hours defined.
 For instance an item visited 30 minutes ago will match with hours: 1.
 An item visited 3 hours ago won't match that.
 
-These modes can be combined for more precise results:
+>title
+
+This will match with the title content.
+This is the visible text on the items.
+
+### Combining Modes
+
+Modes can be combined for more precise results:
 
 ```
 {

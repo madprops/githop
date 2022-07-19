@@ -21,13 +21,13 @@ App.setup_items = function (items) {
     }
 
     let clean_url = App.clean_url(url)
-    let text = item.title.substring(0, App.settings.max_title_length).trim()
+    let title = item.title.substring(0, App.settings.max_title_length).trim()
 
-    if (!text || added.includes(text)) {
+    if (!title || added.includes(title)) {
       continue
     }
 
-    added.push(text)
+    added.push(title)
 
     let el = document.createElement("div")
     el.classList.add("item")
@@ -37,7 +37,7 @@ App.setup_items = function (items) {
 
     let obj = {
       index: i,
-      text: text,
+      title: title,
       url: url,
       clean_url: clean_url,
       date: item.lastVisitTime,
@@ -96,10 +96,10 @@ App.create_item_element = function (item) {
   icon.height = 25
   item.element.append(icon)
 
-  let text = document.createElement("div")
-  text.classList.add("item_text")
-  text.textContent = item.text
-  item.element.append(text)
+  let title = document.createElement("div")
+  title.classList.add("item_title")
+  title.textContent = item.title
+  item.element.append(title)
 
   item.created = true
 }

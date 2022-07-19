@@ -53,10 +53,10 @@ App.hide_editor = function () {
 
 // These buttons are always present
 App.buttons_core = {
-  "All": {name: "All", mode: "all", title: "Show all items"},
-  "Favorites": {name: "Favorites", mode: "favorites", title: "Favorite items. Click the icons to toggle"},
-  "Home": {name: "Home", mode: "home", title: "Go to the Homepage", alt: true},
-  "About": {name: "?", mode: "about", title: "Open the Editor", alt: true},
+  "All": {name: "All", mode: "all", tooltip: "Show all items"},
+  "Favorites": {name: "Favorites", mode: "favorites", tooltip: "Favorite items. Click the icons to toggle"},
+  "Home": {name: "Home", mode: "home", tooltip: "Go to the Homepage", alt: true},
+  "About": {name: "?", mode: "about", tooltip: "Open the Editor", alt: true},
 }
 
 // Basic information
