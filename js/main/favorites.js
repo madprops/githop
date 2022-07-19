@@ -37,10 +37,7 @@ App.add_favorite = function (item) {
     if (item.favorite) {
       if (!urls.includes(item.url)) {
         item.favorite = false
-        
-        if (item.filled) {
-          item.element.classList.remove("favorite")
-        }
+        item.element.classList.remove("favorite")
       }
     }
   }
