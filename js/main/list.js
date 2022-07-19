@@ -105,7 +105,7 @@ App.create_item_element = function (item) {
 // Fully create the item element
 App.fill_item_element = function (item) {
   let hours = Math.round(App.get_hours(item.date) / 24)
-  let title = `${item.url} - Visited: ${hours} days ago`
+  let title = `${item.url} (Visited ${hours} days ago)`
   item.element.title = title
 
   if (item.favorite) {
@@ -114,7 +114,7 @@ App.fill_item_element = function (item) {
 
   let icon = App.el(".item_icon", item.element)
   jdenticon.update(icon, App.get_unit(item.clean_url))
-  
+
   item.filled = true
   console.log("Element created")
 }
