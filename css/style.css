@@ -66,6 +66,10 @@ body, html {
   scrollbar-width: none;
 }
 
+#buttons::-webkit-scrollbar {
+  width: 0;
+}
+
 .button {
   font-size: 0.95rem;
   min-width: 2rem;
