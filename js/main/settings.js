@@ -74,6 +74,32 @@ App.setup_settings = function () {
   ]
 
   App.get_settings()
+
+  App.el("#editor_done").addEventListener("click", function () {
+    if (App.original_editor_value === App.nice_editor.getValue()) {
+      App.hide_editor()
+      return
+    }
+
+    try {
+      let value = App.nice_editor.getValue()
+      let obj = JSON.parse(value)
+      App.save_settings(obj, true)
+    } catch (err) {
+      alert(err)
+      return
+    }
+  })
+
+  App.el("#editor_defaults").addEventListener("click", function () {
+    if (confirm("Restore defaults?")) {
+      App.save_settings(App.default_settings, true)
+    }
+  })
+
+  App.el("#editor_help").addEventListener("click", function () {
+    App.show_help()
+  })  
 }
 
 // Get the saved settings
@@ -112,32 +138,6 @@ App.get_settings = function () {
     App.buttons_core.Favorites,
     ...App.settings.buttons,
   ]
-
-  App.el("#editor_done").addEventListener("click", function () {
-    if (App.original_editor_value === App.nice_editor.getValue()) {
-      App.hide_editor()
-      return
-    }
-
-    try {
-      let value = App.nice_editor.getValue()
-      let obj = JSON.parse(value)
-      App.save_settings(obj, true)
-    } catch (err) {
-      alert(err)
-      return
-    }
-  })
-
-  App.el("#editor_defaults").addEventListener("click", function () {
-    if (confirm("Restore defaults?")) {
-      App.save_settings(App.default_settings, true)
-    }
-  })
-
-  App.el("#editor_help").addEventListener("click", function () {
-    App.show_help()
-  })
 }
 
 // Save settings obj
