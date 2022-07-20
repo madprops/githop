@@ -139,8 +139,8 @@ App.setup_buttons = function () {
   App.get_last_button()
 
   let buttons = App.el("#buttons")
-  let left = App.el("#buttons_scroll_left")
-  let right = App.el("#buttons_scroll_right")
+  let left = App.el("#buttons_left")
+  let right = App.el("#buttons_right")
 
   buttons.addEventListener("wheel", function (e) {
     let direction = e.deltaY > 0 ? "down" : "up"
