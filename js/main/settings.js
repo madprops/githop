@@ -54,8 +54,6 @@ App.hide_editor = function () {
 App.buttons_core = {
   "All": {name: "All", mode: "all", tooltip: "Show all items"},
   "Favorites": {name: "Favorites", mode: "favorites", tooltip: "Favorite items. Click the icons to toggle"},
-  "Home": {name: "Home", mode: "home", tooltip: "Go to the Homepage", alt: true},
-  "About": {name: "?", mode: "about", tooltip: "Open the Editor", alt: true},
 }
 
 // Basic information
@@ -117,8 +115,6 @@ App.get_settings = function () {
     App.buttons_core.All,
     App.buttons_core.Favorites,
     ...App.settings.buttons,
-    App.buttons_core.Home,
-    App.buttons_core.About,
   ]
 
   App.el("#editor_done").addEventListener("click", function () {

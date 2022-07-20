@@ -151,3 +151,30 @@ App.set_filter_placeholder = function () {
 
   App.el("#filter").placeholder = s
 }
+
+// Prepare filter buttons
+App.setup_filter = function () {
+  // When a user types something
+  App.el("#filter").addEventListener("input", function (e) {
+    if (App.editor_on) {
+      return
+    }
+
+    App.do_filter()
+  })
+
+  // When the filter clear button is pressed
+  App.el("#filter_btn_clear").addEventListener("click", function () {
+    App.clear_filter()
+  })
+
+  // When the filter home button is pressed
+  App.el("#filter_btn_home").addEventListener("click", function () {
+    App.open_tab(App.settings.homepage)
+  })
+
+  // When the filter editor button is pressed
+  App.el("#filter_btn_editor").addEventListener("click", function () {
+    App.show_editor()
+  })
+}

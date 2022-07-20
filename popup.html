@@ -5,19 +5,24 @@
     <script src="js/libs/ace.js"></script>
     <script src="js/libs/jdenticon.js"></script>
     <script src="js/main/app.js"></script>
+    <script src="js/main/utils.js"></script>
     <script src="js/main/settings.js"></script>
     <script src="js/main/events.js"></script>
     <script src="js/main/favorites.js"></script>
     <script src="js/main/buttons.js"></script>
     <script src="js/main/items.js"></script>
+    <script src="js/main/list.js"></script>
     <script src="js/main/filter.js"></script>
-    <script src="js/main/utils.js"></script>
   </head>
   <body>
     <div id="main">
       <div id="filter_container">
         <input type="text" id="filter" autocomplete="off">
-        <div id="filter_clear" class="filter_button actionbox">Clear</div>
+        <div id="filter_buttons">
+          <button id="filter_btn_clear" class="button button_2 actionbox">Clear</button>
+          <button id="filter_btn_home" class="button button_2 actionbox" title="Go to the Homepage">Home</button>
+          <button id="filter_btn_editor" class="button button_2 actionbox" title="Open the Editor">?</button>
+        </div>
       </div>
 
       <div id="buttons"></div>

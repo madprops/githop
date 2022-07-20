@@ -7,11 +7,6 @@ App.make_buttons = function () {
     el.textContent = button.name
     el.classList.add("button")
     
-    if (button.alt) {
-      el.classList.add("button_2")
-      el.classList.add("actionbox")
-    }
-
     if (button.tooltip) {
       el.title = button.tooltip
     } else {
@@ -40,16 +35,8 @@ App.make_buttons = function () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      if (btn.alt) {
-        if (btn.mode === "home") {
-          App.go_home()
-        } else if (btn.mode === "about") {
-          App.show_editor()
-        }
-      } else {
-        App.do_button_select(btn)
-        App.clear_filter()
-      }
+      App.do_button_select(btn)
+      App.clear_filter()
     })
 
     buttons.append(el)
@@ -69,10 +56,6 @@ App.cycle_buttons = function (direction) {
   let first
   
   for (let button of map) {
-    if (button.alt) {
-      continue
-    }
-
     if (!first) {
       first = button
     }
@@ -147,9 +130,4 @@ App.get_last_button = function () {
 // Saves the last mode localStorage object
 App.save_last_button = function () {
   App.save_local_storage(App.ls_last_button, App.last_button)
-}
-
-// Go to homepage
-App.go_home = function () {
-  App.open_tab(App.settings.homepage)
 }

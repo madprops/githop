@@ -37,20 +37,11 @@ body, html {
   outline: 1px solid blue;
 }
 
-.filter_button {
+#filter_buttons {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  gap: 0.5rem;
   margin-left: 0.5rem;
-  flex-grow: 0;
-  flex-shrink: 0;
-  border: 1px solid grey;
-  border-radius: 25px;
-  font-size: 0.77rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.45rem;
-  padding-right: 0.45rem;
 }
 
 #buttons {
