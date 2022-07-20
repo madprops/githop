@@ -11,10 +11,4 @@ App.setup_events()
 App.setup_filter()
 App.setup_list()
 App.focus_filter()
-
-// Do the history search
-browser.history.search({
-  text: App.settings.homepage,
-  maxResults: App.settings.max_results,
-  startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months)
-}).then(App.setup_items)
+App.get_items()

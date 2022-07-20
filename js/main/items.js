@@ -1,5 +1,14 @@
+// Get items from history
+App.get_items = function () {
+  browser.history.search({
+    text: App.settings.homepage,
+    maxResults: App.settings.max_results,
+    startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months)
+  }).then(App.process_items)
+}
+
 // When results are found
-App.setup_items = function (items) {
+App.process_items = function (items) {
   let added = []
   let base_url = App.unslash(App.settings.homepage)
   let favorite_urls = App.favorites.map(x => x.url)
