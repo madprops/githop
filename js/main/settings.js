@@ -108,6 +108,7 @@ App.get_settings = function () {
   }
 
   if (save) {
+    App.settings = App.order_settings(App.settings)
     App.save_settings(App.settings)
   }
 
@@ -151,6 +152,18 @@ App.save_settings = function (obj, restart = false) {
   if (restart) {
     alert("Changes saved.")
     window.close()
+  }
+}
+
+// Order the settings object
+App.order_settings = function (obj) {
+  return {
+    homepage: obj.homepage,
+    max_results: obj.max_results,
+    history_months: obj.history_months,
+    max_title_length: obj.max_title_length,
+    max_favorites: obj.max_favorites,
+    buttons: obj.buttons,
   }
 }
 
