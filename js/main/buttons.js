@@ -90,6 +90,7 @@ App.highlight_button = function (btn) {
   for (let button of App.get_buttons()) {
     if (button.textContent === btn.name) {
       button.classList.add("highlighted")
+      button.scrollIntoView({block: "nearest"})
     } else {
       button.classList.remove("highlighted")
     }
@@ -130,4 +131,38 @@ App.get_last_button = function () {
 // Saves the last mode localStorage object
 App.save_last_button = function () {
   App.save_local_storage(App.ls_last_button, App.last_button)
+}
+
+// Prepare buttons
+App.setup_buttons = function () {
+  App.make_buttons()
+  App.get_last_button()
+
+  App.el("#buttons_scroll_left").addEventListener("click", function () {
+    App.scroll_buttons_left()
+  })
+
+  App.el("#buttons_scroll_right").addEventListener("click", function () {
+    App.scroll_buttons_right()
+  })
+
+  App.el("#buttons").addEventListener("wheel", function (e) {
+    let direction = e.deltaY > 0 ? "down" : "up"
+
+    if (direction === "down") {
+      App.scroll_buttons_right()
+    } else if (direction === "up") {
+      App.scroll_buttons_left()
+    }
+  })
+}
+
+// Scroll buttons to the right
+App.scroll_buttons_right = function () {
+  App.el("#buttons").scrollLeft += 50
+}
+
+// Scroll buttons to the left
+App.scroll_buttons_left = function () {
+  App.el("#buttons").scrollLeft -= 50
 }

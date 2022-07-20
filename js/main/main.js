@@ -4,9 +4,8 @@ App.editor_on = false
 App.date_start = Date.now()
 
 App.setup_settings()
-App.make_buttons()
+App.setup_buttons()
 App.get_favorites()
-App.get_last_button()
 App.set_filter_placeholder()
 App.start_item_observer()
 App.setup_events()
