@@ -159,10 +159,10 @@ App.setup_buttons = function () {
 
 // Scroll buttons to the right
 App.scroll_buttons_right = function () {
-  App.el("#buttons").scrollLeft += 50
+  App.el("#buttons").scrollLeft += 80
 }
 
 // Scroll buttons to the left
 App.scroll_buttons_left = function () {
-  App.el("#buttons").scrollLeft -= 50
+  App.el("#buttons").scrollLeft -= 80
 }
