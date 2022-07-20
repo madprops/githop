@@ -1,5 +1,5 @@
 // Get favorite local storage
-App.get_favorites = function () {
+App.setup_favorites = function () {
   App.favorites = App.get_local_storage(App.ls_favorites)
 
   if (App.favorites === null) {

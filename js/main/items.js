@@ -1,3 +1,8 @@
+// Setup items
+App.setup_items = function () {
+  App.start_item_observer()
+}
+
 // Get items from history
 App.get_items = function () {
   browser.history.search({

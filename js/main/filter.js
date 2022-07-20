@@ -166,4 +166,6 @@ App.setup_filter = function () {
   App.el("#filter_btn_editor").addEventListener("click", function () {
     App.show_editor()
   })
+  
+  App.focus_filter()
 }
