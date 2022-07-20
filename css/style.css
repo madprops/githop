@@ -200,3 +200,7 @@ body, html {
   gap: 1rem;
   padding: 0.5rem;
 }
+
+.float_right {
+  margin-left: auto;
+}
