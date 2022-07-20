@@ -24,6 +24,7 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.77rem;
 }
 
 .top_container_row {
@@ -63,12 +64,6 @@ body, html {
   justify-content: center;
   max-width: 100%;
   user-select: none;
-  margin-top: 0.77rem;
-}
-
-.buttons_container_row {
-  margin-top: 0 !important;
-  margin-left: 0.77rem !important;
 }
 
 #buttons_left {
