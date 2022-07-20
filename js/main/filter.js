@@ -18,7 +18,9 @@ App.do_filter = function (value = "") {
 
   if (App.selected_button.mode === "all") {
     modes.push("all")
-  } else if (App.selected_button.mode === "favorites") {
+  } 
+  
+  if (App.selected_button.mode === "favorites") {
     modes.push("favorites")
     favorite_urls = App.favorites.map(x => x.url)
 
