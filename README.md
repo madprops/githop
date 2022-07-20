@@ -84,3 +84,9 @@ Modes can be combined for more precise results:
   "level": 2
 }
 ```
+
+## Responsive
+
+If there's space, the top will be displayed in a single row:
+
+![](https://i.imgur.com/8ldaRZS.jpg)
