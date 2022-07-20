@@ -138,15 +138,11 @@ App.setup_buttons = function () {
   App.make_buttons()
   App.get_last_button()
 
-  App.el("#buttons_scroll_left").addEventListener("click", function () {
-    App.scroll_buttons_left()
-  })
+  let buttons = App.el("#buttons")
+  let left = App.el("#buttons_scroll_left")
+  let right = App.el("#buttons_scroll_right")
 
-  App.el("#buttons_scroll_right").addEventListener("click", function () {
-    App.scroll_buttons_right()
-  })
-
-  App.el("#buttons").addEventListener("wheel", function (e) {
+  buttons.addEventListener("wheel", function (e) {
     let direction = e.deltaY > 0 ? "down" : "up"
 
     if (direction === "down") {
@@ -155,6 +151,19 @@ App.setup_buttons = function () {
       App.scroll_buttons_left()
     }
   })
+
+  left.addEventListener("click", function () {
+    App.scroll_buttons_left()
+  })
+
+  right.addEventListener("click", function () {
+    App.scroll_buttons_right()
+  })
+
+  if (buttons.scrollWidth <= buttons.clientWidth) {
+    left.classList.add("hidden")
+    right.classList.add("hidden")
+  }
 }
 
 // Scroll buttons to the right
