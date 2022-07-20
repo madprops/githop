@@ -141,17 +141,6 @@ App.focus_filter = function () {
   App.el("#filter").focus()
 }
 
-// Set the filter placeholder
-App.set_filter_placeholder = function () {
-  let s = App.name
-
-  if (App.description) {
-    s += ` - ${App.description}`
-  }
-
-  App.el("#filter").placeholder = s
-}
-
 // Prepare filter buttons
 App.setup_filter = function () {
   // When a user types something

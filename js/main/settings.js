@@ -1,6 +1,5 @@
 // Information
 App.name = "GitHop"
-App.description = "Type to filter - Enter to select - Tab to cycle"
 
 // localStorage settings
 App.ls_favorites = "favorites_v1"
