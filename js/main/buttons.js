@@ -152,17 +152,17 @@ App.setup_buttons = function () {
     }
   })
 
-  left.addEventListener("click", function () {
-    App.scroll_buttons_left()
-  })
-
-  right.addEventListener("click", function () {
-    App.scroll_buttons_right()
-  })
-
   if (buttons.scrollWidth <= buttons.clientWidth) {
     left.classList.add("hidden")
     right.classList.add("hidden")
+  } else {
+    left.addEventListener("click", function () {
+      App.scroll_buttons_left()
+    })
+  
+    right.addEventListener("click", function () {
+      App.scroll_buttons_right()
+    })
   }
 }
 
