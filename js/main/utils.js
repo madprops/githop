@@ -80,3 +80,8 @@ App.plural = function (n, singular, plural) {
     return `${n} ${plural}`
   }
 }
+
+// Print a message
+App.log = function (s) {
+  console.log(s)
+}

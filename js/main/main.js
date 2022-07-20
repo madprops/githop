@@ -11,6 +11,7 @@ App.setup_favorites()
 App.setup_events()
 App.setup_filter()
 App.setup_list()
+App.setup_ui()
 App.setup_items()
 
 // Start

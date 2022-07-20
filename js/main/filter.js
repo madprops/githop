@@ -126,7 +126,7 @@ App.do_filter = function (value = "") {
 
   // Check performance
   let d = Date.now() - filter_start
-  console.log(`Filter Time: ${d}`)
+  App.log(`Filter Time: ${d}`)
 }
 
 // Clear filter

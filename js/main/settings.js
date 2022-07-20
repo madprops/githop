@@ -114,7 +114,7 @@ App.get_settings = function () {
   for (let p in App.default_settings) {
     if (App.settings[p] === undefined) {
       App.settings[p] = App.default_settings[p]
-      console.log(`Setting '${p}' set to default`)
+      App.log(`Setting '${p}' set to default`)
       save = true
     }
   }
@@ -122,7 +122,7 @@ App.get_settings = function () {
   for (let p in App.settings) {
     if (App.default_settings[p] === undefined) {
       App.settings[p] = undefined
-      console.log(`Setting '${p}' removed`)
+      App.log(`Setting '${p}' removed`)
       save = true
     }
   }

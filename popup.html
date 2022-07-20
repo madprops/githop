@@ -12,25 +12,27 @@
     <script src="js/main/buttons.js"></script>
     <script src="js/main/items.js"></script>
     <script src="js/main/list.js"></script>
+    <script src="js/main/ui.js"></script>
     <script src="js/main/filter.js"></script>
   </head>
   <body>
     <div id="main">
-      <div id="filter_container">
-
-        <input type="text" id="filter" autocomplete="off" placeholder="Filter">
-
-        <div id="filter_buttons">
-          <button id="filter_btn_clear" class="button button_2 actionbox" title="Clear the Filter">Clear</button>
-          <button id="filter_btn_home" class="button button_2 actionbox" title="Go to the Homepage">Home</button>
-          <button id="filter_btn_editor" class="button button_2 actionbox" title="Open the Editor">?</button>
+      <div id="top_container">
+        <div id="filter_container">
+          <input type="text" id="filter" autocomplete="off" placeholder="Filter">
+  
+          <div id="filter_buttons">
+            <button id="filter_btn_clear" class="button button_2 actionbox" title="Clear the Filter">Clear</button>
+            <button id="filter_btn_home" class="button button_2 actionbox" title="Go to the Homepage">Home</button>
+            <button id="filter_btn_editor" class="button button_2 actionbox" title="Open the Editor">?</button>
+          </div>
         </div>
-      </div>
-
-      <div id="buttons_container">
-        <div id="buttons_left" class="action">&lt;</div>
-        <div id="buttons"></div>
-        <div id="buttons_right" class="action">&gt;</div>
+  
+        <div id="buttons_container">
+          <div id="buttons_left" class="action">&lt;</div>
+          <div id="buttons"></div>
+          <div id="buttons_right" class="action">&gt;</div>
+        </div>
       </div>
 
       <div id="list"></div>

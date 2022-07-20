@@ -73,9 +73,9 @@ App.process_items = function (items) {
 
   // Check performance
   let d = Date.now() - App.date_start
-  console.log(`Time: ${d}`)
-  console.log(`Results: ${items.length}`)
-  console.log(`Items: ${App.items.length}`)
+  App.log(`Time: ${d}`)
+  App.log(`Results: ${items.length}`)
+  App.log(`Items: ${App.items.length}`)
 }
 
 // Start intersection observer to check visibility
@@ -133,7 +133,7 @@ App.fill_item_element = function (item) {
   jdenticon.update(icon, App.get_unit(item.clean_url))
 
   item.filled = true
-  console.log("Element created")
+  App.log("Element created")
 }
 
 // Get next item that is visible

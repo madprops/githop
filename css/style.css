@@ -19,6 +19,17 @@ body, html {
   box-sizing: border-box;
 }
 
+#top_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.top_container_row {
+  flex-direction: row !important;
+}
+
 #filter_container {
   display: flex;
   flex-direction: row;
@@ -53,6 +64,11 @@ body, html {
   max-width: 100%;
   user-select: none;
   margin-top: 0.77rem;
+}
+
+.buttons_container_row {
+  margin-top: 0 !important;
+  margin-left: 0.77rem !important;
 }
 
 #buttons_left {
@@ -183,8 +199,4 @@ body, html {
   flex-direction: row;
   gap: 1rem;
   padding: 0.5rem;
-}
-
-#editor_info {
-  margin-left: auto;
 }
