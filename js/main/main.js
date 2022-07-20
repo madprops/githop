@@ -3,7 +3,7 @@ App.editor_on = false
 // Used for performance measuring
 App.date_start = Date.now()
 
-App.get_settings()
+App.setup_settings()
 App.make_buttons()
 App.get_favorites()
 App.get_last_button()

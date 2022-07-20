@@ -56,30 +56,25 @@ App.buttons_core = {
   "Favorites": {name: "Favorites", mode: "favorites", tooltip: "Favorite items. Click the icons to toggle"},
 }
 
-// Basic information
-App.default_settings = {}
-App.default_settings.homepage = "https://github.com"
+App.setup_settings = function () {
+  App.default_settings = {}
+  App.default_settings.homepage = "https://github.com"
+  App.default_settings.max_results = 1000
+  App.default_settings.history_months = 12
+  App.default_settings.max_title_length = 250
+  App.default_settings.max_favorites = 250
+  App.default_settings.buttons = [
+    {name: "Commits", path: "/commit/"},
+    {name: "Issues", path: "/issues/"},
+    {name: "Pulls", path: "/pull/"},
+    {name: "Tags", path: "/tag/"},
+    {name: "Day", hours: 24},
+    {name: "1", level: 1},
+    {name: "2", level: 2},
+  ]
 
-// Max results to fetch from the history
-App.default_settings.max_results = 1000
-
-// How far back to search for results
-App.default_settings.history_months = 12
-
-// Limits
-App.default_settings.max_title_length = 250
-App.default_settings.max_favorites = 250
-
-// Configurable buttons
-App.default_settings.buttons = [
-  {name: "Commits", path: "/commit/"},
-  {name: "Issues", path: "/issues/"},
-  {name: "Pulls", path: "/pull/"},
-  {name: "Tags", path: "/tag/"},
-  {name: "Day", hours: 24},
-  {name: "1", level: 1},
-  {name: "2", level: 2},
-]
+  App.get_settings()
+}
 
 // Get the saved settings
 App.get_settings = function () {
