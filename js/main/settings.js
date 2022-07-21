@@ -209,17 +209,16 @@ App.check_setting_types = function (obj, do_alert = false) {
     let the_type = typeof App.default_settings[key]
 
     if (typeof obj[key] !== the_type) {
-      obj[key] = App.default_settings[key]
       let msg = `[Settings] Invalid type for ${key}. It should be ${the_type}.`
-
+      
       if (do_alert) {
         alert(msg)
         return true
       } else {
+        obj[key] = App.default_settings[key]
         App.log(msg)
+        changed = true
       }
-
-      changed = true
     }
   }
 
