@@ -138,7 +138,7 @@ Check the `Modes` section above to see how to configure buttons.
 Settings must be valid json. 
 If there's a parsing error, a message with the specific error will show.
 
-### Intersection Observer
+## Intersection Observer
 
 Instead of fully building all the items in the list, an intersection observer is used
 to detect when an item becomes visible, to fill it with the remaining heavy components.
