@@ -88,7 +88,7 @@ App.setup_settings = function () {
   App.default_settings.history_months = 12
   App.default_settings.text_mode = "title",
   App.default_settings.max_text_length = 250
-  App.default_settings.max_favorites = 250
+  App.default_settings.max_favorites = 100
   App.default_settings.buttons = [
     {name: "Commits", path: "/commit/"},
     {name: "Issues", path: "/issues/"},

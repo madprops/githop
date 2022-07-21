@@ -111,7 +111,7 @@ What text to show in the items. Either "title" or "url".
 
 >max_text_length
 
-How long the visible text in the items can be.
+How long the text in the items can be.
 
 >max_favorites
 
