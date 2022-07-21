@@ -1,6 +1,6 @@
 App.setup_list = function () {
   let list = App.el("#list")
-  
+
   // When list items are clicked
   list.addEventListener("click", function (e) {
     if (e.target.closest(".item")) {
@@ -13,7 +13,7 @@ App.setup_list = function () {
         } else {
           App.add_favorite(item)
         }
-      } else if (e.target.closest(".item_title")) {
+      } else if (e.target.closest(".item_text")) {
         App.open_tab(item.url)
       }
     }

@@ -37,11 +37,11 @@ App.process_items = function (items) {
     let clean_url = App.clean_url(url)
     let title = item.title.substring(0, App.settings.max_title_length).trim()
 
-    if (!title || added.includes(title)) {
+    if (!title || added.includes(url)) {
       continue
     }
 
-    added.push(title)
+    added.push(url)
 
     let el = document.createElement("div")
     el.classList.add("item")
@@ -110,11 +110,16 @@ App.create_item_element = function (item) {
   icon.height = 25
   item.element.append(icon)
 
-  let title = document.createElement("div")
-  title.classList.add("item_title")
-  title.textContent = item.title
-  item.element.append(title)
+  let text = document.createElement("div")
+  text.classList.add("item_text")
 
+  if (App.settings.text_mode === "title") {
+    text.textContent = item.title
+  } else if (App.settings.text_mode === "url") {
+    text.textContent = item.clean_url
+  }
+
+  item.element.append(text)
   item.created = true
 }
 
@@ -122,8 +127,13 @@ App.create_item_element = function (item) {
 App.fill_item_element = function (item) {
   let days = Math.round(App.get_hours(item.date) / 24)
   let s = App.plural(days, "day", "days")
-  let title = `${item.url} (Visited ${s} ago)`
-  item.element.title = title
+  let visited = `(Visited ${s} ago)`
+
+  if (App.settings.text_mode === "title") {
+    item.element.title = `${item.url} ${visited}`
+  } else if (App.settings.text_mode === "url") {
+    item.element.title = `${item.title} ${visited}`
+  }
 
   if (item.favorite) {
     item.element.classList.add("favorite")

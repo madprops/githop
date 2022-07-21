@@ -90,3 +90,45 @@ Modes can be combined for more precise results:
 If there's space, the top will be displayed in a single row:
 
 ![](https://i.imgur.com/8ldaRZS.jpg)
+
+## Settings
+
+>homepage
+
+Them main/root website. This will be used to get the results from the history. This will open a tab to that location when the Home button is clicked.
+
+>max_results
+
+Maximum results to fetch from the history. The amount displayed can be less since some items get filtered.
+
+>history_months
+
+How far behind in history to search for results. This could be limited by max_results and vice-versa.
+
+>text_mode
+
+What text to show in the items. Either "title" or "url".
+
+>max_text_length
+
+How long the visible text in the items can be.
+
+>max_favorites
+
+How many favorite items to keep stored.
+Favorite items will only show if the items are still in the browser history.
+
+>buttons
+
+A list of custom buttons. For instance:
+
+```
+{name: "Tags", path: "/tag/"},
+{name: "Day", hours: 24},
+{name: "1", level: 1}
+```
+
+### JSON
+
+Settings must be valid json. 
+If there's a parsing error, a message with the specific error will show.

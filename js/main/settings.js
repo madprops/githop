@@ -86,7 +86,8 @@ App.setup_settings = function () {
   App.default_settings.homepage = "https://github.com"
   App.default_settings.max_results = 1000
   App.default_settings.history_months = 12
-  App.default_settings.max_title_length = 250
+  App.default_settings.text_mode = "title",
+  App.default_settings.max_text_length = 250
   App.default_settings.max_favorites = 250
   App.default_settings.buttons = [
     {name: "Commits", path: "/commit/"},
@@ -155,7 +156,8 @@ App.order_settings = function (obj) {
     homepage: obj.homepage,
     max_results: obj.max_results,
     history_months: obj.history_months,
-    max_title_length: obj.max_title_length,
+    text_mode: obj.text_mode,
+    max_text_length: obj.max_text_length,
     max_favorites: obj.max_favorites,
     buttons: obj.buttons,
   }

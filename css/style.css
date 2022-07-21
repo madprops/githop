@@ -63,7 +63,6 @@ body, html {
   align-items: center;
   justify-content: center;
   max-width: 100%;
-  user-select: none;
 }
 
 #buttons_left {
@@ -108,7 +107,6 @@ body, html {
   overflow-x: hidden;
   margin-top: 1rem;
   flex-grow: 1;
-  user-select: none;
   height: 100%;
 }
 
@@ -122,7 +120,7 @@ body, html {
   align-items: center;
 }
 
-.item_title {
+.item_text {
   overflow-wrap: break-word;
 	word-break: break-word;
   padding-top: 0.5rem;
@@ -198,4 +196,8 @@ body, html {
 
 .float_right {
   margin-left: auto;
+}
+
+.unselectable {
+  user-select: none;
 }

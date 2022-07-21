@@ -17,7 +17,7 @@
   </head>
   <body>
     <div id="main">
-      <div id="top_container">
+      <div id="top_container" class="unselectable">
         <div id="filter_container">
           <input type="text" id="filter" autocomplete="off" placeholder="Filter">
   
@@ -35,14 +35,14 @@
         </div>
       </div>
 
-      <div id="list"></div>
+      <div id="list" class="unselectable"></div>
     </div>
 
     <div id="editor_container" class="hidden">
       <div id="editor_buttons">
-        <div id="editor_done" class="action underline">Done</div>
-        <div id="editor_defaults" class="action underline">Defaults</div>
-        <div id="editor_help" class="action underline">Help</div>
+        <div id="editor_done" class="action underline unselectable">Done</div>
+        <div id="editor_defaults" class="action underline unselectable">Defaults</div>
+        <div id="editor_help" class="action underline unselectable">Help</div>
         <div id="editor_info" class="float_right"></div>
       </div>
 
