@@ -94,32 +94,32 @@ If there's space, the top will be displayed in a single row:
 
 ## Settings
 
->homepage
+>homepage (string)
 
 Them main/root website. This will be used to get the results from the history. This will open a tab to that location when the Home button is clicked.
 
->max_results
+>max_results (integer)
 
 Maximum results to fetch from the history. The amount displayed can be less since some items get filtered.
 
->history_months
+>history_months (integer)
 
 How far behind in history to search for results. This could be limited by max_results and vice-versa.
 
->text_mode
+>text_mode (string)
 
 What text to show in the items. Either "title" or "url".
 
->max_text_length
+>max_text_length (integer)
 
 How long the text in the items can be.
 
->max_favorites
+>max_favorites (integer)
 
 How many favorite items to keep stored.
 Favorite items will only show if the items are still in the browser history.
 
->buttons
+>buttons (list of objects)
 
 A list of custom buttons. For instance:
 
