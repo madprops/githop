@@ -1,3 +1,7 @@
+// Modules
+import jsonrepair from "../libs/jsonrepair/jsonrepair.js"
+App.json_repair = jsonrepair
+
 // Editor open or not
 App.editor_on = false
 

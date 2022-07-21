@@ -21,12 +21,20 @@ App.start_nice_editor = function () {
       return
     }
 
+    let value = App.nice_editor.getValue()
+
     try {
-      let value = App.nice_editor.getValue()
       let obj = JSON.parse(value)
       App.save_settings(obj, true)
     } catch (err) {
-      alert(err)
+      try {
+        // Try to repair the json
+        let repaired = App.json_repair(value)
+        let obj = JSON.parse(repaired)
+        App.save_settings(obj, true)
+      } catch (err) {
+        alert(err)
+      }
       return
     }
   })
