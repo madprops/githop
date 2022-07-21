@@ -34,15 +34,13 @@ App.process_items = function (items) {
       continue
     }
 
-    let clean_url = App.clean_url(url)
-    let title = item.title.substring(0, App.settings.max_title_length).trim()
-
-    if (!title || added.includes(url)) {
+    
+    if (added.includes(url)) {
       continue
     }
-
+    
     added.push(url)
-
+    
     let el = document.createElement("div")
     el.classList.add("item")
     el.classList.add("hidden")
@@ -51,9 +49,9 @@ App.process_items = function (items) {
 
     let obj = {
       index: i,
-      title: title,
+      title: item.title,
       url: url,
-      clean_url: clean_url,
+      clean_url: App.clean_url(url),
       date: item.lastVisitTime,
       favorite: favorite_urls.includes(url),
       created: false,
@@ -112,12 +110,17 @@ App.create_item_element = function (item) {
 
   let text = document.createElement("div")
   text.classList.add("item_text")
-
+  
+  let text_content
+  
   if (App.settings.text_mode === "title") {
-    text.textContent = item.title
+    text_content = item.title
   } else if (App.settings.text_mode === "url") {
-    text.textContent = item.clean_url
+    text_content = item.clean_url
   }
+  
+  text.textContent = text_content.
+    substring(0, App.settings.max_text_length).trim()
 
   item.element.append(text)
   item.created = true
