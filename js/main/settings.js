@@ -24,13 +24,25 @@ App.start_nice_editor = function () {
     }
 
     try {
-      let obj = App.check_setting_types(JSON.parse(value))
+      let obj = JSON.parse(value)
+      
+      if (App.check_setting_types(obj, true)) {
+        App.nice_editor.focus()
+        return
+      }
+
       App.save_settings(obj, true)
     } catch (err) {
       try {
         // Try to repair the json
         let repaired = App.json_repair(value)
-        let obj = App.check_setting_types(JSON.parse(repaired))
+        let obj = JSON.parse(repaired)
+        
+        if (App.check_setting_types(obj, true)) {
+          App.nice_editor.focus()
+          return
+        }
+
         App.save_settings(obj, true)
       } catch (err) {
         alert(err)
@@ -137,6 +149,10 @@ App.get_settings = function () {
     }
   }
 
+  if (App.check_setting_types(App.settings)) {
+    save = true
+  }
+
   if (save) {
     App.settings = App.order_settings(App.settings)
     App.save_settings(App.settings)
@@ -186,12 +202,26 @@ App.show_help = function () {
 }
 
 // Check setting types
-App.check_setting_types = function (obj) {
+App.check_setting_types = function (obj, do_alert = false) {
+  let changed = false
+
   for (let key in obj) {
-    if (typeof obj[key] !== typeof App.default_settings[key]) {
+    let the_type = typeof App.default_settings[key]
+
+    if (typeof obj[key] !== the_type) {
       obj[key] = App.default_settings[key]
+      let msg = `[Settings] Invalid type for ${key}. It should be ${the_type}.`
+
+      if (do_alert) {
+        alert(msg)
+        return true
+      } else {
+        App.log(msg)
+      }
+
+      changed = true
     }
   }
 
-  return obj
+  return changed
 }
