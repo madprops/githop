@@ -34,6 +34,7 @@ App.start_nice_editor = function () {
         App.save_settings(obj, true)
       } catch (err) {
         alert(err)
+        App.nice_editor.focus()
       }
       return
     }
