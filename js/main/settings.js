@@ -24,13 +24,13 @@ App.start_nice_editor = function () {
     }
 
     try {
-      let obj = JSON.parse(value)
+      let obj = App.check_setting_types(JSON.parse(value))
       App.save_settings(obj, true)
     } catch (err) {
       try {
         // Try to repair the json
         let repaired = App.json_repair(value)
-        let obj = JSON.parse(repaired)
+        let obj = App.check_setting_types(JSON.parse(repaired))
         App.save_settings(obj, true)
       } catch (err) {
         alert(err)
@@ -183,4 +183,15 @@ App.show_help = function () {
   s += "level = Path level (aa/bb = 2)\n"
 
   alert(s)
+}
+
+// Check setting types
+App.check_setting_types = function (obj) {
+  for (let key in obj) {
+    if (typeof obj[key] !== typeof App.default_settings[key]) {
+      obj[key] = App.default_settings[key]
+    }
+  }
+
+  return obj
 }
