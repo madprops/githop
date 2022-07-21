@@ -10,12 +10,13 @@ Use your mouse or keyboard. Use the filter to search for a specific item.
 
 The filter works by checking the titles and urls.
 
-Buttons like "Commits" focus on certain kinds of items by matching against a url substring like "/commit/" plus the filter you enter.
+Use the different buttons to refine your search.
 
-Buttons 1, and 2 refer to path levels. 
-For instance aa/bb is a 2-level path.
+Click or press Enter to go to an item's url.
 
-The Day button shows items that were visited in the last 24 hours.
+Middle-clicking an item opens it in a new tab without closing the app.
+
+Tab cycles between the buttons.
 
 ## Icons
 
