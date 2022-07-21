@@ -123,10 +123,14 @@ Favorite items will only show if the items are still in the browser history.
 A list of custom buttons. For instance:
 
 ```
-{name: "Tags", path: "/tag/"},
-{name: "Day", hours: 24},
-{name: "1", level: 1}
+"buttons": [
+  {name: "Tags", path: "/tag/"},
+  {name: "Day", hours: 24},
+  {name: "1", level: 1}
+]
 ```
+
+Check the `Modes` section above to see how to configure buttons.
 
 ### JSON
 
