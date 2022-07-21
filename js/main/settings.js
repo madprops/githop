@@ -16,12 +16,12 @@ App.start_nice_editor = function () {
   })
 
   App.el("#editor_done").addEventListener("click", function () {
-    if (App.original_editor_value === App.nice_editor.getValue()) {
+    let value = App.nice_editor.getValue()
+
+    if (App.original_editor_value === value) {
       App.hide_editor()
       return
     }
-
-    let value = App.nice_editor.getValue()
 
     try {
       let obj = JSON.parse(value)
