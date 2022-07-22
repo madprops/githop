@@ -144,3 +144,15 @@ If there's a parsing error, a message with the specific error will show.
 Instead of fully building all the items in the list, an intersection observer is used
 to detect when an item becomes visible, to fill it with the remaining heavy components.
 This makes loading times faster.
+
+## Mode Tags
+
+Modes can be "tagged" by middle clicking them.
+
+This adds their modes to the query.
+
+For instance if you're in "All", an middle click "Day",
+it will tag that button which will includes `hours=24` to the filter query.
+Any number of buttons can be tagged.
+This is a way to easily refine searches on the go.
+For instance it's easy to tag `2` to add `level=2`.

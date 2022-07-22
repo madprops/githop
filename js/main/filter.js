@@ -16,70 +16,47 @@ App.do_filter = function (value = "") {
   let modes = []
   let favorite_urls
 
-  if (App.selected_button.mode === "all") {
-    modes.push("all")
-  } 
+  {
+    if (App.get_tag_mode("mode").includes("favorites")) {
+      modes.push("favorites")
+      favorite_urls = App.favorites.map(x => x.url)
+    }
+  }
+
+  {
+    let m = App.get_tag_mode("path")
   
-  if (App.selected_button.mode === "favorites") {
-    modes.push("favorites")
-  } else if (App.get_tag_mode("mode") === "favorites") {
-    modes.push("favorites")
-  }
-
-  if (modes.includes("favorites")) {
-    favorite_urls = App.favorites.map(x => x.url)
-  }
-
-  if (App.selected_button.path) {
-    modes.push("path")
-    path = App.selected_button.path.toLowerCase()
-  } else {
-    let mode = App.get_tag_mode("path")
-
-    if (mode) {
+    if (m.length > 0) {
       modes.push("path")
-      path = mode
+      path = m[0]
     }
   }
 
-  if (App.selected_button.title) {
-    modes.push("title")
-    title = App.selected_button.title.toLowerCase()
-  } else {
-    let mode = App.get_tag_mode("title")
+  {
+    let m = App.get_tag_mode("title")
 
-    if (mode) {
+    if (m.length > 0) {
       modes.push("title")
-      title = mode
+      title = m[0]
     }    
   }
 
-  if (App.selected_button.hours) {
-    modes.push("hours")
-    hours = parseInt(App.selected_button.hours)
-  } else {
-    let mode = App.get_tag_mode("hours")
+  {
+    let m = App.get_tag_mode("hours")
 
-    if (mode) {
+    if (m.length > 0) {
       modes.push("hours")
-      hours = mode
+      hours = m[0]
     }    
   }
   
-  if (App.selected_button.level) {
-    modes.push("level")
-    level = parseInt(App.selected_button.level)
-  } else {
-    let mode = App.get_tag_mode("level")
+  {
+    let m = App.get_tag_mode("level")
 
-    if (mode) {
+    if (m.length > 0) {
       modes.push("level")
-      level = mode
+      level = m[0]
     }
-  }
-
-  if (modes.length === 0) {
-    return
   }
 
   let words = value.toLowerCase().split(" ").filter(x => x !== "")

@@ -47,8 +47,8 @@ App.add_favorite = function (item) {
 
   App.save_favorites()
 
-  if (App.selected_button.mode === "favorites") {
-    this.do_filter()
+  if (App.get_tag_mode("mode") === "favorites") {
+    App.do_filter()
   }
 }
 
@@ -67,7 +67,7 @@ App.remove_favorite = function (item) {
     }
   }
 
-  if (App.selected_button.mode === "favorites") {
-    this.do_filter()
+  if (App.get_tag_mode("mode") === "favorites") {
+    App.do_filter()
   }
 }

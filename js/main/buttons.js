@@ -74,7 +74,7 @@ App.cycle_buttons = function (direction) {
       break
     }
 
-    if (App.selected_button.name === button.name) {
+    if (button.tagged) {
       waypoint = true
     }
   }
@@ -105,7 +105,6 @@ App.highlight_button = function (btn) {
 
 // Activates a button
 App.do_button_select = function (button) {
-  App.selected_button = button
   App.highlight_button(button)
   App.last_button = button.name
   App.save_last_button()
@@ -113,6 +112,8 @@ App.do_button_select = function (button) {
   for (let btn of App.buttons) {
     btn.tagged = false
   }
+
+  button.tagged = true
 }
 
 // Get remembered mode state
@@ -189,9 +190,9 @@ App.scroll_buttons_left = function () {
 // Enable a button tag
 App.tag_button = function (button) {
   if (button.tagged) {
-    button.element.classList.remove("tagged")
+    button.element.classList.remove("highlighted")
   } else {
-    button.element.classList.add("tagged")
+    button.element.classList.add("highlighted")
   }
 
   button.tagged = !button.tagged
@@ -199,11 +200,15 @@ App.tag_button = function (button) {
 
 // Get tag mode
 App.get_tag_mode = function (mode) {
+  let modes = []
+
   for (let button of App.buttons) {
     if (button.tagged) {
       if (mode in button) {
-        return button[mode]
+        modes.push(button[mode])
       }
     }
   }
+
+  return modes
 }
