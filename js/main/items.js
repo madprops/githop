@@ -34,7 +34,6 @@ App.process_items = function (items) {
       continue
     }
 
-    
     if (added.includes(url)) {
       continue
     }
