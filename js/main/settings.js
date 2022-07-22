@@ -172,7 +172,7 @@ App.save_settings = function (obj, restart = false) {
   App.save_local_storage(App.ls_settings, obj)
 
   if (restart) {
-    alert("Changes saved.")
+    alert("Setting changes saved successfully.")
     window.close()
   }
 }
