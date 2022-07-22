@@ -41,7 +41,7 @@ App.make_buttons = function () {
 
     el.addEventListener("auxclick", function (e) {
       if (e.button === 1) {
-        App.tag_button(btn)
+        App.toggle_tag_button(btn)
         App.do_filter()
         App.focus_filter()
       }
@@ -188,8 +188,12 @@ App.scroll_buttons_left = function () {
 }
 
 // Enable a button tag
-App.tag_button = function (button) {
+App.toggle_tag_button = function (button) {
   if (button.tagged) {
+    if (App.buttons.filter(x => x.tagged).length === 1) {
+      return
+    }
+    
     button.element.classList.remove("highlighted")
   } else {
     button.element.classList.add("highlighted")

@@ -28,7 +28,7 @@ App.do_filter = function (value = "") {
   
     if (m.length > 0) {
       modes.push("path")
-      path = m[0]
+      path = m
     }
   }
 
@@ -37,7 +37,7 @@ App.do_filter = function (value = "") {
 
     if (m.length > 0) {
       modes.push("title")
-      title = m[0]
+      title = m
     }    
   }
 
@@ -46,7 +46,7 @@ App.do_filter = function (value = "") {
 
     if (m.length > 0) {
       modes.push("hours")
-      hours = m[0]
+      hours = m
     }    
   }
   
@@ -55,7 +55,7 @@ App.do_filter = function (value = "") {
 
     if (m.length > 0) {
       modes.push("level")
-      level = m[0]
+      level = m
     }
   }
 
@@ -78,31 +78,33 @@ App.do_filter = function (value = "") {
       }
     }
 
-    if (modes.includes("level")) {  
-      if (App.count(item.clean_url, "/") !== level) {
-        return false
-      }
-    } 
-    
-    if (modes.includes("hours")) {
-      let h = App.get_hours(item.date)
-
-      if (h > hours) {
-        return false
-      }
-    } 
-    
     if (modes.includes("path")) {
-      if (!item.url.toLowerCase().includes(path)) {
+      if (!path.some(x => item.url.toLowerCase().includes(x))) {
         return false
       }
     }
 
     if (modes.includes("title")) {
-      if (!item.title.toLowerCase().includes(title)) {
+      if (!title.some(x => item.title.toLowerCase().includes(x))) {
         return false
       }
-    }
+    }    
+
+    if (modes.includes("hours")) {
+      let d = App.get_hours(item.date)
+
+      if (!hours.some(x => d <= x)) {
+        return false
+      }
+    }    
+
+    if (modes.includes("level")) {
+      let lvl = App.count(item.clean_url, "/")
+
+      if (!level.some(x => x === lvl)) {
+        return false
+      }
+    } 
 
     return true
   }
