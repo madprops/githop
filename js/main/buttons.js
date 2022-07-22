@@ -3,6 +3,15 @@ App.make_buttons = function () {
   let buttons = App.el("#buttons")
 
   function click_single (btn) {
+    if (btn.activated) {
+      let num = App.get_active_buttons().length
+      
+      if (num === 1) {
+        click_toggle(btn)
+        return
+      }
+    }
+
     App.activate_single_button(btn)
     App.do_filter()
     App.focus_filter()
@@ -205,10 +214,11 @@ App.get_button = function (name) {
 
 // Make only one button active
 App.activate_single_button = function (button) {
-  if (button.activated) {
-    App.toggle_activate_button(button)
-  } else {
-    App.deactivate_all_buttons()
-    App.toggle_activate_button(button)
-  }
+  App.deactivate_all_buttons()
+  App.toggle_activate_button(button)
+}
+
+// Get a list with active buttons
+App.get_active_buttons = function () {
+  return App.buttons.filter(x => x.activated)
 }
