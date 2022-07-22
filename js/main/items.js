@@ -114,7 +114,7 @@ App.create_item_element = function (item) {
   let text_content
   
   if (App.settings.text_mode === "title") {
-    text_content = item.title
+    text_content = item.title || item.url
   } else if (App.settings.text_mode === "url") {
     text_content = item.clean_url
   }
