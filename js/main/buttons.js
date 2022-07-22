@@ -39,6 +39,15 @@ App.make_buttons = function () {
       App.clear_filter()
     })
 
+    el.addEventListener("auxclick", function (e) {
+      if (e.button === 1) {
+        App.tag_button(btn)
+        App.do_filter()
+        App.focus_filter()
+      }
+    })
+
+    button.element = el
     buttons.append(el)
   }
 }
@@ -80,19 +89,16 @@ App.cycle_buttons = function (direction) {
   }
 }
 
-// Get button elements
-App.get_buttons = function () {
-  return App.els(".button", App.el("#buttons"))
-}
-
 // Highlight the active button
 App.highlight_button = function (btn) {
-  for (let button of App.get_buttons()) {
-    if (button.textContent === btn.name) {
-      button.classList.add("highlighted")
-      button.scrollIntoView({block: "nearest"})
+  for (let button of App.buttons) {
+    button.element.classList.remove("tagged")
+
+    if (button.element.textContent === btn.name) {
+      button.element.classList.add("highlighted")
+      button.element.scrollIntoView({block: "nearest"})
     } else {
-      button.classList.remove("highlighted")
+      button.element.classList.remove("highlighted")
     }
   }
 }
@@ -103,6 +109,10 @@ App.do_button_select = function (button) {
   App.highlight_button(button)
   App.last_button = button.name
   App.save_last_button()
+
+  for (let btn of App.buttons) {
+    btn.tagged = false
+  }
 }
 
 // Get remembered mode state
@@ -174,4 +184,26 @@ App.scroll_buttons_right = function () {
 // Scroll buttons to the left
 App.scroll_buttons_left = function () {
   App.el("#buttons").scrollLeft -= 80
+}
+
+// Enable a button tag
+App.tag_button = function (button) {
+  if (button.tagged) {
+    button.element.classList.remove("tagged")
+  } else {
+    button.element.classList.add("tagged")
+  }
+
+  button.tagged = !button.tagged
+}
+
+// Get tag mode
+App.get_tag_mode = function (mode) {
+  for (let button of App.buttons) {
+    if (button.tagged) {
+      if (mode in button) {
+        return button[mode]
+      }
+    }
+  }
 }

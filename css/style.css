@@ -155,6 +155,10 @@ body, html {
   background-color: #99EDC3;
 }
 
+.tagged {
+  background-color: orange;
+}
+
 .underline {
   text-decoration: underline;
 }

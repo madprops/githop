@@ -6,7 +6,7 @@ App.do_filter = function (value = "") {
   if (value) {
     App.el("#filter").value = value
   } else {
-    value = App.el("#filter").value
+    value = App.el("#filter").value.trim()
   }
 
   let path
@@ -22,32 +22,60 @@ App.do_filter = function (value = "") {
   
   if (App.selected_button.mode === "favorites") {
     modes.push("favorites")
-    favorite_urls = App.favorites.map(x => x.url)
-
-    if (favorite_urls.length === 0) {
-      App.hide_all_items()
-      return
-    }
-  } 
-  
-  if (App.selected_button.level) {
-    modes.push("level")
-    level = parseInt(App.selected_button.level)
+  } else if (App.get_tag_mode("mode") === "favorites") {
+    modes.push("favorites")
   }
-  
-  if (App.selected_button.hours) {
-    modes.push("hours")
-    hours = parseInt(App.selected_button.hours)
-  } 
-  
+
+  if (modes.includes("favorites")) {
+    favorite_urls = App.favorites.map(x => x.url)
+  }
+
   if (App.selected_button.path) {
     modes.push("path")
     path = App.selected_button.path.toLowerCase()
+  } else {
+    let mode = App.get_tag_mode("path")
+
+    if (mode) {
+      modes.push("path")
+      path = mode
+    }
   }
 
   if (App.selected_button.title) {
     modes.push("title")
     title = App.selected_button.title.toLowerCase()
+  } else {
+    let mode = App.get_tag_mode("title")
+
+    if (mode) {
+      modes.push("title")
+      title = mode
+    }    
+  }
+
+  if (App.selected_button.hours) {
+    modes.push("hours")
+    hours = parseInt(App.selected_button.hours)
+  } else {
+    let mode = App.get_tag_mode("hours")
+
+    if (mode) {
+      modes.push("hours")
+      hours = mode
+    }    
+  }
+  
+  if (App.selected_button.level) {
+    modes.push("level")
+    level = parseInt(App.selected_button.level)
+  } else {
+    let mode = App.get_tag_mode("level")
+
+    if (mode) {
+      modes.push("level")
+      level = mode
+    }
   }
 
   if (modes.length === 0) {
@@ -65,6 +93,12 @@ App.do_filter = function (value = "") {
   function check_modes (item) {
     if (!matches(item)) {
       return false
+    }
+
+    if (modes.includes("favorites")) {
+      if (!favorite_urls.includes(item.url)) {
+        return false
+      }
     }
 
     if (modes.includes("level")) {  
@@ -97,21 +131,7 @@ App.do_filter = function (value = "") {
   }
 
   for (let item of App.items) {
-    let includes
-
-    if (modes.includes("all")) {
-      includes = matches(item)
-    } 
-    
-    else if (modes.includes("favorites")) {
-      includes = favorite_urls.includes(item.url) && matches(item)
-    } 
-    
-    else {
-      includes = check_modes(item)
-    }
-    
-    if (includes) {
+    if (check_modes(item)) {
       App.show_item(item)
 
       if (!selected) {
