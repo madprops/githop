@@ -112,12 +112,13 @@ What text to show in the items. Either "title" or "url".
 
 >max_text_length (integer)
 
-How long the text in the items can be.
+How long the text in the items can be. Number of characters.
 
 >max_favorites (integer)
 
 How many favorite items to keep stored.
 Favorite items will only show if the items are still in the browser history.
+Setting this to 0 will remove the Favorites feature all together.
 
 >buttons (list of objects)
 

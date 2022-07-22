@@ -8,10 +8,12 @@ App.setup_list = function () {
       let item = App.items[el.dataset.index]
 
       if (e.target.closest(".item_icon")) {
-        if (item.favorite) {
-          App.remove_favorite(item)
-        } else {
-          App.add_favorite(item)
+        if (App.settings.max_favorites > 0) {
+          if (item.favorite) {
+            App.remove_favorite(item)
+          } else {
+            App.add_favorite(item)
+          }
         }
       } else if (e.target.closest(".item_text")) {
         App.open_tab(item.url)

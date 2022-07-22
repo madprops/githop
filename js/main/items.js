@@ -138,7 +138,7 @@ App.fill_item_element = function (item) {
     item.element.title = `${item.title} ${visited}`
   }
 
-  if (item.favorite) {
+  if (App.settings.max_favorites > 0 && item.favorite) {
     item.element.classList.add("favorite")
   }
 

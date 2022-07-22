@@ -109,7 +109,7 @@ App.setup_settings = function () {
   App.default_settings.history_months = 12
   App.default_settings.text_mode = "title",
   App.default_settings.max_text_length = 250
-  App.default_settings.max_favorites = 100
+  App.default_settings.max_favorites = 200
   App.default_settings.buttons = [
     {name: "Commits", path: "/commit/"},
     {name: "Issues", path: "/issues/"},
@@ -158,11 +158,13 @@ App.get_settings = function () {
     App.save_settings(App.settings)
   }
 
-  App.buttons = [
-    App.buttons_core.All,
-    App.buttons_core.Favorites,
-    ...App.settings.buttons,
-  ]
+  App.buttons = [App.buttons_core.All]
+  
+  if (App.settings.max_favorites > 0) {
+    App.buttons.push(App.buttons_core.Favorites)
+  }
+
+  App.buttons.push(...App.settings.buttons)
 }
 
 // Save settings obj
@@ -209,7 +211,7 @@ App.check_setting_types = function (obj, do_alert = false) {
     let the_type = typeof App.default_settings[key]
 
     if (typeof obj[key] !== the_type) {
-      let msg = `[Settings] Invalid type for ${key}. It should be ${the_type}.`
+      let msg = `Invalid type for ${key}. It should be ${the_type}.`
       
       if (do_alert) {
         alert(msg)

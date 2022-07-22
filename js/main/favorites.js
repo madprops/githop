@@ -5,6 +5,8 @@ App.setup_favorites = function () {
   if (App.favorites === null) {
     App.favorites = []
   }
+
+  App.favorites = App.favorites.slice(0, App.settings.max_favorites)
 }
 
 // Saves the favorite localStorage object
