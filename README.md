@@ -145,14 +145,9 @@ Instead of fully building all the items in the list, an intersection observer is
 to detect when an item becomes visible, to fill it with the remaining heavy components.
 This makes loading times faster.
 
-## Mode Tags
+## Combining Buttons
 
-Modes can be "tagged" by middle clicking them.
-
-This adds their modes to the query.
-
+More than 1 button can be active at a time by middle clicking them.
 For instance if you're in "All", an middle click "Day",
-it will tag that button which will includes `hours=24` to the filter query.
-Any number of buttons can be tagged.
+it will activate that button which will include `hours=24` to the filter query.
 This is a way to easily refine searches on the go.
-For instance it's easy to tag `2` to add `level=2`.
