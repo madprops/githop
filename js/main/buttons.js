@@ -36,9 +36,19 @@ App.make_buttons = function () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      App.toggle_activate_button(btn)
-      App.do_filter()
-      App.focus_filter()
+      if (e.shiftKey) {
+        App.activate_single_button(btn)
+      } else {
+        App.toggle_activate_button(btn)
+        App.do_filter()
+        App.focus_filter()
+      }
+    })
+
+    el.addEventListener("auxclick", function (e) {
+      if (e.button === 1) {
+        App.activate_single_button(btn)
+      }
     })
 
     button.element = el
@@ -181,4 +191,12 @@ App.get_button = function (name) {
       return button
     }
   }
+}
+
+// Make only one button active
+App.activate_single_button = function (button) {
+  App.deactivate_all_buttons()
+  App.toggle_activate_button(button)
+  App.do_filter()
+  App.focus_filter()
 }
