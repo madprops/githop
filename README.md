@@ -16,6 +16,15 @@ Click or press Enter to go to an item's url.
 
 Middle-clicking an item opens it in a new tab without closing the app.
 
+## Buttons
+
+More than 1 button can be active at a time by clicking them.
+For instance you can have "Tag", "Day", and "2" active.
+Which would match the tag path, 24 hours, and level 2.
+If more of the same type are selected, for instance Commits and Issues (path),
+it will check as an OR (it matches commits or it matches issues).
+This is a way to easily refine searches on the go.
+
 ## Icons
 
 Each item gets an icon based on the first level of the url.
@@ -142,12 +151,3 @@ If there's a parsing error, a message with the specific error will show.
 Instead of fully building all the items in the list, an intersection observer is used
 to detect when an item becomes visible, to fill it with the remaining heavy components.
 This makes loading times faster.
-
-## Combining Buttons
-
-More than 1 button can be active at a time by clicking them.
-For instance you can have "Tag", "Day", and "2" active.
-Which would match the tag path, 24 hours, and level 2.
-If more of the same type are selected, for instance Commits and Issues (path),
-it will check as an OR (it matches commits or it matches issues).
-This is a way to easily refine searches on the go.
