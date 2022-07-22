@@ -3,16 +3,9 @@ App.escape_special_chars = function (s) {
   return s.replace(/[^A-Za-z0-9]/g, "\\$&")
 }
 
-// Remove slash at the end
-App.unslash = function (url) {
-  return url.replace(/\/$/, "").trim()
-}
-
 // Remove root url from the start of a url
-App.clean_url = function (url) {
-  let escaped = App.escape_special_chars(App.settings.homepage)
-  let regex = new RegExp(`^${escaped}\\/?`, "i")
-  return url.replace(regex, "")
+App.pathname = function (url) {
+  return new URL(url).pathname.replace(/\/$/, "").replace(/^\//, "")
 }
 
 // Get first part of a url

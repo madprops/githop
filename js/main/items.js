@@ -15,7 +15,6 @@ App.get_items = function () {
 // When results are found
 App.process_items = function (items) {
   let added = []
-  let base_url = App.unslash(App.settings.homepage)
   let favorite_urls = App.favorites.map(x => x.url)
   let list = App.el("#list")
   let i = 0
@@ -23,22 +22,17 @@ App.process_items = function (items) {
   App.items = []
 
   for (let item of items) {
+    let curl = App.pathname(item.url)
 
-    if (!item.url.startsWith(App.settings.homepage)) {
+    if (!curl) {
       continue
     }
 
-    let url = App.unslash(item.url)
-
-    if (url === base_url) {
-      continue
-    }
-
-    if (added.includes(url)) {
+    if (added.includes(item.url)) {
       continue
     }
     
-    added.push(url)
+    added.push(item.url)
     
     let el = document.createElement("div")
     el.classList.add("item")
@@ -49,10 +43,10 @@ App.process_items = function (items) {
     let obj = {
       index: i,
       title: item.title,
-      url: url,
-      clean_url: App.clean_url(url),
+      url: item.url,
+      clean_url: curl,
       date: item.lastVisitTime,
-      favorite: favorite_urls.includes(url),
+      favorite: favorite_urls.includes(item.url),
       created: false,
       filled: false,
       hidden: true,
