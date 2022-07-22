@@ -3,6 +3,7 @@ App.make_buttons = function () {
   let buttons = App.el("#buttons")
 
   for (let button of App.buttons) {
+    button.activated = false
     let el = document.createElement("button")
     el.textContent = button.name
     el.classList.add("button")
@@ -35,16 +36,9 @@ App.make_buttons = function () {
     let btn = button
 
     el.addEventListener("click", function (e) {
-      App.do_button_select(btn)
-      App.clear_filter()
-    })
-
-    el.addEventListener("auxclick", function (e) {
-      if (e.button === 1) {
-        App.toggle_tag_button(btn)
-        App.do_filter()
-        App.focus_filter()
-      }
+      App.toggle_activate_button(btn)
+      App.do_filter()
+      App.focus_filter()
     })
 
     button.element = el
@@ -52,47 +46,10 @@ App.make_buttons = function () {
   }
 }
 
-// Move to the next button
-App.cycle_buttons = function (direction) {
-  let map = App.buttons.slice(0)
-
-  if (direction === "left") {
-    map.reverse()
-  }
-
-  let waypoint = false
-  let selected
-  let first
-  
-  for (let button of map) {
-    if (!first) {
-      first = button
-    }
-
-    if (waypoint) {
-      selected = button
-      break
-    }
-
-    if (button.tagged) {
-      waypoint = true
-    }
-  }
-
-  if (!selected && first) {
-    selected = first
-  }
-
-  if (selected) {
-    App.do_button_select(selected)
-    App.clear_filter()
-  }
-}
-
 // Highlight the active button
 App.highlight_button = function (btn) {
   for (let button of App.buttons) {
-    button.element.classList.remove("tagged")
+    button.element.classList.remove("activated")
 
     if (button.element.textContent === btn.name) {
       button.element.classList.add("highlighted")
@@ -103,51 +60,32 @@ App.highlight_button = function (btn) {
   }
 }
 
-// Activates a button
-App.do_button_select = function (button) {
-  App.highlight_button(button)
-  App.last_button = button.name
-  App.save_last_button()
-
-  for (let btn of App.buttons) {
-    btn.tagged = false
-  }
-
-  button.tagged = true
-}
-
 // Get remembered mode state
-App.get_last_button = function () {
-  App.last_button = App.get_local_storage(App.ls_last_button)
+App.get_button_state = function () {
+  App.button_state = App.get_local_storage(App.ls_button_state)
 
-  if (App.last_button === null) {
-    App.last_button = ""
+  if (App.button_state === null) {
+    App.button_state = ""
   }
 
-  let found = false
+  for (let name of App.button_state) {
+    let btn = App.get_button(name)
 
-  for (let button of App.buttons) {
-    if (button.name === App.last_button) {
-      App.do_button_select(button)
-      found = true
-      break
+    if (btn) {
+      App.toggle_activate_button(btn)
     }
-  }
-
-  if (!found) {
-    App.do_button_select(App.buttons[0])
   }
 }
 
 // Saves the last mode localStorage object
-App.save_last_button = function () {
-  App.save_local_storage(App.ls_last_button, App.last_button)
+App.save_button_state = function () {
+  App.save_local_storage(App.ls_button_state, App.button_state)
 }
 
 // Prepare buttons
 App.setup_buttons = function () {
   App.make_buttons()
-  App.get_last_button()
+  App.get_button_state()
 
   let buttons = App.el("#buttons")
   let left = App.el("#buttons_left")
@@ -187,27 +125,24 @@ App.scroll_buttons_left = function () {
   App.el("#buttons").scrollLeft -= 80
 }
 
-// Enable a button tag
-App.toggle_tag_button = function (button) {
-  if (button.tagged) {
-    if (App.buttons.filter(x => x.tagged).length === 1) {
-      return
-    }
-    
+// Activate or de-activate a button
+App.toggle_activate_button = function (button) {
+  if (button.activated) {
     button.element.classList.remove("highlighted")
   } else {
     button.element.classList.add("highlighted")
   }
 
-  button.tagged = !button.tagged
+  button.activated = !button.activated
+  App.update_button_state()
 }
 
-// Get tag mode
-App.get_tag_mode = function (mode) {
+// Get active mode by checking buttons
+App.get_active_mode = function (mode) {
   let modes = []
 
   for (let button of App.buttons) {
-    if (button.tagged) {
+    if (button.activated) {
       if (mode in button) {
         modes.push(button[mode])
       }
@@ -215,4 +150,35 @@ App.get_tag_mode = function (mode) {
   }
 
   return modes
+}
+
+// Update button state
+App.update_button_state = function () {
+  App.button_state = []
+
+  for (let button of App.buttons) {
+    if (button.activated) {
+      App.button_state.push(button.name)
+    }
+  }
+
+  App.save_button_state()
+}
+
+// De-activate all buttons
+App.deactivate_all_buttons = function () {
+  for (let button of App.buttons) {
+    if (button.activated) {
+      App.toggle_activate_button(button)
+    }
+  }
+}
+
+// Get button by name
+App.get_button = function (name) {
+  for (let button of App.buttons) {
+    if (button.name === name) {
+      return button
+    }
+  }
 }

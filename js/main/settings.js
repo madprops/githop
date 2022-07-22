@@ -3,7 +3,7 @@ App.name = "GitHop"
 
 // localStorage settings
 App.ls_favorites = "favorites_v1"
-App.ls_last_button = "last_button_v1"
+App.ls_button_state = "button_state_v1"
 App.ls_settings = "settings_v1"
 
 // Setup the settings editor
@@ -98,7 +98,6 @@ App.hide_editor = function () {
 
 // These buttons are always present
 App.buttons_core = {
-  "All": {name: "All", mode: "all", tooltip: "Show all items"},
   "Favorites": {name: "Favorites", mode: "favorites", tooltip: "Favorite items. Click the icons to toggle"},
 }
 
@@ -158,7 +157,7 @@ App.get_settings = function () {
     App.save_settings(App.settings)
   }
 
-  App.buttons = [App.buttons_core.All]
+  App.buttons = []
   
   if (App.settings.max_favorites > 0) {
     App.buttons.push(App.buttons_core.Favorites)

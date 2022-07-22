@@ -28,14 +28,6 @@ App.setup_events = function () {
       }
 
       e.preventDefault()
-    } else if (e.key === "Tab") {
-      if (e.shiftKey) {
-        App.cycle_buttons("left")
-      } else {
-        App.cycle_buttons("right")
-      }
-
-      e.preventDefault()
     }
   })
 }

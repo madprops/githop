@@ -17,14 +17,14 @@ App.do_filter = function (value = "") {
   let favorite_urls
 
   {
-    if (App.get_tag_mode("mode").includes("favorites")) {
+    if (App.get_active_mode("mode").includes("favorites")) {
       modes.push("favorites")
       favorite_urls = App.favorites.map(x => x.url)
     }
   }
 
   {
-    let m = App.get_tag_mode("path")
+    let m = App.get_active_mode("path")
   
     if (m.length > 0) {
       modes.push("path")
@@ -33,7 +33,7 @@ App.do_filter = function (value = "") {
   }
 
   {
-    let m = App.get_tag_mode("title")
+    let m = App.get_active_mode("title")
 
     if (m.length > 0) {
       modes.push("title")
@@ -42,7 +42,7 @@ App.do_filter = function (value = "") {
   }
 
   {
-    let m = App.get_tag_mode("hours")
+    let m = App.get_active_mode("hours")
 
     if (m.length > 0) {
       modes.push("hours")
@@ -51,7 +51,7 @@ App.do_filter = function (value = "") {
   }
   
   {
-    let m = App.get_tag_mode("level")
+    let m = App.get_active_mode("level")
 
     if (m.length > 0) {
       modes.push("level")
@@ -153,6 +153,7 @@ App.setup_filter = function () {
 
   // When the filter clear button is pressed
   App.el("#filter_btn_clear").addEventListener("click", function () {
+    App.deactivate_all_buttons()
     App.clear_filter()
   })
 
