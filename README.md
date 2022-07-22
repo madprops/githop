@@ -1,6 +1,8 @@
 Currently a [Firefox addon](https://addons.mozilla.org/en-US/firefox/addon/githop/).
 
-Find GitHub locations quickly using your browser's history.
+Find visited GitHub locations quickly using different filters.
+
+All the information is gathered from the browser's history, it does zero network requests.
 
 ![](https://i.imgur.com/3PHqOaG.jpg)
 
@@ -38,8 +40,6 @@ making it load faster.
 Clicking the icons makes an item a "favorite", making it appear in the Favorites list. When an item is a favorite it gets a yellow circular border around its icon:
 
 ![](https://i.imgur.com/OQnZUAQ.jpg)
-
-All the information is gathered from the browser's history, it does zero network requests.
 
 ## Editor
 
