@@ -91,7 +91,7 @@ App.do_filter = function (value = "") {
     }    
 
     if (modes.includes("hours")) {
-      let d = App.get_hours(item.date)
+      let d = Math.round(App.get_hours(item.date))
 
       if (!hours.some(x => d <= x)) {
         return false
