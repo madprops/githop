@@ -145,6 +145,7 @@ Check the `Modes` section above to see how to configure buttons.
 
 Settings must be valid json. 
 If there's a parsing error, a message with the specific error will show.
+Invalid json will be attempted to be fixed automatically, but won't work in all cases.
 
 ## Intersection Observer
 
