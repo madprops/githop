@@ -157,13 +157,14 @@ App.get_settings = function () {
     App.save_settings(App.settings)
   }
 
-  App.buttons = []
+  let buttons = []
   
   if (App.settings.max_favorites > 0) {
-    App.buttons.push(structuredClone(App.buttons_core.Favorites))
+    buttons.push(App.buttons_core.Favorites)
   }
 
-  App.buttons.push(...structuredClone(App.settings.buttons))
+  buttons.push(...App.settings.buttons)
+  App.buttons = structuredClone(buttons)
 }
 
 // Save settings obj
