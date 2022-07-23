@@ -153,8 +153,7 @@ App.setup_filter = function () {
 
   // When the filter clear button is pressed
   App.el("#filter_btn_clear").addEventListener("click", function () {
-    App.deactivate_all_buttons()
-    App.clear_filter()
+    App.clear_all()
   })
 
   // When the filter home button is pressed
@@ -168,4 +167,10 @@ App.setup_filter = function () {
   })
   
   App.focus_filter()
+}
+
+// Clear filter and buttons
+App.clear_all = function () {
+  App.deactivate_all_buttons()
+  App.clear_filter()
 }
