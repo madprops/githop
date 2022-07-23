@@ -19,7 +19,7 @@ App.do_filter = function (value = "") {
   {
     if (App.get_active_mode("mode").includes("favorites")) {
       modes.push("favorites")
-      favorite_urls = App.favorites.map(x => x.url)
+      favorite_urls = App.favorites.map(x => x.url.toLowerCase())
     }
   }
 
@@ -28,7 +28,7 @@ App.do_filter = function (value = "") {
   
     if (m.length > 0) {
       modes.push("path")
-      path = m
+      path = m.map(x => x.toLowerCase())
     }
   }
 
@@ -37,7 +37,7 @@ App.do_filter = function (value = "") {
 
     if (m.length > 0) {
       modes.push("title")
-      title = m
+      title = m.map(x => x.toLowerCase())
     }    
   }
 
@@ -73,19 +73,19 @@ App.do_filter = function (value = "") {
     }
 
     if (modes.includes("favorites")) {
-      if (!favorite_urls.includes(item.url)) {
+      if (!favorite_urls.includes(item.url.toLowerCase())) {
         return false
       }
     }
 
     if (modes.includes("path")) {
-      if (!path.some(x => item.url.toLowerCase().includes(x))) {
+      if (!path.every(x => item.url.toLowerCase().includes(x))) {
         return false
       }
     }
 
     if (modes.includes("title")) {
-      if (!title.some(x => item.title.toLowerCase().includes(x))) {
+      if (!title.every(x => item.title.toLowerCase().includes(x))) {
         return false
       }
     }    
@@ -93,7 +93,7 @@ App.do_filter = function (value = "") {
     if (modes.includes("hours")) {
       let d = Math.round(App.get_hours(item.date))
 
-      if (!hours.some(x => d <= x)) {
+      if (!hours.every(x => d <= x)) {
         return false
       }
     }    
@@ -101,7 +101,7 @@ App.do_filter = function (value = "") {
     if (modes.includes("level")) {
       let lvl = App.count(item.clean_url, "/")
 
-      if (!level.some(x => x === lvl)) {
+      if (!level.every(x => x === lvl)) {
         return false
       }
     } 

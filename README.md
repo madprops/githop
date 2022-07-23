@@ -24,7 +24,7 @@ More than 1 button can be active at a time by Shift+Clicking or Middle+Clicking 
 For instance you can have "Tag", "Day", and "2" active.
 Which would match the tag path, 24 hours, and level 2.
 If more of the same type are selected, for instance Commits and Issues (path),
-it will check as an OR (it matches commits or it matches issues).
+it will check as an AND (it matches if Commits and Issues paths are present).
 This is a way to easily refine searches on the go.
 
 ## Icons
