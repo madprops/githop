@@ -27,6 +27,11 @@ If more of the same type are selected, for instance Commits and Issues (path),
 it will check as an AND (it matches if Commits and Issues paths are present).
 This is a way to easily refine searches on the go.
 
+## All Button
+
+The All button will deselect all active buttons on the first click.
+On the second click it will clear the filter.
+
 ## Icons
 
 Each item gets an icon based on the first level of the url.
@@ -92,12 +97,6 @@ Modes can be combined for more precise results:
   "level": 2
 }
 ```
-
-## All Button
-
-The All button will deselect all active buttons on the first click.
-
-On the second click it will clear the filter.
 
 ## Responsive
 
