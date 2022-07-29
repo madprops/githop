@@ -200,9 +200,11 @@ App.show_help = function () {
   s += "hours = Visited before these hours ago\n"
   s += "level = Path level (aa/bb = 2)\n"
   s += "------------------------------\n"
-  s += "Setting max_favorites to 0 hides Favorites"
+  s += "max_favorites 0 hides Favorites\n"
+  s += "------------------------------\n"
+  s += "text_mode can be title or url\n"
 
-  alert(s)
+  alert(s.trim())
 }
 
 // Check setting types
