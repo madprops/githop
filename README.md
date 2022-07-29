@@ -29,9 +29,15 @@ This is a way to easily refine searches on the go.
 
 ## All Button
 
-The All button will deselect all active buttons on the first click.
-On the second click it will clear the filter.
-This can be triggered with the Tab key.
+De-activate all buttons and clear the filter.
+
+## Home Button
+
+Go to the homepage (https://github.com or whatever is configured).
+
+## ? Button
+
+Open the settings editor. Also can be used to see current version.
 
 ## Icons
 

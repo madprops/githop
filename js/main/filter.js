@@ -168,13 +168,9 @@ App.setup_filter = function () {
 }
 
 // Clear filter and buttons
-App.show_all = function () {
-  if (App.get_active_buttons().length > 0) {
-    App.deactivate_all_buttons()
-  } else {
-    App.clear_filter()
-  }
-
+App.show_all = function () {  
+  App.deactivate_all_buttons()
+  App.clear_filter()
   App.do_filter()
   App.focus_filter()
 }
