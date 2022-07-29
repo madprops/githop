@@ -31,6 +31,7 @@ This is a way to easily refine searches on the go.
 
 The All button will deselect all active buttons on the first click.
 On the second click it will clear the filter.
+This can be triggered with the Tab key.
 
 ## Icons
 
