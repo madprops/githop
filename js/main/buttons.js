@@ -69,20 +69,6 @@ App.make_buttons = function () {
   }
 }
 
-// Highlight the active button
-App.highlight_button = function (btn) {
-  for (let button of App.buttons) {
-    button.element.classList.remove("activated")
-
-    if (button.element.textContent === btn.name) {
-      button.element.classList.add("highlighted")
-      button.element.scrollIntoView({block: "nearest"})
-    } else {
-      button.element.classList.remove("highlighted")
-    }
-  }
-}
-
 // Get remembered mode state
 App.get_button_state = function () {
   App.button_state = App.get_local_storage(App.ls_button_state)
@@ -154,6 +140,7 @@ App.toggle_activate_button = function (button) {
     button.element.classList.remove("highlighted")
   } else {
     button.element.classList.add("highlighted")
+    button.element.scrollIntoView({block: "nearest"})
   }
 
   button.activated = !button.activated
