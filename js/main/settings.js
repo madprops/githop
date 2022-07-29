@@ -208,7 +208,7 @@ App.show_help = function () {
   s += "max_favorites: How many favorites to remember.\n"
   s += "0 disables Favorites entirely.\n"
   s += "------------------------------\n"
-  s += "Buttons: Custom filter buttons.\n"
+  s += "buttons: Custom filter buttons.\n"
   s += "They use the following modes:\n"
   s += "path = Substring of the URL\n"
   s += "title = Substring of the title\n"
