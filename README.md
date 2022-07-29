@@ -93,6 +93,12 @@ Modes can be combined for more precise results:
 }
 ```
 
+## All Button
+
+The All button will deselect all active buttons on the first click.
+
+On the second click it will clear the filter.
+
 ## Responsive
 
 If there's space, the top will be displayed in a single row:
