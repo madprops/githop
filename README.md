@@ -4,7 +4,7 @@ Find visited GitHub locations quickly using different filters.
 
 All the information is gathered from the browser's history, it does zero network requests.
 
-![](https://i.imgur.com/3PHqOaG.jpg)
+![](https://i.imgur.com/jlnofQx.jpg)
 
 ## Usage
 
@@ -59,7 +59,7 @@ This can also be used to add/remove custom buttons.
 
 For instance you can have a Blender button with a "/blender/" path.
 
-![](https://i.imgur.com/zcPdb5b.jpg)
+![](https://i.imgur.com/40uN0Ad.jpg)
 
 ## Modes
 
@@ -103,7 +103,7 @@ Modes can be combined for more precise results:
 
 If there's space, the top will be displayed in a single row:
 
-![](https://i.imgur.com/8ldaRZS.jpg)
+![](https://i.imgur.com/hP0PVBN.jpg)
 
 ## Settings
 
