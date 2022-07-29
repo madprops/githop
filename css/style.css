@@ -46,7 +46,7 @@ body, html {
   padding: 0.25rem;
   color: black;
   flex-grow: 0;
-  width: 200px;
+  width: 160px;
   outline: 1px solid blue;
 }
 
