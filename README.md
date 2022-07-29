@@ -19,13 +19,14 @@ Click or press Enter to go to an item's url.
 Middle-clicking an item opens it in a new tab without closing the app.
 
 ## Buttons
-
+These are used to refine the searches.
+For instance a button might specify that the url of items must contain "/commit/".
 More than 1 button can be active at a time by Shift-Clicking them.
 For instance you can have "Tag", "Day", and "2" active.
-Which would match the tag path, 24 hours, and level 2.
+Which would match the /tag/ path, 24 hours, and level 2.
 If more of the same type are selected, for instance Commits and Issues (path),
 it will check as an AND (it matches if Commits and Issues paths are present).
-This is a way to easily refine searches on the go.
+All of these can be added, removed, or customized.
 
 ## All Button
 
@@ -37,7 +38,7 @@ Go to the homepage (https://github.com or whatever is configured).
 
 ## ? Button
 
-Open the settings editor. Also can be used to see current version.
+Open the settings editor. Also can be used to see the current version.
 
 ## Icons
 
