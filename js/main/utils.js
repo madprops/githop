@@ -15,7 +15,7 @@ App.get_unit = function (curl) {
 
 // Open a new tab with a url
 App.open_tab = function (url, close = true) {
-  browser.tabs.create({url: url})
+  browser.tabs.create({url: url, active: close})
 
   if (close) {
     window.close()
