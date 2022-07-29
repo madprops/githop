@@ -54,7 +54,13 @@ Clicking the icons makes an item a "favorite", making it appear in the Favorites
 
 ![](https://i.imgur.com/OQnZUAQ.jpg)
 
-## Editor
+## Responsive
+
+If there's space, the top will be displayed in a single row:
+
+![](https://i.imgur.com/hP0PVBN.jpg)
+
+## Settings
 
 Clicking the "?" button reveals the settings editor.
 
@@ -67,52 +73,6 @@ This can also be used to add/remove custom buttons.
 For instance you can have a Blender button with a "/blender/" path.
 
 ![](https://i.imgur.com/40uN0Ad.jpg)
-
-## Modes
-
-Buttons can have multiple modes.
-
->path
-
-This will match items that contain the defined path inside the URL.
-For instance /code/ will match something/code/myrepo/etc
-
->title
-
-This will match with the title content.
-This is the visible text on the items.
-
->hours
-
-This will match items that were visited before the hours defined.
-For instance an item visited 30 minutes ago will match with hours: 1.
-An item visited 3 hours ago won't match that.
-
->level
-
-This will match items that contain the right number of slashes.
-For instance aa/bb/cc will match a level of 3.
-
-### Combining Modes
-
-Modes can be combined for more precise results:
-
-```
-{
-  "name": "Test",
-  "path": "/cat/",
-  "hours": 24,
-  "level": 2
-}
-```
-
-## Responsive
-
-If there's space, the top will be displayed in a single row:
-
-![](https://i.imgur.com/hP0PVBN.jpg)
-
-## Settings
 
 >homepage (string)
 
@@ -152,7 +112,39 @@ A list of custom buttons. For instance:
 ]
 ```
 
-Check the `Modes` section above to see how to configure buttons.
+Buttons can have these modes.
+
+>path
+
+This will match items that contain the defined path inside the URL.
+For instance /code/ will match something/code/myrepo/etc
+
+>title
+
+This will match with the title content.
+This is the visible text on the items.
+
+>hours
+
+This will match items that were visited before the hours defined.
+For instance an item visited 30 minutes ago will match with hours: 1.
+An item visited 3 hours ago won't match that.
+
+>level
+
+This will match items that contain the right number of slashes.
+For instance aa/bb/cc will match a level of 3.
+
+Modes can be combined for more precise results:
+
+```
+{
+  "name": "Test",
+  "path": "/cat/",
+  "hours": 24,
+  "level": 2
+}
+```
 
 ### JSON
 
