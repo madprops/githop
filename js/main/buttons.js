@@ -94,7 +94,7 @@ App.get_button_state = function () {
   App.button_state = App.get_local_storage(App.ls_button_state)
 
   if (App.button_state === null) {
-    App.button_state = ""
+    App.button_state = []
   }
 
   for (let name of App.button_state) {
