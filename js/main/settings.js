@@ -194,15 +194,26 @@ App.order_settings = function (obj) {
 App.show_help = function () {
   let s = ""
 
-  s += "Button modes:\n"
+  s += "homepage: Root url of items. Used to search in the history.\n"
+  s += "------------------------------\n"
+  s += "max_results: How many items (max) to fetch from history.\n"
+  s += "------------------------------\n"
+  s += "history_months: How deep the history search can be, in months.\n"
+  s += "------------------------------\n"
+  s += "text_mode: Can be \"title\" or \"url\".\n"
+  s += "This is the displayed text in items.\n"
+  s += "------------------------------\n"
+  s += "max_text_length: How long the displayed text can be.\n"
+  s += "------------------------------\n"
+  s += "max_favorites: How many favorites to remember.\n"
+  s += "0 disables Favorites entirely.\n"
+  s += "------------------------------\n"
+  s += "Buttons: Custom filter buttons.\n"
+  s += "They use the following modes:\n"
   s += "path = Substring of the URL\n"
   s += "title = Substring of the title\n"
   s += "hours = Visited before these hours ago\n"
   s += "level = Path level (aa/bb = 2)\n"
-  s += "------------------------------\n"
-  s += "max_favorites 0 hides Favorites\n"
-  s += "------------------------------\n"
-  s += "text_mode can be title or url\n"
 
   alert(s.trim())
 }
