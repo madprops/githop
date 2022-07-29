@@ -64,12 +64,6 @@ App.make_buttons = function () {
       }
     })
 
-    el.addEventListener("auxclick", function (e) {
-      if (e.button === 1) {
-        click_toggle(btn)
-      }
-    })
-
     button.element = el
     buttons.append(el)
   }

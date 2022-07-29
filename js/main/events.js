@@ -29,7 +29,7 @@ App.setup_events = function () {
 
       e.preventDefault()
     } else if (e.key === "Tab") {
-      App.clear_all()
+      App.show_all()
       e.preventDefault()
     }
   })

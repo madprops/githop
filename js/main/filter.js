@@ -131,8 +131,6 @@ App.do_filter = function (value = "") {
 // Clear filter
 App.clear_filter = function () {
   App.el("#filter").value = ""
-  App.do_filter()
-  App.focus_filter()
 }
 
 // Focus the filter
@@ -151,9 +149,9 @@ App.setup_filter = function () {
     App.do_filter()
   })
 
-  // When the filter clear button is pressed
-  App.el("#filter_btn_clear").addEventListener("click", function () {
-    App.clear_all()
+  // When the filter all button is pressed
+  App.el("#filter_btn_all").addEventListener("click", function () {
+    App.show_all()
   })
 
   // When the filter home button is pressed
@@ -170,7 +168,13 @@ App.setup_filter = function () {
 }
 
 // Clear filter and buttons
-App.clear_all = function () {
-  App.deactivate_all_buttons()
-  App.clear_filter()
+App.show_all = function () {
+  if (App.get_active_buttons().length > 0) {
+    App.deactivate_all_buttons()
+  } else {
+    App.clear_filter()
+  }
+
+  App.do_filter()
+  App.focus_filter()
 }

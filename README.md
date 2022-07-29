@@ -20,7 +20,7 @@ Middle-clicking an item opens it in a new tab without closing the app.
 
 ## Buttons
 
-More than 1 button can be active at a time by Shift+Clicking or Middle+Clicking them.
+More than 1 button can be active at a time by Shift-Clicking them.
 For instance you can have "Tag", "Day", and "2" active.
 Which would match the tag path, 24 hours, and level 2.
 If more of the same type are selected, for instance Commits and Issues (path),
