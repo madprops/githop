@@ -146,7 +146,7 @@ Modes can be combined for more precise results:
 }
 ```
 
-### JSON
+## JSON
 
 Settings must be valid json. 
 If there's a parsing error, a message with the specific error will show.
