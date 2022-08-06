@@ -22,6 +22,10 @@ App.process_items = function (items) {
   App.items = []
 
   for (let item of items) {
+    if (!item.title || !item.url) {
+      continue
+    }
+    
     let curl = App.pathname(item.url)
 
     if (!curl) {
