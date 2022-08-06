@@ -21,11 +21,7 @@ App.process_items = function (items) {
 
   App.items = []
 
-  for (let item of items) {
-    if (!item.title || !item.url) {
-      continue
-    }
-    
+  for (let item of items) {    
     let curl = App.pathname(item.url)
 
     if (!curl) {
@@ -46,7 +42,7 @@ App.process_items = function (items) {
 
     let obj = {
       index: i,
-      title: item.title,
+      title: item.title || "No Title",
       url: item.url,
       clean_url: curl,
       date: item.lastVisitTime,
@@ -140,7 +136,7 @@ App.fill_item_element = function (item) {
   }
 
   let icon = App.el(".item_icon", item.element)
-  jdenticon.update(icon, App.get_unit(item.clean_url))
+  jdenticon.update(icon, App.get_unit(item.clean_url).toLowerCase())
 
   item.filled = true
   App.log("Element created")
