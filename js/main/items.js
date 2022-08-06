@@ -42,7 +42,7 @@ App.process_items = function (items) {
 
     let obj = {
       index: i,
-      title: item.title || "No Title",
+      title: item.title || curl,
       url: item.url,
       clean_url: curl,
       date: item.lastVisitTime,
