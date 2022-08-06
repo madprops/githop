@@ -64,7 +64,7 @@ App.do_filter = function (value = "") {
 
   function matches (item) {
     return words.every(x => item.title.toLowerCase().includes(x)) || 
-           words.every(x => item.url.includes(x))
+           words.every(x => item.url.toLowerCase().includes(x))
   }
 
   function check_modes (item) {
