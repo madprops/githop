@@ -16,7 +16,7 @@ App.setup_list = function () {
           }
         }
       } else if (e.target.closest(".item_text")) {
-        App.open_tab(item.url)
+        App.resolve_open(item.url)
       }
     }
   })

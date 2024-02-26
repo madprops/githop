@@ -25,7 +25,7 @@ App.start_nice_editor = function () {
 
     try {
       let obj = JSON.parse(value)
-      
+
       if (App.check_setting_types(obj, true)) {
         App.nice_editor.focus()
         return
@@ -37,7 +37,7 @@ App.start_nice_editor = function () {
         // Try to repair the json
         let repaired = App.json_repair(value)
         let obj = JSON.parse(repaired)
-        
+
         if (App.check_setting_types(obj, true)) {
           App.nice_editor.focus()
           return
@@ -60,7 +60,7 @@ App.start_nice_editor = function () {
 
   App.el("#editor_help").addEventListener("click", function () {
     App.show_help()
-  })   
+  })
 }
 
 // Show the editor
@@ -70,17 +70,17 @@ App.show_editor = function () {
   if (!App.nice_editor) {
     App.start_nice_editor()
   }
-  
+
   let manifest = browser.runtime.getManifest()
   let ver = manifest.version
   let info = `${App.name} v${ver}`
   editor_info.textContent = info
-  
+
   App.el("#main").classList.add("hidden")
   App.el("#editor_container").classList.remove("hidden")
-  
+
   let value = JSON.stringify(App.settings, undefined, 2)
-  
+
   App.nice_editor.setValue(value)
   App.nice_editor.clearSelection()
   App.nice_editor.gotoLine(1)
@@ -109,6 +109,7 @@ App.setup_settings = function () {
   App.default_settings.text_mode = "title",
   App.default_settings.max_text_length = 250
   App.default_settings.max_favorites = 200
+  App.default_settings.new_tab = false
   App.default_settings.buttons = [
     {name: "Commits", path: "/commit/"},
     {name: "Issues", path: "/issues/"},
@@ -119,7 +120,7 @@ App.setup_settings = function () {
     {name: "2", level: 2},
   ]
 
-  App.get_settings() 
+  App.get_settings()
 }
 
 // Get the saved settings
@@ -158,7 +159,7 @@ App.get_settings = function () {
   }
 
   let buttons = []
-  
+
   if (App.settings.max_favorites > 0) {
     buttons.push(App.buttons_core.Favorites)
   }
@@ -186,6 +187,7 @@ App.order_settings = function (obj) {
     text_mode: obj.text_mode,
     max_text_length: obj.max_text_length,
     max_favorites: obj.max_favorites,
+    new_tab: obj.new_tab,
     buttons: obj.buttons,
   }
 }
@@ -214,6 +216,7 @@ App.show_help = function () {
   s += "title: Substring of the title.\n"
   s += "hours: Visited before these hours ago.\n"
   s += "level: Path level (aa/bb == 2).\n"
+  s += "new_tab: Open in a new tab.\n"
 
   alert(s.trim())
 }
@@ -227,7 +230,7 @@ App.check_setting_types = function (obj, do_alert = false) {
 
     if (typeof obj[key] !== the_type) {
       let msg = `Invalid type for ${key}. It should be ${the_type}.`
-      
+
       if (do_alert) {
         alert(msg)
         return true

@@ -21,7 +21,7 @@ App.process_items = function (items) {
 
   App.items = []
 
-  for (let item of items) {    
+  for (let item of items) {
     let curl = App.pathname(item.url)
 
     if (!curl) {
@@ -31,9 +31,9 @@ App.process_items = function (items) {
     if (added.includes(item.url)) {
       continue
     }
-    
+
     added.push(item.url)
-    
+
     let el = document.createElement("div")
     el.classList.add("item")
     el.classList.add("hidden")
@@ -52,7 +52,7 @@ App.process_items = function (items) {
       hidden: true,
       element: el
     }
-    
+
     App.items.push(obj)
     list.append(el)
 
@@ -77,7 +77,7 @@ App.start_item_observer = function () {
     rootMargin: "0px",
     threshold: 0.1,
   }
-  
+
   App.item_observer = new IntersectionObserver(function (entries) {
     for (let entry of entries) {
       if (!entry.isIntersecting) {
@@ -103,15 +103,15 @@ App.create_item_element = function (item) {
 
   let text = document.createElement("div")
   text.classList.add("item_text")
-  
+
   let text_content
-  
+
   if (App.settings.text_mode === "title") {
     text_content = item.title || item.url
   } else if (App.settings.text_mode === "url") {
     text_content = item.clean_url
   }
-  
+
   text.textContent = text_content.
     substring(0, App.settings.max_text_length).trim()
 
@@ -232,5 +232,14 @@ App.select_item = function (s_item, scroll = true) {
 
   if (scroll) {
     App.selected_item.element.scrollIntoView({block: "nearest"})
+  }
+}
+
+// Resolve how to open an item
+App.resolve_open = function (url) {
+  if (App.settings.new_tab) {
+    App.open_tab(url)
+  } else {
+    App.change_url(url)
   }
 }

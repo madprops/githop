@@ -22,6 +22,20 @@ App.open_tab = function (url, close = true) {
   }
 }
 
+// Change the url of the current tab
+App.change_url = async function (url, close = true) {
+  try {
+    let tabs = await browser.tabs.query({active: true, currentWindow: true})
+    await browser.tabs.update(tabs[0].id, {url: url})
+
+    if (close) {
+      window.close()
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 // Centralized function to get localStorage objects
 App.get_local_storage = function (ls_name) {
   let obj
