@@ -100,6 +100,12 @@ How many favorite items to keep stored.
 Favorite items will only show if the items are still in the browser history.
 Setting this to 0 will remove the Favorites feature all together.
 
+>new_tab (boolean)
+
+If true items will be opened in a new tab.
+
+By default this is false, which means items open on the same tab.
+
 >buttons (list of objects)
 
 A list of custom buttons. For instance:
@@ -148,7 +154,7 @@ Modes can be combined for more precise results:
 
 ### JSON
 
-Settings must be valid json. 
+Settings must be valid json.
 If there's a parsing error, a message with the specific error will show.
 Invalid json will be attempted to be fixed automatically, but won't work in all cases.
 
