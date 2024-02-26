@@ -112,9 +112,9 @@ A list of custom buttons. For instance:
 
 ```json
 "buttons": [
-  {name: "Tags", path: "/tag/"},
-  {name: "Day", hours: 24},
-  {name: "1", level: 1}
+  {"name": "Tags", "path": "/tag/"},
+  {"name": "Day", "hours": 24},
+  {"name": "1", "level": 1}
 ]
 ```
 
