@@ -110,7 +110,7 @@ By default this is false, which means items open on the same tab.
 
 A list of custom buttons. For instance:
 
-```
+```json
 "buttons": [
   {name: "Tags", path: "/tag/"},
   {name: "Day", hours: 24},
@@ -143,7 +143,7 @@ For instance aa/bb/cc will match a level of 3.
 
 Modes can be combined for more precise results:
 
-```
+```json
 {
   "name": "Test",
   "path": "/cat/",
