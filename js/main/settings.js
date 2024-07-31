@@ -113,6 +113,7 @@ App.setup_settings = function () {
   App.default_settings.buttons = [
     {name: "Commits", path: "/commit/"},
     {name: "Issues", path: "/issues/"},
+    {name: "Discussions", path: "/discussions/"},
     {name: "Pulls", path: "/pull/"},
     {name: "Tags", path: "/tag/"},
     {name: "Day", hours: 24},
