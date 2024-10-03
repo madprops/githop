@@ -117,8 +117,8 @@ App.setup_settings = function () {
   App.default_settings.new_tab = false
   App.default_settings.show_tabs = true
   App.default_settings.show_history = true
-  App.default_settings.tab_icon = "(Tab)"
-  App.default_settings.history_icon = ""
+  App.default_settings.tab_icon = `(Tab)`
+  App.default_settings.history_icon = ``
   App.default_settings.buttons = [
     {name: `Commits`, path: `/commit/`},
     {name: `Issues`, path: `/issues/`},
