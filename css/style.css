@@ -1,8 +1,8 @@
 body, html {
   font-family: sans-serif;
   font-size: 18px;
-  background-color: #252933;
-  color: white;
+  background-color: var(--background_color);
+  color: var(--font_color);
   width: 700px;
   height: 600px;
   margin: 0;
@@ -40,14 +40,14 @@ body, html {
 }
 
 #filter {
-  background-color: #99A7D6;
+  background-color: var(--filter_background_color);
   border-width: 0;
   font-size: 1rem;
   padding: 0.25rem;
-  color: black;
+  color: var(--filter_font_color);
   flex-grow: 0;
   width: 160px;
-  outline: 1px solid blue;
+  outline: 1px solid grey;
 }
 
 #filter_buttons {
@@ -96,7 +96,7 @@ body, html {
 
 .button_2 {
   background-color: transparent;
-  color: white;
+  color: var(--button_font_color);
 }
 
 #list {
@@ -138,13 +138,13 @@ body, html {
 }
 
 .favorite .item_icon {
-  outline: 2px solid gold;
+  outline: 2px solid var(--favorite_outline);
   border-radius: 50%;
 }
 
 .selected {
   border-color: white;
-  background-color: #2B303B;
+  background-color: var(--selected_background_color)
 }
 
 .hidden {

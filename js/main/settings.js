@@ -103,6 +103,7 @@ App.buttons_core = {
 
 App.setup_settings = function () {
   App.default_settings = {}
+  App.default_settings.theme = "dark"
   App.default_settings.homepage = "https://github.com"
   App.default_settings.max_results = 1000
   App.default_settings.history_months = 12
@@ -119,7 +120,7 @@ App.setup_settings = function () {
     {name: "Day", hours: 24},
     {name: "1", level: 1},
     {name: "2", level: 2},
-  ]
+  ],
 
   App.get_settings()
 }
@@ -182,6 +183,7 @@ App.save_settings = function (obj, restart = false) {
 // Order the settings object
 App.order_settings = function (obj) {
   return {
+    theme: obj.theme,
     homepage: obj.homepage,
     max_results: obj.max_results,
     history_months: obj.history_months,
@@ -197,6 +199,8 @@ App.order_settings = function (obj) {
 App.show_help = function () {
   let s = ""
 
+  s += "theme: Can be \"light\" or \"dark\".\n"
+  s += "------------------------------\n"
   s += "homepage: Root url of items. Used to search in the history.\n"
   s += "------------------------------\n"
   s += "max_results: How many items (max) to fetch from history.\n"
