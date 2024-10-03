@@ -243,6 +243,7 @@ App.check_setting_types = function (obj, do_alert = false) {
         alert(msg)
         return true
       }
+
       obj[key] = App.default_settings[key]
       App.log(msg)
       changed = true
