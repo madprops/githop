@@ -31,6 +31,7 @@ App.process_items = function (items, from) {
   let favorite_urls = App.favorites.map(x => x.url)
   let list = App.el(`#list`)
   let i = App.items.length
+  let now = Date.now()
 
   for (let item of items) {
     let curl = App.pathname(item.url)
@@ -54,6 +55,7 @@ App.process_items = function (items, from) {
       created: false,
       filled: false,
       hidden: true,
+      date: item.lastVisitTime || now,
       element: el,
       id: item.id,
       from,
