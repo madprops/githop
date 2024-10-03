@@ -35,10 +35,6 @@ App.process_items = function (items, from) {
   for (let item of items) {
     let curl = App.pathname(item.url)
 
-    if (!curl) {
-      continue
-    }
-
     if (App.items.some(x => x.title === item.url)) {
       continue
     }
