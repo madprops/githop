@@ -117,6 +117,8 @@ App.setup_settings = function () {
   App.default_settings.new_tab = false
   App.default_settings.show_tabs = true
   App.default_settings.show_history = true
+  App.default_settings.tab_icon = "(Tab)"
+  App.default_settings.history_icon = ""
   App.default_settings.buttons = [
     {name: `Commits`, path: `/commit/`},
     {name: `Issues`, path: `/issues/`},
@@ -198,6 +200,8 @@ App.order_settings = function (obj) {
     max_favorites: obj.max_favorites,
     show_tabs: obj.show_tabs,
     show_history: obj.show_history,
+    tab_icon: obj.tab_icon,
+    history_icon: obj.history_icon,
     new_tab: obj.new_tab,
     buttons: obj.buttons,
   }
