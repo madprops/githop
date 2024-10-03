@@ -1,12 +1,13 @@
 // Filter the list with the filter's value
-App.do_filter = function (value = "") {
+App.do_filter = function (value = ``) {
   let filter_start = Date.now()
   App.selected_item = undefined
 
   if (value) {
-    App.el("#filter").value = value
-  } else {
-    value = App.el("#filter").value.trim()
+    App.el(`#filter`).value = value
+  }
+  else {
+    value = App.el(`#filter`).value.trim()
   }
 
   let path
@@ -17,49 +18,49 @@ App.do_filter = function (value = "") {
   let favorite_urls
 
   {
-    if (App.get_active_mode("mode").includes("favorites")) {
-      modes.push("favorites")
+    if (App.get_active_mode(`mode`).includes(`favorites`)) {
+      modes.push(`favorites`)
       favorite_urls = App.favorites.map(x => x.url.toLowerCase())
     }
   }
 
   {
-    let m = App.get_active_mode("path")
+    let m = App.get_active_mode(`path`)
   
     if (m.length > 0) {
-      modes.push("path")
+      modes.push(`path`)
       path = m.map(x => x.toLowerCase())
     }
   }
 
   {
-    let m = App.get_active_mode("title")
+    let m = App.get_active_mode(`title`)
 
     if (m.length > 0) {
-      modes.push("title")
+      modes.push(`title`)
       title = m.map(x => x.toLowerCase())
     }    
   }
 
   {
-    let m = App.get_active_mode("hours")
+    let m = App.get_active_mode(`hours`)
 
     if (m.length > 0) {
-      modes.push("hours")
+      modes.push(`hours`)
       hours = m
     }    
   }
   
   {
-    let m = App.get_active_mode("level")
+    let m = App.get_active_mode(`level`)
 
     if (m.length > 0) {
-      modes.push("level")
+      modes.push(`level`)
       level = m
     }
   }
 
-  let words = value.toLowerCase().split(" ").filter(x => x !== "")
+  let words = value.toLowerCase().split(` `).filter(x => x !== ``)
   let selected = false
 
   function matches (item) {
@@ -72,25 +73,25 @@ App.do_filter = function (value = "") {
       return false
     }
 
-    if (modes.includes("favorites")) {
+    if (modes.includes(`favorites`)) {
       if (!favorite_urls.includes(item.url.toLowerCase())) {
         return false
       }
     }
 
-    if (modes.includes("path")) {
+    if (modes.includes(`path`)) {
       if (!path.every(x => item.url.toLowerCase().includes(x))) {
         return false
       }
     }
 
-    if (modes.includes("title")) {
+    if (modes.includes(`title`)) {
       if (!title.every(x => item.title.toLowerCase().includes(x))) {
         return false
       }
     }    
 
-    if (modes.includes("hours")) {
+    if (modes.includes(`hours`)) {
       let d = Math.round(App.get_hours(item.date))
 
       if (!hours.every(x => d <= x)) {
@@ -98,8 +99,8 @@ App.do_filter = function (value = "") {
       }
     }    
 
-    if (modes.includes("level")) {
-      let lvl = App.count(item.clean_url, "/")
+    if (modes.includes(`level`)) {
+      let lvl = App.count(item.clean_url, `/`)
 
       if (!level.every(x => x === lvl)) {
         return false
@@ -117,7 +118,8 @@ App.do_filter = function (value = "") {
         App.select_item(item)
         selected = true
       }      
-    } else {
+    }
+    else {
       App.hide_item(item)
       continue
     }
@@ -130,18 +132,18 @@ App.do_filter = function (value = "") {
 
 // Clear filter
 App.clear_filter = function () {
-  App.el("#filter").value = ""
+  App.el(`#filter`).value = ``
 }
 
 // Focus the filter
 App.focus_filter = function () {
-  App.el("#filter").focus()
+  App.el(`#filter`).focus()
 }
 
 // Prepare filter buttons
 App.setup_filter = function () {
   // When a user types something
-  App.el("#filter").addEventListener("input", function (e) {
+  App.el(`#filter`).addEventListener(`input`, function (e) {
     if (App.editor_on) {
       return
     }
@@ -150,17 +152,17 @@ App.setup_filter = function () {
   })
 
   // When the filter all button is pressed
-  App.el("#filter_btn_all").addEventListener("click", function () {
+  App.el(`#filter_btn_all`).addEventListener(`click`, function () {
     App.show_all()
   })
 
   // When the filter home button is pressed
-  App.el("#filter_btn_home").addEventListener("click", function () {
+  App.el(`#filter_btn_home`).addEventListener(`click`, function () {
     App.open_tab(App.settings.homepage)
   })
 
   // When the filter editor button is pressed
-  App.el("#filter_btn_editor").addEventListener("click", function () {
+  App.el(`#filter_btn_editor`).addEventListener(`click`, function () {
     App.show_editor()
   })
   

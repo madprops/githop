@@ -1,21 +1,21 @@
 // Information
-App.name = "GitHop"
+App.name = `GitHop`
 
 // localStorage settings
-App.ls_favorites = "favorites_v1"
-App.ls_button_state = "button_state_v1"
-App.ls_settings = "settings_v1"
+App.ls_favorites = `favorites_v1`
+App.ls_button_state = `button_state_v1`
+App.ls_settings = `settings_v1`
 
 // Setup the settings editor
 App.start_nice_editor = function () {
-  App.nice_editor = ace.edit("editor")
+  App.nice_editor = ace.edit(`editor`)
 
   App.nice_editor.session.setOptions({
-    mode: "ace/mode/json",
+    mode: `ace/mode/json`,
     tabSize: 2,
   })
 
-  App.el("#editor_done").addEventListener("click", function () {
+  App.el(`#editor_done`).addEventListener(`click`, function () {
     let value = App.nice_editor.getValue()
 
     if (App.original_editor_value === value) {
@@ -32,7 +32,8 @@ App.start_nice_editor = function () {
       }
 
       App.save_settings(obj, true)
-    } catch (err) {
+    }
+    catch (err) {
       try {
         // Try to repair the json
         let repaired = App.json_repair(value)
@@ -44,7 +45,8 @@ App.start_nice_editor = function () {
         }
 
         App.save_settings(obj, true)
-      } catch (err) {
+      }
+      catch (err) {
         alert(err)
         App.nice_editor.focus()
       }
@@ -52,13 +54,13 @@ App.start_nice_editor = function () {
     }
   })
 
-  App.el("#editor_defaults").addEventListener("click", function () {
-    if (confirm("Restore defaults?")) {
+  App.el(`#editor_defaults`).addEventListener(`click`, function () {
+    if (confirm(`Restore defaults?`)) {
       App.save_settings(App.default_settings, true)
     }
   })
 
-  App.el("#editor_help").addEventListener("click", function () {
+  App.el(`#editor_help`).addEventListener(`click`, function () {
     App.show_help()
   })
 }
@@ -74,10 +76,11 @@ App.show_editor = function () {
   let manifest = browser.runtime.getManifest()
   let ver = manifest.version
   let info = `${App.name} v${ver}`
+  let editor_info = App.el(`#editor_info`)
   editor_info.textContent = info
 
-  App.el("#main").classList.add("hidden")
-  App.el("#editor_container").classList.remove("hidden")
+  App.el(`#main`).classList.add(`hidden`)
+  App.el(`#editor_container`).classList.remove(`hidden`)
 
   let value = JSON.stringify(App.settings, undefined, 2)
 
@@ -92,34 +95,34 @@ App.show_editor = function () {
 // Hide the editor
 App.hide_editor = function () {
   App.editor_on = false
-  App.el("#main").classList.remove("hidden")
-  App.el("#editor_container").classList.add("hidden")
+  App.el(`#main`).classList.remove(`hidden`)
+  App.el(`#editor_container`).classList.add(`hidden`)
 }
 
 // These buttons are always present
 App.buttons_core = {
-  "Favorites": {name: "Favorites", mode: "favorites", tooltip: "Favorite items. Click the icons to toggle"},
+  "Favorites": {name: `Favorites`, mode: `favorites`, tooltip: `Favorite items. Click the icons to toggle`},
 }
 
 App.setup_settings = function () {
   App.default_settings = {}
-  App.default_settings.theme = "dark"
-  App.default_settings.homepage = "https://github.com"
+  App.default_settings.theme = `dark`
+  App.default_settings.homepage = `https://github.com`
   App.default_settings.max_results = 1000
   App.default_settings.history_months = 12
-  App.default_settings.text_mode = "title",
+  App.default_settings.text_mode = `title`,
   App.default_settings.max_text_length = 250
   App.default_settings.max_favorites = 200
   App.default_settings.new_tab = false
   App.default_settings.buttons = [
-    {name: "Commits", path: "/commit/"},
-    {name: "Issues", path: "/issues/"},
-    {name: "Discussions", path: "/discussions/"},
-    {name: "Pulls", path: "/pull/"},
-    {name: "Tags", path: "/tag/"},
-    {name: "Day", hours: 24},
-    {name: "1", level: 1},
-    {name: "2", level: 2},
+    {name: `Commits`, path: `/commit/`},
+    {name: `Issues`, path: `/issues/`},
+    {name: `Discussions`, path: `/discussions/`},
+    {name: `Pulls`, path: `/pull/`},
+    {name: `Tags`, path: `/tag/`},
+    {name: `Day`, hours: 24},
+    {name: `1`, level: 1},
+    {name: `2`, level: 2},
   ],
 
   App.get_settings()
@@ -175,7 +178,7 @@ App.save_settings = function (obj, restart = false) {
   App.save_local_storage(App.ls_settings, obj)
 
   if (restart) {
-    alert("Setting changes saved successfully.")
+    alert(`Setting changes saved successfully.`)
     window.close()
   }
 }
@@ -197,31 +200,31 @@ App.order_settings = function (obj) {
 
 // Show a help message about the editor
 App.show_help = function () {
-  let s = ""
+  let s = ``
 
-  s += "theme: Can be \"light\" or \"dark\".\n"
-  s += "------------------------------\n"
-  s += "homepage: Root url of items. Used to search in the history.\n"
-  s += "------------------------------\n"
-  s += "max_results: How many items (max) to fetch from history.\n"
-  s += "------------------------------\n"
-  s += "history_months: How deep the history search can be, in months.\n"
-  s += "------------------------------\n"
-  s += "text_mode: Can be \"title\" or \"url\".\n"
-  s += "This is the displayed text in items.\n"
-  s += "------------------------------\n"
-  s += "max_text_length: How long the displayed text can be.\n"
-  s += "------------------------------\n"
-  s += "max_favorites: How many favorites to remember.\n"
-  s += "0 disables Favorites entirely.\n"
-  s += "------------------------------\n"
-  s += "buttons: Custom filter buttons.\n"
-  s += "They use the following modes:\n"
-  s += "path: Substring of the URL.\n"
-  s += "title: Substring of the title.\n"
-  s += "hours: Visited before these hours ago.\n"
-  s += "level: Path level (aa/bb == 2).\n"
-  s += "new_tab: Open in a new tab.\n"
+  s += `theme: Can be "light" or "dark".\n`
+  s += `------------------------------\n`
+  s += `homepage: Root url of items. Used to search in the history.\n`
+  s += `------------------------------\n`
+  s += `max_results: How many items (max) to fetch from history.\n`
+  s += `------------------------------\n`
+  s += `history_months: How deep the history search can be, in months.\n`
+  s += `------------------------------\n`
+  s += `text_mode: Can be "title" or "url".\n`
+  s += `This is the displayed text in items.\n`
+  s += `------------------------------\n`
+  s += `max_text_length: How long the displayed text can be.\n`
+  s += `------------------------------\n`
+  s += `max_favorites: How many favorites to remember.\n`
+  s += `0 disables Favorites entirely.\n`
+  s += `------------------------------\n`
+  s += `buttons: Custom filter buttons.\n`
+  s += `They use the following modes:\n`
+  s += `path: Substring of the URL.\n`
+  s += `title: Substring of the title.\n`
+  s += `hours: Visited before these hours ago.\n`
+  s += `level: Path level (aa/bb == 2).\n`
+  s += `new_tab: Open in a new tab.\n`
 
   alert(s.trim())
 }
@@ -239,11 +242,10 @@ App.check_setting_types = function (obj, do_alert = false) {
       if (do_alert) {
         alert(msg)
         return true
-      } else {
-        obj[key] = App.default_settings[key]
-        App.log(msg)
-        changed = true
       }
+      obj[key] = App.default_settings[key]
+      App.log(msg)
+      changed = true
     }
   }
 

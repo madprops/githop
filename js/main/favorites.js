@@ -17,7 +17,7 @@ App.save_favorites = function () {
 // Add a favorite item
 App.add_favorite = function (item) {
   // Remove from list first
-  for (let i=0; i<App.favorites.length; i++) {
+  for (let i = 0; i < App.favorites.length; i++) {
     if (App.favorites[i].url === item.url) {
       App.favorites.splice(i, 1)
       break
@@ -25,7 +25,7 @@ App.add_favorite = function (item) {
   }
 
   item.favorite = true
-  item.element.classList.add("favorite")
+  item.element.classList.add(`favorite`)
   
   let o = {}
   o.title = item.title
@@ -41,13 +41,13 @@ App.add_favorite = function (item) {
 
     if (r_item) {
       r_item.favorite = false
-      r_item.element.classList.remove("favorite")
+      r_item.element.classList.remove(`favorite`)
     }
   }
 
   App.save_favorites()
 
-  if (App.get_active_mode("mode").includes("favorites")) {
+  if (App.get_active_mode(`mode`).includes(`favorites`)) {
     App.do_filter()
   }
 }
@@ -55,9 +55,9 @@ App.add_favorite = function (item) {
 // Remove a favorite item
 App.remove_favorite = function (item) {
   item.favorite = false
-  item.element.classList.remove("favorite")
+  item.element.classList.remove(`favorite`)
 
-  for (let i=0; i<App.favorites.length; i++) {
+  for (let i = 0; i < App.favorites.length; i++) {
     let it = App.favorites[i]
 
     if (it.url === item.url) {
@@ -67,7 +67,7 @@ App.remove_favorite = function (item) {
     }
   }
 
-  if (App.get_active_mode("mode").includes("favorites")) {
+  if (App.get_active_mode(`mode`).includes(`favorites`)) {
     App.do_filter()
   }
 }

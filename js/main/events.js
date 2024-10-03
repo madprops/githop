@@ -1,18 +1,19 @@
 App.setup_events = function () {
-  document.addEventListener("keydown", function (e) {
+  document.addEventListener(`keydown`, function (e) {
     if (App.editor_on) {
       return
     }
 
     App.focus_filter()
 
-    if (e.key === "Enter") {
+    if (e.key === `Enter`) {
       if (App.selected_item) {
         App.resolve_open(App.selected_item.url)
       }
 
       e.preventDefault()
-    } else if (e.key === "ArrowUp") {
+    }
+    else if (e.key === `ArrowUp`) {
       let item = App.get_prev_visible_item(App.selected_item)
 
       if (item) {
@@ -20,7 +21,8 @@ App.setup_events = function () {
       }
 
       e.preventDefault()
-    } else if (e.key === "ArrowDown") {
+    }
+    else if (e.key === `ArrowDown`) {
       let item = App.get_next_visible_item(App.selected_item)
 
       if (item) {
@@ -28,7 +30,8 @@ App.setup_events = function () {
       }
 
       e.preventDefault()
-    } else if (e.key === "Tab") {
+    }
+    else if (e.key === `Tab`) {
       App.show_all()
       e.preventDefault()
     }

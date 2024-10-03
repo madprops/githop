@@ -8,7 +8,7 @@ App.get_items = function () {
   browser.history.search({
     text: App.settings.homepage,
     maxResults: App.settings.max_results,
-    startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months)
+    startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months),
   }).then(App.process_items)
 }
 
@@ -16,7 +16,7 @@ App.get_items = function () {
 App.process_items = function (items) {
   let added = []
   let favorite_urls = App.favorites.map(x => x.url)
-  let list = App.el("#list")
+  let list = App.el(`#list`)
   let i = 0
 
   App.items = []
@@ -34,9 +34,9 @@ App.process_items = function (items) {
 
     added.push(item.url)
 
-    let el = document.createElement("div")
-    el.classList.add("item")
-    el.classList.add("hidden")
+    let el = document.createElement(`div`)
+    el.classList.add(`item`)
+    el.classList.add(`hidden`)
     el.dataset.index = i
     App.item_observer.observe(el)
 
@@ -50,7 +50,7 @@ App.process_items = function (items) {
       created: false,
       filled: false,
       hidden: true,
-      element: el
+      element: el,
     }
 
     App.items.push(obj)
@@ -73,8 +73,8 @@ App.process_items = function (items) {
 // Used for lazy-loading components
 App.start_item_observer = function () {
   let options = {
-    root: App.el("#list"),
-    rootMargin: "0px",
+    root: App.el(`#list`),
+    rootMargin: `0px`,
     threshold: 0.1,
   }
 
@@ -95,20 +95,21 @@ App.start_item_observer = function () {
 
 // Create an item element
 App.create_item_element = function (item) {
-  let icon = document.createElement("canvas")
-  icon.classList.add("item_icon")
+  let icon = document.createElement(`canvas`)
+  icon.classList.add(`item_icon`)
   icon.width = 25
   icon.height = 25
   item.element.append(icon)
 
-  let text = document.createElement("div")
-  text.classList.add("item_text")
+  let text = document.createElement(`div`)
+  text.classList.add(`item_text`)
 
   let text_content
 
-  if (App.settings.text_mode === "title") {
+  if (App.settings.text_mode === `title`) {
     text_content = item.title || item.url
-  } else if (App.settings.text_mode === "url") {
+  }
+  else if (App.settings.text_mode === `url`) {
     text_content = item.clean_url
   }
 
@@ -122,31 +123,32 @@ App.create_item_element = function (item) {
 // Fully create the item element
 App.fill_item_element = function (item) {
   let days = Math.round(App.get_hours(item.date) / 24)
-  let s = App.plural(days, "day", "days")
+  let s = App.plural(days, `day`, `days`)
   let visited = `(Visited ${s} ago)`
 
-  if (App.settings.text_mode === "title") {
+  if (App.settings.text_mode === `title`) {
     item.element.title = `${item.url} ${visited}`
-  } else if (App.settings.text_mode === "url") {
+  }
+  else if (App.settings.text_mode === `url`) {
     item.element.title = `${item.title} ${visited}`
   }
 
   if (App.settings.max_favorites > 0 && item.favorite) {
-    item.element.classList.add("favorite")
+    item.element.classList.add(`favorite`)
   }
 
-  let icon = App.el(".item_icon", item.element)
+  let icon = App.el(`.item_icon`, item.element)
   jdenticon.update(icon, App.get_unit(item.clean_url).toLowerCase())
 
   item.filled = true
-  App.log("Element created")
+  App.log(`Element created`)
 }
 
 // Get next item that is visible
 App.get_next_visible_item = function (o_item) {
   let waypoint = false
 
-  for (let i=0; i<App.items.length; i++) {
+  for (let i = 0; i < App.items.length; i++) {
     let item = App.items[i]
 
     if (waypoint) {
@@ -165,7 +167,7 @@ App.get_next_visible_item = function (o_item) {
 App.get_prev_visible_item = function (o_item) {
   let waypoint = false
 
-  for (let i=App.items.length-1; i>=0; i--) {
+  for (let i = App.items.length - 1; i >= 0; i--) {
     let item = App.items[i]
 
     if (waypoint) {
@@ -204,7 +206,7 @@ App.show_item = function (item) {
     App.create_item_element(item)
   }
 
-  item.element.classList.remove("hidden")
+  item.element.classList.remove(`hidden`)
 }
 
 // Make an item not visible
@@ -215,7 +217,7 @@ App.hide_item = function (item) {
     return
   }
 
-  item.element.classList.add("hidden")
+  item.element.classList.add(`hidden`)
 }
 
 // Make an item selected
@@ -223,15 +225,15 @@ App.hide_item = function (item) {
 App.select_item = function (s_item, scroll = true) {
   for (let item of App.items) {
     if (item.created) {
-      item.element.classList.remove("selected")
+      item.element.classList.remove(`selected`)
     }
   }
 
   App.selected_item = s_item
-  App.selected_item.element.classList.add("selected")
+  App.selected_item.element.classList.add(`selected`)
 
   if (scroll) {
-    App.selected_item.element.scrollIntoView({block: "nearest"})
+    App.selected_item.element.scrollIntoView({block: `nearest`})
   }
 }
 
@@ -239,7 +241,8 @@ App.select_item = function (s_item, scroll = true) {
 App.resolve_open = function (url) {
   if (App.settings.new_tab) {
     App.open_tab(url)
-  } else {
+  }
+  else {
     App.change_url(url)
   }
 }

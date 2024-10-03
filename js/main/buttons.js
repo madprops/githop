@@ -1,6 +1,6 @@
 // Add buttons next to the filter
 App.make_buttons = function () {
-  let buttons = App.el("#buttons")
+  let buttons = App.el(`#buttons`)
 
   function click_single (btn) {
     if (btn.activated) {
@@ -25,13 +25,14 @@ App.make_buttons = function () {
 
   for (let button of App.buttons) {
     button.activated = false
-    let el = document.createElement("button")
+    let el = document.createElement(`button`)
     el.textContent = button.name
-    el.classList.add("button")
+    el.classList.add(`button`)
     
     if (button.tooltip) {
       el.title = button.tooltip
-    } else {
+    }
+    else {
       let titles = []
 
       if (button.path) {
@@ -50,16 +51,17 @@ App.make_buttons = function () {
         titles.push(`Title ${button.title}`)
       } 
 
-      el.title = titles.join("   |   ")
+      el.title = titles.join(`   |   `)
     }
 
     // Avoid reference problems
     let btn = button
 
-    el.addEventListener("click", function (e) {
+    el.addEventListener(`click`, function (e) {
       if (e.shiftKey) {
         click_toggle(btn)
-      } else {
+      }
+      else {
         click_single(btn)
       }
     })
@@ -96,29 +98,31 @@ App.setup_buttons = function () {
   App.make_buttons()
   App.get_button_state()
 
-  let buttons = App.el("#buttons")
-  let left = App.el("#buttons_left")
-  let right = App.el("#buttons_right")
+  let buttons = App.el(`#buttons`)
+  let left = App.el(`#buttons_left`)
+  let right = App.el(`#buttons_right`)
 
-  buttons.addEventListener("wheel", function (e) {
-    let direction = e.deltaY > 0 ? "down" : "up"
+  buttons.addEventListener(`wheel`, function (e) {
+    let direction = e.deltaY > 0 ? `down` : `up`
 
-    if (direction === "down") {
+    if (direction === `down`) {
       App.scroll_buttons_right()
-    } else if (direction === "up") {
+    }
+    else if (direction === `up`) {
       App.scroll_buttons_left()
     }
   })
 
   if (buttons.scrollWidth <= buttons.clientWidth) {
-    left.classList.add("hidden")
-    right.classList.add("hidden")
-  } else {
-    left.addEventListener("click", function () {
+    left.classList.add(`hidden`)
+    right.classList.add(`hidden`)
+  }
+  else {
+    left.addEventListener(`click`, function () {
       App.scroll_buttons_left()
     })
   
-    right.addEventListener("click", function () {
+    right.addEventListener(`click`, function () {
       App.scroll_buttons_right()
     })
   }
@@ -126,21 +130,22 @@ App.setup_buttons = function () {
 
 // Scroll buttons to the right
 App.scroll_buttons_right = function () {
-  App.el("#buttons").scrollLeft += 80
+  App.el(`#buttons`).scrollLeft += 80
 }
 
 // Scroll buttons to the left
 App.scroll_buttons_left = function () {
-  App.el("#buttons").scrollLeft -= 80
+  App.el(`#buttons`).scrollLeft -= 80
 }
 
 // Activate or de-activate a button
 App.toggle_activate_button = function (button) {
   if (button.activated) {
-    button.element.classList.remove("highlighted")
-  } else {
-    button.element.classList.add("highlighted")
-    button.element.scrollIntoView({block: "nearest"})
+    button.element.classList.remove(`highlighted`)
+  }
+  else {
+    button.element.classList.add(`highlighted`)
+    button.element.scrollIntoView({block: `nearest`})
   }
 
   button.activated = !button.activated

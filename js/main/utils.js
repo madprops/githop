@@ -1,21 +1,21 @@
 // Escape non alphanumeric chars
 App.escape_special_chars = function (s) {
-  return s.replace(/[^A-Za-z0-9]/g, "\\$&")
+  return s.replace(/[^A-Za-z0-9]/g, `\\$&`)
 }
 
 // Remove root url from the start of a url
 App.pathname = function (url) {
-  return new URL(url).pathname.replace(/\/$/, "").replace(/^\//, "")
+  return new URL(url).pathname.replace(/\/$/, ``).replace(/^\//, ``)
 }
 
 // Get first part of a url
 App.get_unit = function (curl) {
-  return curl.split("/")[0].split("?")[0].split("#")[0]
+  return curl.split(`/`)[0].split(`?`)[0].split(`#`)[0]
 }
 
 // Open a new tab with a url
 App.open_tab = function (url, close = true) {
-  browser.tabs.create({url: url, active: close})
+  browser.tabs.create({url, active: close})
 
   if (close) {
     window.close()
@@ -26,13 +26,14 @@ App.open_tab = function (url, close = true) {
 App.change_url = async function (url, close = true) {
   try {
     let tabs = await browser.tabs.query({active: true, currentWindow: true})
-    await browser.tabs.update(tabs[0].id, {url: url})
+    await browser.tabs.update(tabs[0].id, {url})
 
     if (close) {
       window.close()
     }
-  } catch (err) {
-    console.error(err)
+  }
+  catch (err) {
+    //
   }
 }
 
@@ -43,11 +44,13 @@ App.get_local_storage = function (ls_name) {
   if (localStorage[ls_name]) {
     try {
       obj = JSON.parse(localStorage.getItem(ls_name))
-    } catch (err) {
+    }
+    catch (err) {
       localStorage.removeItem(ls_name)
       obj = null
     }
-  } else {
+  }
+  else {
     obj = null
   }
 
@@ -83,12 +86,12 @@ App.get_hours = function (hours) {
 App.plural = function (n, singular, plural) {
   if (n === 1) {
     return `${n} ${singular}`
-  } else {
-    return `${n} ${plural}`
   }
+  return `${n} ${plural}`
 }
 
 // Print a message
 App.log = function (s) {
+  // eslint-disable-next-line no-console
   console.log(s)
 }
