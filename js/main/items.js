@@ -4,22 +4,33 @@ App.setup_items = function () {
 }
 
 // Get items from history
-App.get_items = function () {
-  browser.history.search({
-    text: App.settings.homepage,
-    maxResults: App.settings.max_results,
-    startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months),
-  }).then(App.process_items)
+App.get_items = async function () {
+  App.items = []
+
+  if (App.settings.show_tabs) {
+    let tabs = await browser.tabs.query({currentWindow: true})
+    tabs = tabs.filter(x => x.url && x.url.includes(App.settings.homepage))
+    App.process_items(tabs, `tabs`)
+  }
+
+  if (App.settings.show_history) {
+    let history = await browser.history.search({
+      text: App.settings.homepage,
+      maxResults: App.settings.max_results,
+      startTime: Date.now() - (1000 * 60 * 60 * 24 * 30 * App.settings.history_months),
+    })
+
+    App.process_items(history, `history`)
+  }
+
+  App.after_process()
 }
 
 // When results are found
-App.process_items = function (items) {
-  let added = []
+App.process_items = function (items, from) {
   let favorite_urls = App.favorites.map(x => x.url)
   let list = App.el(`#list`)
-  let i = 0
-
-  App.items = []
+  let i = App.items.length
 
   for (let item of items) {
     let curl = App.pathname(item.url)
@@ -28,11 +39,9 @@ App.process_items = function (items) {
       continue
     }
 
-    if (added.includes(item.url)) {
+    if (App.items.some(x => x.title === item.url)) {
       continue
     }
-
-    added.push(item.url)
 
     let el = document.createElement(`div`)
     el.classList.add(`item`)
@@ -45,28 +54,24 @@ App.process_items = function (items) {
       title: item.title || curl,
       url: item.url,
       clean_url: curl,
-      date: item.lastVisitTime,
       favorite: favorite_urls.includes(item.url),
       created: false,
       filled: false,
       hidden: true,
       element: el,
+      id: item.id,
+      from,
     }
 
     App.items.push(obj)
     list.append(el)
-
     i += 1
   }
+}
 
+App.after_process = function () {
   // Initial filter
   App.do_filter()
-
-  // Check performance
-  let d = Date.now() - App.date_start
-  App.log(`Time: ${d}`)
-  App.log(`Results: ${items.length}`)
-  App.log(`Items: ${App.items.length}`)
 }
 
 // Start intersection observer to check visibility
@@ -113,6 +118,10 @@ App.create_item_element = function (item) {
     text_content = item.clean_url
   }
 
+  if (item.from === `tabs`) {
+    text_content = `(Tab) ${text_content}`
+  }
+
   text.textContent = text_content.
     substring(0, App.settings.max_text_length).trim()
 
@@ -122,15 +131,11 @@ App.create_item_element = function (item) {
 
 // Fully create the item element
 App.fill_item_element = function (item) {
-  let days = Math.round(App.get_hours(item.date) / 24)
-  let s = App.plural(days, `day`, `days`)
-  let visited = `(Visited ${s} ago)`
-
   if (App.settings.text_mode === `title`) {
-    item.element.title = `${item.url} ${visited}`
+    item.element.title = item.url
   }
   else if (App.settings.text_mode === `url`) {
-    item.element.title = `${item.title} ${visited}`
+    item.element.title = item.title
   }
 
   if (App.settings.max_favorites > 0 && item.favorite) {
@@ -238,11 +243,20 @@ App.select_item = function (s_item, scroll = true) {
 }
 
 // Resolve how to open an item
-App.resolve_open = function (url) {
-  if (App.settings.new_tab) {
-    App.open_tab(url)
+App.resolve_open = function (item) {
+  if (item.from === `tabs`) {
+    App.focus_tab(item.id)
+    window.close()
+  }
+  else if (App.settings.new_tab) {
+    App.open_tab(item.url)
   }
   else {
-    App.change_url(url)
+    App.change_url(item.url)
   }
+}
+
+// Focus an open tab
+App.focus_tab = async function (id) {
+  await browser.tabs.update(id, {active: true})
 }

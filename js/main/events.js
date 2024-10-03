@@ -8,7 +8,7 @@ App.setup_events = function () {
 
     if (e.key === `Enter`) {
       if (App.selected_item) {
-        App.resolve_open(App.selected_item.url)
+        App.resolve_open(App.selected_item)
       }
 
       e.preventDefault()

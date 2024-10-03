@@ -115,6 +115,8 @@ App.setup_settings = function () {
   App.default_settings.max_text_length = 250
   App.default_settings.max_favorites = 200
   App.default_settings.new_tab = false
+  App.default_settings.show_tabs = true
+  App.default_settings.show_history = true
   App.default_settings.buttons = [
     {name: `Commits`, path: `/commit/`},
     {name: `Issues`, path: `/issues/`},
@@ -194,6 +196,8 @@ App.order_settings = function (obj) {
     text_mode: obj.text_mode,
     max_text_length: obj.max_text_length,
     max_favorites: obj.max_favorites,
+    show_tabs: obj.show_tabs,
+    show_history: obj.show_history,
     new_tab: obj.new_tab,
     buttons: obj.buttons,
   }
@@ -218,6 +222,9 @@ App.show_help = function () {
   s += `------------------------------\n`
   s += `max_favorites: How many favorites to remember.\n`
   s += `0 disables Favorites entirely.\n`
+  s += `------------------------------\n`
+  s += `show_tabs: Show tab items in the list.\n`
+  s += `show_history: Show history items in the list.\n`,
   s += `------------------------------\n`
   s += `buttons: Custom filter buttons.\n`
   s += `They use the following modes:\n`
