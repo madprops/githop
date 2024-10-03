@@ -87,6 +87,7 @@ App.plural = function (n, singular, plural) {
   if (n === 1) {
     return `${n} ${singular}`
   }
+
   return `${n} ${plural}`
 }
 

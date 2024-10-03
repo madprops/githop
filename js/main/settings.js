@@ -50,6 +50,7 @@ App.start_nice_editor = function () {
         alert(err)
         App.nice_editor.focus()
       }
+
       return
     }
   })
