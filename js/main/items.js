@@ -117,10 +117,14 @@ App.create_item_element = function (item) {
   }
 
   if (item.from === `tabs`) {
-    text_content = `${App.settings.tab_icon} ${text_content}`
+    if (App.settings.tab_icon) {
+      text_content = `${App.settings.tab_icon}\u00A0\u00A0${text_content}`
+    }
   }
   else if (item.from === `history`) {
-    text_content = `${App.settings.history_icon} ${text_content}`
+    if (App.settings.history_icon) {
+      text_content = `${App.settings.history_icon}\u00A0\u00A0${text_content}`
+    }
   }
 
   text.textContent = text_content.
