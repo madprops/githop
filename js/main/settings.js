@@ -115,6 +115,7 @@ App.setup_settings = function () {
   App.default_settings.max_text_length = 250
   App.default_settings.max_favorites = 200
   App.default_settings.new_tab = false
+  App.default_settings.focus_tab = true
   App.default_settings.show_tabs = true
   App.default_settings.show_history = true
   App.default_settings.tab_icon = `\uD83D\uDFE2`
@@ -203,6 +204,7 @@ App.order_settings = function (obj) {
     tab_icon: obj.tab_icon,
     history_icon: obj.history_icon,
     new_tab: obj.new_tab,
+    focus_tab: obj.focus_tab,
     buttons: obj.buttons,
   }
 }
@@ -237,6 +239,7 @@ App.show_help = function () {
   s += `hours: Visited before these hours ago.\n`
   s += `level: Path level (aa/bb == 2).\n`
   s += `new_tab: Open in a new tab.\n`
+  s += `focus_tab: Focus tabs if they're already open.\n`
 
   alert(s.trim())
 }

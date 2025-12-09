@@ -249,7 +249,7 @@ App.select_item = function (s_item, scroll = true) {
 
 // Resolve how to open an item
 App.resolve_open = function (item) {
-  if (item.from === `tabs`) {
+  if (App.settings.focus_tab && (item.from === `tabs`)) {
     App.focus_tab(item.id)
     window.close()
   }
