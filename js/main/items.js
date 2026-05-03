@@ -35,8 +35,9 @@ App.process_items = function (items, from) {
 
   for (let item of items) {
     let curl = App.pathname(item.url)
+    let url = App.clean_url(item.url)
 
-    if (App.items.some(x => x.url === item.url)) {
+    if (App.items.some(x => x.url === url)) {
       continue
     }
 
@@ -49,9 +50,9 @@ App.process_items = function (items, from) {
     let obj = {
       index: i,
       title: item.title || curl,
-      url: item.url,
+      url: url,
       clean_url: curl,
-      favorite: favorite_urls.includes(item.url),
+      favorite: favorite_urls.includes(url),
       created: false,
       filled: false,
       hidden: true,

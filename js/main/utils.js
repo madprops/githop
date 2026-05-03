@@ -96,3 +96,8 @@ App.log = function (s) {
   // eslint-disable-next-line no-console
   console.log(s)
 }
+
+// Clean the url
+App.clean_url = (s) => {
+  return s.split(`?`)[0].split(`#`)[0]
+}
